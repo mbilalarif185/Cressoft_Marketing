@@ -20,7 +20,6 @@ const HomeOneBanner = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const device_width = window.innerWidth;
-
       if (
         document.querySelectorAll(".g-ban-one").length > 0 &&
         device_width > 576
