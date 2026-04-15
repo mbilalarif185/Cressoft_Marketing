@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/images/logo.png";
+import logo from "public/images/white.png";
 import { CRESSOFT_SOCIAL } from "@/constants/socialLinks";
 
 interface HeaderProps {
@@ -73,7 +73,9 @@ const Offcanvas = ({ openNav, setOpenNav }: HeaderProps) => {
           <div className="offcanvas-menu__header nav-fade">
             <div className="logo">
               <Link href="/">
-                <Image src={logo} alt="Image" title="Image" priority />
+                <Image src={logo}
+                height={200}
+                width={200} alt="Image" title="Image" priority />
               </Link>
             </div>
             <button
