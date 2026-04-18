@@ -6,7 +6,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import ball from "public/images/ball.png";
+import ball from "public/images/ball.webp";
+import { SITE_URL } from "@/lib/seo";
 
 // Single source of truth for all services. Keeping this as a stable
 // module-level constant avoids re-creating the array on every render and
@@ -24,8 +25,6 @@ const SERVICES = [
 ] as const;
 
 const SERVICE_HREF = "/marketing-solutions";
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://cressoft.my";
 
 const AUTOPLAY_OPTS = {
   delay: 1,

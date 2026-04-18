@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -8,22 +8,30 @@ import {
   CONTACT_PHONE_TEL_HREF,
 } from "@/constants/contact";
 import { CRESSOFT_SOCIAL } from "@/constants/socialLinks";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import banneronethumb from "public/images/home/banner.webp";
 import star from "public/images/star.png";
 
-gsap.registerPlugin(ScrollTrigger);
 const HomeOneBanner = () => {
-  const [videoActive, setVideoActive] = useState(false);
-
+  // Defer GSAP entirely until the hero image has painted. We `await import`
+  // both libraries inside the effect so they are *not* part of the page's
+  // initial JS payload and never block LCP — the parallax tween adds polish
+  // post-LCP on viewports >576px only.
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const device_width = window.innerWidth;
-      if (
-        document.querySelectorAll(".g-ban-one").length > 0 &&
-        device_width > 576
-      ) {
+    if (typeof window === "undefined" || window.innerWidth <= 576) return;
+    if (document.querySelectorAll(".g-ban-one").length === 0) return;
+
+    let cancelled = false;
+    let revert: (() => void) | null = null;
+
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/dist/ScrollTrigger"),
+      ]);
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const ctx = gsap.context(() => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".banner",
@@ -33,11 +41,7 @@ const HomeOneBanner = () => {
             pin: false,
           },
         });
-
-        tl.set(".g-ban-one", {
-          y: "-10%",
-        });
-
+        tl.set(".g-ban-one", { y: "-10%" });
         tl.to(".g-ban-one", {
           opacity: 0,
           scale: 2,
@@ -45,8 +49,14 @@ const HomeOneBanner = () => {
           zIndex: -1,
           duration: 2,
         });
-      }
-    }
+      });
+      revert = () => ctx.revert();
+    })();
+
+    return () => {
+      cancelled = true;
+      revert?.();
+    };
   }, []);
 
   return (
@@ -87,10 +97,19 @@ const HomeOneBanner = () => {
         </div>
         <Image
           src={banneronethumb}
-          alt="Image"
+          alt="Cressoft digital marketing agency Malaysia hero illustration"
           className="banner-one-thumb d-none d-sm-block g-ban-one"
+          priority
+          fetchPriority="high"
+          sizes="(max-width: 992px) 80vw, 60vw"
         />
-        <Image src={star} alt="Image" className="star" />
+        <Image
+          src={star}
+          alt=""
+          aria-hidden="true"
+          className="star"
+          loading="lazy"
+        />
         <div className="banner-left-text banner-social-text d-none d-md-flex">
           <Link href={CONTACT_MAILTO_HREF}>mail : {CONTACT_EMAIL}</Link>
           <Link href={CONTACT_PHONE_TEL_HREF}>Call : {CONTACT_PHONE_DISPLAY}</Link>

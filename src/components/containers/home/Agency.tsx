@@ -5,61 +5,98 @@ import {
   CONTACT_WHATSAPP_MESSAGE_AGENCY,
   contactWhatsAppHref,
 } from "@/constants/contact";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import thumbone from "public/images/agency/pic1.png";
-import thumbtwo from "public/images/agency/pic2.png";
+import thumbone from "public/images/agency/pic1.webp";
+import thumbtwo from "public/images/agency/pic2.webp";
 import star from "public/images/star.png";
 import dotlarge from "public/images/agency/dot-large.png";
 
-gsap.registerPlugin(ScrollTrigger);
 const Agency = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
+  // GSAP + ScrollTrigger (~75 KB combined) are loaded lazily inside the
+  // effect so they never enter the page-level bundle. The IntersectionObserver
+  // gate ensures they only fetch when the section is actually about to appear
+  // — keeping /about-us First Load JS minimal for users who never reach this
+  // section (bounce, navigation, mobile fold above).
   useEffect(() => {
-    if (!sectionRef.current) return;
+    const root = sectionRef.current;
+    if (!root) return;
 
-    // gsap.context scopes selectors to this section AND auto-reverts every
-    // tween + ScrollTrigger on cleanup (Strict Mode / Fast Refresh safe).
-    const ctx = gsap.context(() => {
-      const bars = gsap.utils.toArray<HTMLElement>(".skill-bar-single");
+    let cancelled = false;
+    let revert: (() => void) | null = null;
 
-      bars.forEach((bar) => {
-        const wrapper = bar.querySelector<HTMLElement>("[data-percent]");
-        const fill = bar.querySelector<HTMLElement>(".skill-bar-percent");
-        const value = bar.querySelector<HTMLElement>(".percent-value");
-        if (!wrapper || !fill || !value) return;
+    const init = async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/dist/ScrollTrigger"),
+      ]);
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
 
-        const percentAttr = wrapper.getAttribute("data-percent") || "0%";
-        const percentNum = parseFloat(percentAttr) || 0;
+      const ctx = gsap.context(() => {
+        const bars = gsap.utils.toArray<HTMLElement>(".skill-bar-single");
 
-        gsap.set(fill, { width: 0 });
-        value.textContent = "0%";
+        bars.forEach((bar) => {
+          const wrapper = bar.querySelector<HTMLElement>("[data-percent]");
+          const fill = bar.querySelector<HTMLElement>(".skill-bar-percent");
+          const value = bar.querySelector<HTMLElement>(".percent-value");
+          if (!wrapper || !fill || !value) return;
 
-        const tl = gsap.timeline({
-          defaults: { duration: 2, ease: "power2.out" },
-          scrollTrigger: {
-            trigger: bar,
-            start: "top 85%",
-            once: true,
-          },
-        });
+          const percentAttr = wrapper.getAttribute("data-percent") || "0%";
+          const percentNum = parseFloat(percentAttr) || 0;
 
-        tl.to(fill, { width: percentAttr }, 0).to(
-          value,
-          {
-            textContent: String(percentNum),
-            snap: { textContent: 1 },
-            modifiers: {
-              textContent: (v: string) => `${Math.round(parseFloat(v))}%`,
+          gsap.set(fill, { width: 0 });
+          value.textContent = "0%";
+
+          const tl = gsap.timeline({
+            defaults: { duration: 2, ease: "power2.out" },
+            scrollTrigger: {
+              trigger: bar,
+              start: "top 85%",
+              once: true,
             },
-          },
-          0
-        );
-      });
-    }, sectionRef);
+          });
 
-    return () => ctx.revert();
+          tl.to(fill, { width: percentAttr }, 0).to(
+            value,
+            {
+              textContent: String(percentNum),
+              snap: { textContent: 1 },
+              modifiers: {
+                textContent: (v: string) => `${Math.round(parseFloat(v))}%`,
+              },
+            },
+            0
+          );
+        });
+      }, sectionRef);
+
+      revert = () => ctx.revert();
+    };
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            init();
+          }
+        },
+        { rootMargin: "200px 0px" }
+      );
+      io.observe(root);
+      return () => {
+        cancelled = true;
+        io.disconnect();
+        revert?.();
+      };
+    }
+
+    init();
+    return () => {
+      cancelled = true;
+      revert?.();
+    };
   }, []);
 
   return (

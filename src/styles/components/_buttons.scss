@@ -208,16 +208,6 @@
   transform: translateY(0);
 }
 
-//  video modal button
-.video-modal-btn {
-  a {
-    @include box(84px);
-    background-color: var(--primary-color);
-    font-size: 20px;
-    color: var(--white);
-  }
-}
-
 @keyframes wave {
   0% {
     transform: translate(-50%, -50%) scale(0.6);

@@ -1,10 +1,10 @@
-import React, { useEffect, useId, useMemo, useRef, useState } from "react";
+import React, { useId, useMemo, useRef, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 
-import stepDiscover from "public/images/work/discover.png";
-import stepWireframes from "public/images/work/wire.png";
-import stepDesign from "public/images/work/ui.png";
-import stepDevelopment from "public/images/work/development.png";
+import stepDiscover from "public/images/work/discover.webp";
+import stepWireframes from "public/images/work/wire.webp";
+import stepDesign from "public/images/work/ui.webp";
+import stepDevelopment from "public/images/work/development.webp";
 
 type Step = {
   /** Two-digit progress label (e.g. "25", "50"). */
@@ -50,32 +50,14 @@ const STEPS: Step[] = [
   },
 ];
 
-const VIDEO_ID = "fSv6UgCkuTU";
-
 const WorkStepsProject = () => {
   const headingId = useId();
   const sectionRef = useRef<HTMLElement | null>(null);
   const previewId = useId();
 
   const [activeStep, setActiveStep] = useState(0);
-  const [videoActive, setVideoActive] = useState(false);
 
   const activePreview = STEPS[activeStep] ?? STEPS[0];
-
-  // Body scroll-lock + Escape-to-close while the video modal is open.
-  useEffect(() => {
-    if (!videoActive) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setVideoActive(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [videoActive]);
 
   // schema.org/HowTo — these are ordered process steps, perfect for the
   // HowTo rich-result type on Google search.
@@ -222,34 +204,7 @@ const WorkStepsProject = () => {
             </div>
           </div>
         </div>
-       
       </section>
-
-      {/* <div
-        className={(videoActive ? " video-zoom-in" : " ") + " video-backdrop"}
-        onClick={() => setVideoActive(false)}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Introduction video"
-        aria-hidden={!videoActive}
-      >
-        <div className="video-inner">
-          <div
-            className="video-container"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {videoActive && <YoutubeEmbed embedId={VIDEO_ID} />}
-            <button
-              type="button"
-              aria-label="Close video popup"
-              className="close-video-popup"
-              onClick={() => setVideoActive(false)}
-            >
-              <i className="fa-solid fa-xmark" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </div> */}
 
       <script
         type="application/ld+json"

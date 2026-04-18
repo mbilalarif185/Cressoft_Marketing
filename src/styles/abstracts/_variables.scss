@@ -1,11 +1,14 @@
 // (1.02) variables
 
-// inter google font source
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+// Inter is now loaded via `next/font/google` in `src/pages/_app.tsx` and
+// exposed through the CSS variable `--font-inter`. Self-hosted, preloaded,
+// and with `display: swap` to eliminate render-blocking and FOIT.
 
 :root {
-  // font family
-  --inter: "Inter", sans-serif;
+  // font family — fall back to system stack if next/font hasn't initialized
+  // (e.g. before hydration, in legacy browsers, or in error pages).
+  --inter: var(--font-inter, "Inter"), system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
 
   // theme default
   --theme-font: var(--inter);

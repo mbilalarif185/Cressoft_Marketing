@@ -25,14 +25,6 @@
   .banner {
     --theme-color: black;
     background-color: white;
-
-    .video-frame {
-      i {
-        @include box(60%);
-        background-color: black;
-        color: white;
-      }
-    }
   }
 
   .banner__content {
@@ -334,13 +326,6 @@
 
   .work-steps-light {
     --theme-color: black;
-    .video-frame {
-      i {
-        @include box(60%);
-        background-color: black;
-        color: white;
-      }
-    }
 
     .work-steps__single {
       h5,
@@ -412,9 +397,6 @@
     background-color: white;
     --theme-color: black;
     border-color: #d9d9d9;
-    &::before {
-      background-image: url("../../../public/images/banner/line-l.png");
-    }
 
     .intro {
       p {

@@ -2,11 +2,11 @@ import React, { useCallback, useMemo, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import dotlarge from "public/images/agency/dot-large.png";
-import serviceResults from "public/images/service/results.png";
-import serviceModernization from "public/images/service/deep.png";
-import serviceInnovation from "public/images/service/full.png";
-import serviceConsulting from "public/images/service/trans.png";
-import serviceLocal from "public/images/service/agile.png";
+import serviceResults from "public/images/service/results.webp";
+import serviceModernization from "public/images/service/deep.webp";
+import serviceInnovation from "public/images/service/full.webp";
+import serviceConsulting from "public/images/service/trans.webp";
+import serviceLocal from "public/images/service/agile.webp";
 
 type Service = {
   id: string;

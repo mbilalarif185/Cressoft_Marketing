@@ -1,0 +1,26 @@
+images/agency/clutch.png -> images/agency/clutch.webp
+images/agency/pic1.png -> images/agency/pic1.webp
+images/agency/pic2.png -> images/agency/pic2.webp
+images/ball.png -> images/ball.webp
+images/banner/banner-two-bg.png -> images/banner/banner-two-bg.webp
+images/cta.png -> images/cta.webp
+images/portfolio/bcr.png -> images/portfolio/bcr.webp
+images/portfolio/dynamic portal.png -> images/portfolio/dynamic portal.webp
+images/portfolio/edu.png -> images/portfolio/edu.webp
+images/portfolio/hookah.png -> images/portfolio/hookah.webp
+images/portfolio/ilham.png -> images/portfolio/ilham.webp
+images/portfolio/lcr.png -> images/portfolio/lcr.webp
+images/portfolio/mock.png -> images/portfolio/mock.webp
+images/projects/icon-one.png -> images/projects/icon-one.webp
+images/projects/icon-two.png -> images/projects/icon-two.webp
+images/service/agile.png -> images/service/agile.webp
+images/service/deep.png -> images/service/deep.webp
+images/service/full.png -> images/service/full.webp
+images/service/results.png -> images/service/results.webp
+images/service/trans.png -> images/service/trans.webp
+images/sponsor/Golf-club.png -> images/sponsor/Golf-club.webp
+images/test-.png -> images/test-.webp
+images/work/development.png -> images/work/development.webp
+images/work/discover.png -> images/work/discover.webp
+images/work/ui.png -> images/work/ui.webp
+images/work/wire.png -> images/work/wire.webp

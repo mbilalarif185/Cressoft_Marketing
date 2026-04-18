@@ -6,7 +6,7 @@ import "swiper/swiper-bundle.css";
 import one from "public/images/sponsor/Best-Car-Rental-Dubai-.png";
 import two from "public/images/sponsor/CMS.png";
 import three from "public/images/sponsor/Educrest.png";
-import four from "public/images/sponsor/Golf-club.png";
+import four from "public/images/sponsor/Golf-club.webp";
 import six from "public/images/sponsor/Legendary.png";
 import seven from "public/images/sponsor/roshan-consultancy.png";
 import eight from "public/images/sponsor/Stla.png";

@@ -4,12 +4,12 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, FreeMode } from "swiper/modules";
 import "swiper/swiper-bundle.css";
-import hrone from "public/images/portfolio/lcr.png";
-import hrtwo from "public/images/portfolio/mock.png";
-import hrthree from "public/images/portfolio/bcr.png";
-import hrfour from "public/images/portfolio/edu.png";
-import hrfive from "public/images/portfolio/ilham.png";
-import hrsix from "public/images/portfolio/hookah.png";
+import hrone from "public/images/portfolio/lcr.webp";
+import hrtwo from "public/images/portfolio/mock.webp";
+import hrthree from "public/images/portfolio/bcr.webp";
+import hrfour from "public/images/portfolio/edu.webp";
+import hrfive from "public/images/portfolio/ilham.webp";
+import hrsix from "public/images/portfolio/hookah.webp";
 
 type Project = {
   title: string;

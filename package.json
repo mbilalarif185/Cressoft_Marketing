@@ -3,21 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/dev.cjs",
     "dev:turbo": "next dev --turbo",
     "dev:clean": "npm run clean && next dev",
     "dev:clean:turbo": "npm run clean && next dev --turbo",
+    "dev:safe": "npm run clean && next dev -p 3100",
     "clean": "node -e \"const fs=require('fs');['.next','node_modules/.cache'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "optimize:images": "node scripts/optimize-images.mjs && node scripts/update-image-imports.mjs"
   },
   "dependencies": {
     "@types/node": "20.5.7",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "bootstrap": "^5.3.1",
-    "chroma-js": "^2.4.2",
     "gray-matter": "^4.0.3",
     "gsap": "^3.12.2",
     "next": "15.2.4",
@@ -36,7 +37,6 @@
     "vanilla-tilt": "^1.8.1"
   },
   "devDependencies": {
-    "@types/chroma-js": "^2.4.0",
     "eslint": "8.48.0",
     "eslint-config-next": "15.2.4"
   },

@@ -1,0 +1,21 @@
+# Robots policy for https://cressoft.net
+# Allow everything by default, but keep API routes out of the index.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /404
+Disallow: /500
+
+# Major bots — explicit allow keeps things obvious for audits.
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://cressoft.net/sitemap.xml

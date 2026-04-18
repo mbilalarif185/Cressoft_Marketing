@@ -1,9 +1,8 @@
 import type { GetServerSideProps } from "next";
 import { getAllPostMeta } from "@/lib/blog";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://cressoft.com";
+import { SITE_URL as RESOLVED_SITE_URL } from "@/lib/seo";
+const SITE_URL = RESOLVED_SITE_URL;
 
 const escapeXml = (s: string) =>
   s
@@ -31,7 +30,7 @@ const buildRss = () => {
       <description>${escapeXml(p.description)}</description>
       <pubDate>${pubDate}</pubDate>
       <category>${escapeXml(p.category)}</category>
-      <author>noreply@cressoft.com (${escapeXml(p.author)})</author>
+      <author>info@cressoft.net (${escapeXml(p.author)})</author>
     </item>`;
     })
     .join("");

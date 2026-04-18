@@ -1,9 +1,9 @@
 /** Site-wide contact details — single source of truth for UI, links, and SEO helpers. */
 
-export const CONTACT_PHONE_DISPLAY = "+6011 1102 0111";
+export const CONTACT_PHONE_DISPLAY = "+6011 2889 0942";
 
 /** Use in `tel:` links (digits after +, no spaces). */
-export const CONTACT_PHONE_TEL_HREF = "tel:+601111020111";
+export const CONTACT_PHONE_TEL_HREF = "tel:+601128890942";
 
 export const CONTACT_EMAIL = "info@cressoft.net";
 
@@ -15,7 +15,7 @@ export const second_MAILTO_HREF = "mailto:sam@cressoft.net";
 export const CONTACT_ADDRESS = "Cova Square, Kota Damansara, Malaysia";
 
 /** WhatsApp wa.me path (country + number, no + or spaces). */
-export const CONTACT_WHATSAPP_E164 = "601111020111";
+export const CONTACT_WHATSAPP_E164 = "601128890942";
 
 export function contactWhatsAppHref(message: string): string {
   return `https://wa.me/${CONTACT_WHATSAPP_E164}?text=${encodeURIComponent(message)}`;

@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { serialize } from "next-mdx-remote/serialize";
@@ -9,6 +8,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 import Layout from "@/components/layout/Layout";
+import Seo from "@/components/seo/Seo";
 import BlogSingleBanner from "@/components/layout/banner/BlogSingleBanner";
 import BlogDetailsMain from "@/components/containers/blog/BlogDetailsMain";
 import {
@@ -19,6 +19,8 @@ import {
 } from "@/lib/blog";
 import type { BlogPost, BlogPostMeta } from "@/types/blog";
 
+import { SITE_URL, ORGANIZATION_LOGO, SITE_NAME } from "@/lib/seo";
+
 type BlogSinglePageProps = {
   post: Omit<BlogPost, "content">;
   source: MDXRemoteSerializeResult;
@@ -27,10 +29,6 @@ type BlogSinglePageProps = {
   prev: BlogPostMeta | null;
   next: BlogPostMeta | null;
 };
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://cressoft.com";
 
 const BlogSinglePage = ({
   post,
@@ -41,7 +39,8 @@ const BlogSinglePage = ({
   next,
 }: BlogSinglePageProps) => {
   const router = useRouter();
-  const url = `${SITE_URL}${router.asPath.split("?")[0]}`;
+  const pathname = `/blog/${post.slug}`;
+  const url = `${SITE_URL}${pathname}`;
   const cover = post.cover.startsWith("http")
     ? post.cover
     : `${SITE_URL}${post.cover}`;
@@ -57,45 +56,47 @@ const BlogSinglePage = ({
     author: { "@type": "Person", name: post.author },
     publisher: {
       "@type": "Organization",
-      name: "Cressoft",
+      name: SITE_NAME,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/images/logo.png`,
+        url: ORGANIZATION_LOGO,
       },
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     keywords: post.tags.join(", "),
+    inLanguage: "en-MY",
+    articleSection: post.category,
   };
 
-  return (
-    <Layout header={2} footer={5} video={0}>
-      <Head>
-        <title>{`${post.title} — Cressoft Blog`}</title>
-        <meta name="description" content={post.description} />
-        <link rel="canonical" href={url} />
+  // Avoid leaving the unused router warning while still keeping the import
+  // available if future logic needs it (e.g. preview mode badge).
+  void router;
 
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={url} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description} />
-        <meta property="og:image" content={cover} />
+  return (
+    <Layout header={2} footer={5}>
+      <Seo
+        title={post.title}
+        description={post.description}
+        pathname={pathname}
+        image={cover}
+        imageAlt={`${post.title} – Cressoft Blog`}
+        type="article"
+        keywords={post.tags}
+        breadcrumbs={[
+          { name: "Home", url: `${SITE_URL}/` },
+          { name: "Blog", url: `${SITE_URL}/blog` },
+          { name: post.title, url },
+        ]}
+        jsonLd={articleJsonLd}
+      >
         <meta property="article:published_time" content={post.date} />
+        <meta property="article:modified_time" content={post.date} />
         <meta property="article:author" content={post.author} />
         <meta property="article:section" content={post.category} />
         {post.tags.map((tag) => (
           <meta key={tag} property="article:tag" content={tag} />
         ))}
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.description} />
-        <meta name="twitter:image" content={cover} />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-        />
-      </Head>
+      </Seo>
 
       <BlogSingleBanner
         title={post.title}
@@ -159,6 +160,7 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
       prev,
       next,
     },
+    revalidate: 3600,
   };
 };
 

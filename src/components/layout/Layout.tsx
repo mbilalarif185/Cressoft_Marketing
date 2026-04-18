@@ -1,220 +1,38 @@
-import React, { Fragment, useState, useEffect } from "react";
-import Head from "next/head";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import VanillaTilt from "vanilla-tilt";
-import { useRouter } from "next/router";
-// import Header from "./header/Header";
+import React, { Fragment, useState } from "react";
+import dynamic from "next/dynamic";
 import HeaderTwo from "./header/HeaderTwo";
-// import HeaderThree from "./header/HeaderThree";
-// import HeaderFour from "./header/HeaderFour";
-// import HeaderFive from "./header/HeaderFive";
 import Footer from "./footer/Footer";
-import SplitType from "split-type";
-import { CONTACT_ADDRESS } from "@/constants/contact";
 
-gsap.registerPlugin(ScrollTrigger);
+/**
+ * Animation glue (gsap + ScrollTrigger + split-type + vanilla-tilt) is loaded
+ * on the client only and *after* hydration. This keeps ~135 KB of JS out of
+ * the shared First Load bundle and out of the critical path entirely — the
+ * page is interactive long before any tween code is fetched.
+ */
+const ClientAnimations = dynamic(() => import("./ClientAnimations"), {
+  ssr: false,
+  loading: () => null,
+});
 
 type LayoutProps = {
   children: React.ReactNode;
-  handleMouseEnterTitle?: any;
-  handleMouseLeaveTitle?: any;
   header?: React.ReactNode;
   footer?: React.ReactNode;
-  video?: React.ReactNode;
 };
 
-const Layout = ({
-  children,
-  header,
-  footer,
-  handleMouseEnterTitle,
-  handleMouseLeaveTitle,
-  video,
-}: LayoutProps) => {
-  const router = useRouter();
-
+const Layout = ({ children, header, footer }: LayoutProps) => {
   const [openNav, setOpenNav] = useState(false);
 
   const handleNav = () => {
     setOpenNav(!openNav);
   };
 
-  const classMappings: Record<string, string> = {
-    "/index-light": "home-light",
-    "/index-two-light": "home-two-light",
-    "/index-three-light": "home-three-light",
-    "/index-four-light": "home-four-light",
-    "/index-five-light": "home-five-light",
-  };
-
-  const classNameForCurrentPath = classMappings[router.pathname] || "";
-
-  let additionalClasses = " ";
-
-  const combinedClasses = `${additionalClasses} my-app`;
-
-  const combinedClassName = `${combinedClasses}${
-    openNav ? " body-active" : ""
-  } ${classNameForCurrentPath}`;
-
-  // tilt effect — cleanup for React Strict Mode (dev) and Fast Refresh remounts
-  useEffect(() => {
-    const tiltElements = document.querySelectorAll(".topy-tilt");
-
-    tiltElements.forEach((element) => {
-      VanillaTilt.init(element as HTMLElement, {
-        max: 5,
-        speed: 3000,
-      });
-    });
-
-    return () => {
-      tiltElements.forEach((element) => {
-        const el = element as HTMLElement & {
-          vanillaTilt?: { destroy: () => void };
-        };
-        el.vanillaTilt?.destroy();
-      });
-    };
-  }, []);
-
-  // fade animation
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const fadeWrapperRefs = document.querySelectorAll(".fade-wrapper");
-
-      fadeWrapperRefs.forEach((fadeWrapperRef) => {
-        const fadeItems = fadeWrapperRef.querySelectorAll(".fade-top");
-
-        fadeItems.forEach((element, index) => {
-          const delay = index * 0.15;
-
-          gsap.set(element, {
-            opacity: 0,
-            y: 100,
-          });
-
-          ScrollTrigger.create({
-            trigger: element,
-            start: "top 100%",
-            end: "bottom 20%",
-            scrub: 0.5,
-            onEnter: () => {
-              gsap.to(element, {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                delay: delay,
-              });
-            },
-            once: true,
-          });
-        });
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  // appear down
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const appearDownSections = document.querySelectorAll(".appear-down");
-
-      appearDownSections.forEach((section) => {
-        gsap.fromTo(
-          section,
-          {
-            scale: 0.8,
-            opacity: 0,
-          },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 1.5,
-            scrollTrigger: {
-              trigger: section,
-              scrub: 1,
-              start: "top bottom",
-              end: "bottom center",
-              markers: false,
-            },
-          }
-        );
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  // split text animation (SplitType must revert or second mount/HMR corrupts DOM)
-  useEffect(() => {
-    if (document.querySelectorAll(".title-anim").length === 0) {
-      return;
-    }
-
-    const split = new SplitType(".title-anim");
-
-    const ctx = gsap.context(() => {
-      const titleAnims = document.querySelectorAll(".title-anim");
-
-      titleAnims.forEach((titleAnim) => {
-        const charElements = titleAnim.querySelectorAll(".char");
-
-        charElements.forEach((char, index) => {
-          const tl2 = gsap.timeline({
-            scrollTrigger: {
-              trigger: char,
-              start: "top 90%",
-              end: "bottom 60%",
-              scrub: false,
-              markers: false,
-              toggleActions: "play none none none",
-            },
-          });
-
-          const charDelay = index * 0.03;
-
-          tl2.from(char, {
-            duration: 0.8,
-            x: 70,
-            delay: charDelay,
-            autoAlpha: 0,
-          });
-        });
-      });
-    });
-
-    return () => {
-      ctx.revert();
-      try {
-        split.revert();
-      } catch {
-        /* DOM may already be detached (e.g. unmount during Strict Mode) */
-      }
-    };
-  }, []);
+  // Stable string (no leading/trailing whitespace) — avoids SSR/CSR className drift.
+  const combinedClassName = `my-app${openNav ? " body-active" : ""}`;
 
   return (
     <Fragment>
-      <Head>
-        <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-          rel="shortcut icon"
-          href="/images/digital-marketing-agency.png"
-          type="image/x-icon"
-        />
-        <title>Cressoft Marketing | Digital Marketing Agency, Malaysia</title>
-        <meta name="keywords" content="creative, agency, portfolio" />
-        <meta
-          name="description"
-          content={`Digital marketing agency in ${CONTACT_ADDRESS}. SEO, web development, content marketing, and brand growth.`}
-        />
-      </Head>
       <div className={combinedClassName}>
-       
         {header === 2 && (
           <HeaderTwo
             openNav={openNav}
@@ -222,11 +40,11 @@ const Layout = ({
             setOpenNav={setOpenNav}
           />
         )}
-        
-        
+
         <main>{children}</main>
         {footer === 1 && <Footer />}
-       
+
+        <ClientAnimations />
       </div>
     </Fragment>
   );

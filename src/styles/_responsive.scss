@@ -176,11 +176,6 @@
     .work-steps__preview-caption {
       font-size: 14px;
     }
-
-    .video-frame {
-      @include box(120px);
-      font-size: 20px;
-    }
   }
 
   .testimonial {
@@ -493,11 +488,6 @@
 
     .work-four {
       margin-top: 120px;
-    }
-
-    .video-frame {
-      top: 28%;
-      right: 20%;
     }
   }
 
@@ -864,11 +854,6 @@
   }
 
   .banner {
-    .video-frame {
-      @include box(140px);
-      font-size: 20px;
-    }
-
     .banner__content {
       margin-top: -16px;
       padding-left: 0px;
@@ -900,16 +885,6 @@
     .banner-four__title {
       max-width: 700px;
       padding-left: 0px;
-    }
-  }
-
-  .video-modal {
-    .video-frame {
-      @include box(140px);
-      font-size: 20px;
-      i {
-        @include box(80px);
-      }
     }
   }
 
@@ -1165,14 +1140,6 @@
       }
     }
 
-    .video-frame {
-      position: relative;
-      inset: unset;
-      left: 15px;
-      margin-top: 40px;
-      @include box(140px);
-    }
-
     .star {
       left: 40px;
       top: 120px;
@@ -1187,15 +1154,6 @@
     .banner-three__slider-progress,
     .banner-three__content {
       padding-left: 0px;
-    }
-
-    .banner-three__video {
-      img {
-        min-height: 140px;
-      }
-      .video-frame {
-        @include box(60px);
-      }
     }
   }
 

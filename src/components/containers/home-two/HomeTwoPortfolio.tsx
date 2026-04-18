@@ -4,12 +4,12 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/swiper-bundle.css";
-import one from "public/images/portfolio/lcr.png";
-import two from "public/images/portfolio/mock.png";
-import three from "public/images/portfolio/bcr.png";
-import four from "public/images/portfolio/edu.png";
-import five from "public/images/portfolio/ilham.png";
-import six from "public/images/portfolio/hookah.png";
+import one from "public/images/portfolio/lcr.webp";
+import two from "public/images/portfolio/mock.webp";
+import three from "public/images/portfolio/bcr.webp";
+import four from "public/images/portfolio/edu.webp";
+import five from "public/images/portfolio/ilham.webp";
+import six from "public/images/portfolio/hookah.webp";
 
 type PortfolioCategory = "design" | "development" | "technology";
 

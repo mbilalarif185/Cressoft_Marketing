@@ -6,7 +6,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import star from "public/images/testimonial/star.png";
-import thumb from "public/images/test-.png";
+import thumb from "public/images/test-.webp";
 
 type HomeTwoTestimonialProps = {
   /** Optional marquee headline shown above/below the testimonial slider. */
