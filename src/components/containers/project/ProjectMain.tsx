@@ -1,241 +1,166 @@
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
+import React, { useId, useMemo } from "react";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import hrone from "public/images/projects/hr-one.png";
-import hrtwo from "public/images/projects/hr-two.png";
-import hrthree from "public/images/projects/hr-three.png";
-import hrfour from "public/images/projects/hr-four.png";
-import hrfive from "public/images/projects/hr-five.png";
-import hrsix from "public/images/projects/hr-six.png";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, FreeMode } from "swiper/modules";
+import "swiper/swiper-bundle.css";
+import hrone from "public/images/portfolio/lcr.png";
+import hrtwo from "public/images/portfolio/mock.png";
+import hrthree from "public/images/portfolio/bcr.png";
+import hrfour from "public/images/portfolio/edu.png";
+import hrfive from "public/images/portfolio/ilham.png";
+import hrsix from "public/images/portfolio/hookah.png";
 
-gsap.registerPlugin(ScrollTrigger);
+type Project = {
+  title: string;
+  href: string;
+  image: StaticImageData;
+  alt: string;
+};
+
+const PROJECTS: Project[] = [
+  {
+    title: " Digital Website Development",
+    href: "https://legendarycarrental.ae/",
+    image: hrone,
+    alt: "Legendary Car Rental ",
+  },
+  {
+    title: "Brand Identity Difference",
+    href: "https://legendarycarrental.com/",
+    image: hrtwo,
+    alt: "Brand identity project",
+  },
+  {
+    title: "Marketing App Solutions",
+    href: "https://bestcarrentaldubai.ae/",
+    image: hrthree,
+    alt: "Marketing app solutions project",
+  },
+  {
+    title: "Web Application",
+    href: "https://educrestmigration.com/",
+    image: hrfour,
+    alt: "LMS web application project",
+  },
+  {
+    title: "Search Engine Optimization",
+    href: "https://ilhamekhizar.com/",
+    image: hrfive,
+    alt: "Brand identity project",
+  },
+  {
+    title: "Digital Website Development",
+    href: "https://www.hookahfuntasia.com.my/",
+    image: hrsix,
+    alt: "Digital Marketing",
+  },
+];
+
 const ProjectMain = () => {
-  const slider = useRef<HTMLDivElement>(null);
+  const headingId = useId();
 
-  useEffect(() => {
-    const ele = slider.current;
+  // schema.org/ItemList JSON-LD — helps Google index portfolio entries
+  // and link them to the project-single pages.
+  const jsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: PROJECTS.map((p, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: p.href,
+        name: p.title,
+      })),
+    }),
+    []
+  );
 
-    if (window.innerWidth >= 992 && ele) {
-      gsap.registerPlugin(ScrollTrigger);
-
-      const rightSections = gsap.utils.toArray(".project-sl__single");
-
-      const pin = gsap.to(rightSections, {
-        xPercent: -100 * (rightSections.length - 3),
-        ease: "none",
-        scrollTrigger: {
-          trigger: ele,
-          pin: true,
-          invalidateOnRefresh: true,
-          start: "center center-=100",
-          scrub: 1,
-          end: () => "+=" + (slider.current?.offsetWidth || 0),
-          markers: false,
-        },
-      });
-
-      return () => {
-        pin.kill();
-      };
-    }
-  }, []);
+  // Suffix to scope navigation classes if the component is rendered twice.
+  const navSuffix = useMemo(
+    () => headingId.replace(/[^a-zA-Z0-9]/g, ""),
+    [headingId]
+  );
+  const prevClass = `prev-project-${navSuffix}`;
+  const nextClass = `next-project-${navSuffix}`;
 
   return (
-    <section className="section project-sl" ref={slider}>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrone} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              mobile app
-              <br />
-              development
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrtwo} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              brand identity
-              <br />
-              difference
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrthree} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              marketing app
-              <br />
-              solutions
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrfour} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              LMS web app
-              <br />
-              lication
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrfive} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              brand identity
-              <br />
-              difference
-            </Link>
-          </h2>
+    <section
+      className="section project-sl-section"
+      aria-labelledby={headingId}
+    >
+      <h2 id={headingId} className="visually-hidden">
+        Selected Projects
+      </h2>
+
+      <Swiper
+        // `slidesPerView="auto"` lets each `.project-sl__single` keep its
+        // CSS-defined width (360px desktop / 280px mobile) — same look as
+        // the original GSAP layout, just with proper drag/swipe + arrows.
+        slidesPerView="auto"
+        spaceBetween={0}
+        speed={700}
+        loop={PROJECTS.length > 4}
+        freeMode={{ enabled: true, momentum: true, momentumRatio: 0.6 }}
+        modules={[Autoplay, Navigation, FreeMode]}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        navigation={{ prevEl: `.${prevClass}`, nextEl: `.${nextClass}` }}
+        className="project-sl"
+        a11y={{
+          prevSlideMessage: "Previous project",
+          nextSlideMessage: "Next project",
+        }}
+      >
+        {PROJECTS.map((project, index) => (
+          <SwiperSlide key={`${project.title}-${index}`}>
+            <article className="project-sl__single">
+              <div className="thumb">
+                <Link href={project.href} aria-label={project.title}>
+                  <Image
+                    src={project.image}
+                    alt={project.alt}
+                    placeholder="blur"
+                    sizes="(min-width: 1400px) 25vw, (min-width: 992px) 33vw, (min-width: 576px) 50vw, 90vw"
+                  />
+                </Link>
+              </div>
+              <div className="content">
+                <h3>
+                  <Link href={project.href}>{project.title}</Link>
+                </h3>
+              </div>
+            </article>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <div className="container">
+        <div className="slide-group justify-content-center mt-5">
+          <button
+            type="button"
+            aria-label="Previous project"
+            className={`slide-btn ${prevClass}`}
+          >
+            <i className="fa-light fa-angle-left" aria-hidden="true"></i>
+          </button>
+          <button
+            type="button"
+            aria-label="Next project"
+            className={`slide-btn ${nextClass}`}
+          >
+            <i className="fa-light fa-angle-right" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrsix} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              digital website
-              <br />
-              development
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrone} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              mobile app
-              <br />
-              development
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrtwo} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              brand identity
-              <br />
-              difference
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrthree} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              marketing app
-              <br />
-              solutions
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrfour} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              LMS web app
-              <br />
-              lication
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrfive} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              brand identity
-              <br />
-              difference
-            </Link>
-          </h2>
-        </div>
-      </div>
-      <div className="project-sl__single">
-        <div className="thumb">
-          <Link href="project-single">
-            <Image src={hrsix} alt="Image" />
-          </Link>
-        </div>
-        <div className="content">
-          <h2>
-            <Link href="project-single">
-              digital website
-              <br />
-              development
-            </Link>
-          </h2>
-        </div>
-      </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </section>
   );
 };

@@ -9,7 +9,9 @@ import NextPageNull from "@/components/containers/home/NextPageNull";
 import HomeTwoPortfolio from "@/components/containers/home-two/HomeTwoPortfolio";
 import HomeTwoTestimonial from "@/components/containers/home-two/HomeTwoTestimonial";
 import HomeTwoBlog from "@/components/containers/home-two/HomeTwoBlog";
-import HomeTwoCta from "@/components/containers/service-details/CtaTwo";
+
+import MarketingFaq from "@/components/containers/marketing-solutions/MarketingFaq";
+import CtaSuccess from "@/components/containers/success-stories/CtaSuccess";
 
 const HomeTwo = () => {
   return (
@@ -18,12 +20,15 @@ const HomeTwo = () => {
     
       <HomeTwoAward />
       <HomeTwoOffer />
-      <HomeTwoModal />
+      {/* <HomeTwoModal /> */}
       <HomeTwoPortfolio />
       <HomeTwoSponsor />
-      <HomeTwoTestimonial />
+      <HomeTwoTestimonial
+       marqueeText="Grow Your Brand in Malaysia"
+       marqueeHref="https://wa.me/601111020111?text=Hello%20I%20want%20to%20know%20more%20about%20your%20services" />
+      <MarketingFaq/>
       <HomeTwoBlog />
-      <HomeTwoCta />
+      <CtaSuccess />
       <NextPageNull />
     </Layout>
   );

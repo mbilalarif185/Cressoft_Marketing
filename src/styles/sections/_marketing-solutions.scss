@@ -1,0 +1,1353 @@
+// =====================================================
+// Marketing Solutions page
+// Scoped styles for the marketing-solutions page redesign.
+// All selectors are namespaced (`.marketing-*`) so they
+// can never bleed into other pages.
+// =====================================================
+
+// Shared utility -------------------------------------------------
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+// 1) Services grid -----------------------------------------------
+.marketing-services {
+  position: relative;
+  z-index: 1;
+
+  .marketing-services__lead {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 0.78;
+  }
+
+  .marketing-services__grid {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-bottom: 0;
+  }
+
+  .marketing-services__col {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .marketing-services__card {
+    position: relative;
+    height: 100%;
+    padding: 36px 32px 32px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0.01) 100%
+    );
+    overflow: hidden;
+    transition: var(--transition);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at top right,
+        rgba(106, 90, 250, 0.18),
+        transparent 65%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(106, 90, 250, 0.45);
+
+      &::before {
+        opacity: 1;
+      }
+      .marketing-services__cta {
+        color: var(--primary-color);
+      }
+      .marketing-services__icon {
+        background: var(--primary-color);
+        color: var(--white);
+      }
+    }
+  }
+
+  .marketing-services__index {
+    position: absolute;
+    top: 24px;
+    inset-inline-end: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    opacity: 0.45;
+  }
+
+  .marketing-services__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(106, 90, 250, 0.14);
+    border: 1px solid rgba(106, 90, 250, 0.28);
+    color: var(--primary-color);
+    font-size: 22px;
+    margin-bottom: 22px;
+    transition: var(--transition);
+  }
+
+  .marketing-services__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    text-transform: capitalize;
+  }
+
+  .marketing-services__desc {
+    margin: 0 0 20px;
+    font-size: 15px;
+    line-height: 1.65;
+    opacity: 0.78;
+  }
+
+  .marketing-services__bullets {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.85;
+
+      i {
+        flex: 0 0 auto;
+        margin-top: 4px;
+        color: var(--primary-color);
+        font-size: 12px;
+      }
+    }
+  }
+
+  .marketing-services__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white);
+    font-weight: 600;
+    transition: var(--transition);
+
+    i {
+      transition: transform 0.25s ease;
+    }
+    &:hover i {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  // "View more / show less" toggle below the grid.
+  .marketing-services__more {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .marketing-services__more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: rgba(106, 90, 250, 0.08);
+    border: 1px solid rgba(106, 90, 250, 0.4);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: var(--transition);
+
+    i {
+      font-size: 12px;
+      color: var(--primary-color);
+      transition: transform 0.25s ease;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: var(--white);
+      box-shadow: 0 12px 28px rgba(106, 90, 250, 0.45);
+      i {
+        color: var(--white);
+        transform: translateY(2px);
+      }
+    }
+
+    &[aria-expanded="true"] i {
+      transform: translateY(-2px);
+    }
+
+    &:focus {
+      outline: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 3px;
+    }
+  }
+
+  .marketing-services__more-hint {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.55;
+  }
+}
+
+// 2) Results / stats strip ---------------------------------------
+.marketing-results {
+  position: relative;
+  z-index: 1;
+
+  .marketing-results__lead {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 0.78;
+  }
+
+  .marketing-results__grid {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-bottom: 0;
+  }
+
+  .marketing-results__col {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .marketing-results__card {
+    position: relative;
+    height: 100%;
+    padding: 36px 28px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(
+      160deg,
+      rgba(106, 90, 250, 0.1) 0%,
+      rgba(255, 255, 255, 0.02) 60%
+    );
+    transition: var(--transition);
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline-end: -40px;
+      bottom: -40px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(106, 90, 250, 0.18);
+      filter: blur(50px);
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(106, 90, 250, 0.4);
+    }
+  }
+
+  .marketing-results__metric {
+    display: block;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .marketing-results__label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .marketing-results__detail {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    opacity: 0.7;
+  }
+}
+
+// 3) Process timeline --------------------------------------------
+.marketing-process {
+  position: relative;
+  z-index: 1;
+
+  .sub-title.justify-content-center {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  // Lead paragraph below the section heading. Justified for a clean
+  // newspaper-style block; constrained width so the line length stays
+  // comfortable to read; partial last line centered to feel intentional
+  // inside a centered section header.
+  .marketing-process__lead {
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    text-align-last: center;
+    hyphens: auto;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 0.78;
+  }
+
+  .marketing-process__list {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .marketing-process__item {
+    list-style: none;
+    position: relative;
+    display: flex;
+  }
+
+  .marketing-process__card {
+    position: relative;
+    width: 100%;
+    padding: 36px 28px 32px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0.01) 100%
+    );
+    transition: var(--transition);
+
+    &:hover {
+      border-color: rgba(106, 90, 250, 0.4);
+      transform: translateY(-4px);
+    }
+  }
+
+  .marketing-process__number {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--primary-color);
+    margin-bottom: 18px;
+  }
+
+  .marketing-process__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(106, 90, 250, 0.14);
+    border: 1px solid rgba(106, 90, 250, 0.28);
+    color: var(--primary-color);
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .marketing-process__title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .marketing-process__desc {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.78;
+  }
+
+  // Dotted connector between cards (decorative)
+  .marketing-process__connector {
+    position: absolute;
+    top: 70px;
+    inset-inline-end: -24px;
+    width: 24px;
+    height: 2px;
+    background-image: linear-gradient(
+      to right,
+      rgba(106, 90, 250, 0.5) 50%,
+      transparent 50%
+    );
+    background-size: 8px 2px;
+    background-repeat: repeat-x;
+    pointer-events: none;
+  }
+}
+
+// 4) Why us -----------------------------------------------------
+.marketing-why {
+  position: relative;
+  z-index: 1;
+
+  .marketing-why__intro {
+    padding-inline-end: 20px;
+  }
+
+  .marketing-why__lead {
+    margin: 16px 0 28px;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 0.78;
+    max-width: 460px;
+  }
+
+  .marketing-why__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: var(--transition);
+
+    i {
+      transition: transform 0.25s ease;
+    }
+    &:hover {
+      color: var(--white);
+      i {
+        transform: translate(2px, -2px);
+      }
+    }
+  }
+
+  .marketing-why__grid {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-bottom: 0;
+  }
+
+  .marketing-why__col {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .marketing-why__card {
+    position: relative;
+    height: 100%;
+    padding: 28px 26px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.02);
+    transition: var(--transition);
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: rgba(106, 90, 250, 0.4);
+      background: rgba(106, 90, 250, 0.06);
+    }
+  }
+
+  .marketing-why__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(106, 90, 250, 0.14);
+    border: 1px solid rgba(106, 90, 250, 0.28);
+    color: var(--primary-color);
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+
+  .marketing-why__card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  .marketing-why__card-desc {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.78;
+  }
+}
+
+// 5) FAQ accordion -----------------------------------------------
+.marketing-faq {
+  position: relative;
+  z-index: 1;
+
+  .sub-title.justify-content-center {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .marketing-faq__list {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .marketing-faq__item {
+    list-style: none;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+    transition: border-color 0.25s ease, background 0.25s ease;
+
+    &--open {
+      border-color: rgba(106, 90, 250, 0.5);
+      background: rgba(106, 90, 250, 0.05);
+
+      .marketing-faq__chevron {
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  .marketing-faq__question {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    padding: 22px 26px;
+    color: var(--white);
+    font-size: 17px;
+    font-weight: 600;
+    text-align: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &:focus {
+      outline: none;
+    }
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+      border-radius: 12px;
+    }
+
+    span {
+      flex: 1 1 auto;
+    }
+  }
+
+  .marketing-faq__chevron {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--white);
+    font-size: 12px;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  .marketing-faq__answer {
+    padding: 0 26px 24px;
+
+    p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.7;
+      opacity: 0.82;
+    }
+  }
+}
+
+// 6) Marketing CTA — asymmetric two-column "audit booking" design.
+//    Left = pitch + actions, Right = booking-preview card mock-up.
+//    Visually distinct from CtaSuccess (which is a stats two-column).
+.marketing-cta {
+  &.section {
+    padding-bottom: 40px;
+  }
+
+  // Outer wrapper with a glowing gradient border via padding-trick.
+  .marketing-cta__panel {
+    position: relative;
+    padding: 1.5px; // gradient-border thickness
+    border-radius: 32px;
+    background: linear-gradient(
+      140deg,
+      rgba(106, 90, 250, 0.55) 0%,
+      rgba(106, 90, 250, 0.05) 30%,
+      rgba(255, 255, 255, 0.06) 60%,
+      rgba(106, 90, 250, 0.5) 100%
+    );
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45),
+      0 0 60px rgba(106, 90, 250, 0.15);
+    isolation: isolate;
+  }
+
+  // Inner panel sits on top of the gradient border
+  .marketing-cta__layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+    padding: 64px;
+    border-radius: 30.5px;
+    background: radial-gradient(
+        circle at top left,
+        rgba(106, 90, 250, 0.18),
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at bottom right,
+        rgba(64, 50, 180, 0.22),
+        transparent 55%
+      ),
+      linear-gradient(180deg, #0c0c14 0%, #14121e 100%);
+    overflow: hidden;
+  }
+
+  // Soft spotlight behind the panel
+  .marketing-cta__glow {
+    position: absolute;
+    inset: -40px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(106, 90, 250, 0.18) 0%,
+      transparent 65%
+    );
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  // ============== LEFT column ==============
+  .marketing-cta__pitch {
+    position: relative;
+    z-index: 1;
+  }
+
+  .marketing-cta__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(106, 90, 250, 0.12);
+    border: 1px solid rgba(106, 90, 250, 0.4);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 26px;
+    // Long pill text + wide letter-spacing tries to wrap on small mobile,
+    // looks bad — keep it as a single chip and shrink letter-spacing instead
+    // (handled in the small-mobile breakpoint below).
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  .marketing-cta__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2dd4bf;
+    animation: marketingCtaPulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes marketingCtaPulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.55);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(45, 212, 191, 0);
+    }
+  }
+
+  .marketing-cta__title {
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin: 0 0 18px;
+  }
+
+  .marketing-cta__highlight {
+    position: relative;
+    background: linear-gradient(
+      120deg,
+      var(--primary-color) 0%,
+      #c084fc 50%,
+      var(--primary-color) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: marketingCtaShimmer 4s linear infinite;
+  }
+
+  @keyframes marketingCtaShimmer {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  .marketing-cta__lead {
+    margin: 0 0 32px;
+    max-width: 520px;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 0.78;
+  }
+
+  .marketing-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  .marketing-cta__btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #8a7bff 0%, var(--primary-color) 100%);
+    border: 1px solid transparent;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    overflow: hidden;
+    box-shadow: 0 14px 32px rgba(106, 90, 250, 0.5);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+    i {
+      position: relative;
+      z-index: 1;
+      font-size: 13px;
+      transition: transform 0.25s ease;
+    }
+    // shimmer sweep on hover
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.25) 50%,
+        transparent 70%
+      );
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(106, 90, 250, 0.6);
+      color: var(--white);
+      i {
+        transform: translateX(4px);
+      }
+      &::before {
+        transform: translateX(100%);
+      }
+    }
+  }
+
+  .marketing-cta__btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 14px;
+    transition: var(--transition);
+
+    i {
+      color: #25d366;
+      font-size: 18px;
+    }
+    &:hover,
+    &:focus-visible {
+      border-color: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+    }
+  }
+
+  // Trust pills — wrap as separate chips, not one capsule
+  .marketing-cta__trust {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: 12.5px;
+      line-height: 1;
+      opacity: 0.9;
+      // Each chip should stay on one line; the parent already wraps the row.
+      white-space: nowrap;
+
+      i {
+        font-size: 11px;
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  .marketing-cta__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--white);
+    font-weight: 700;
+    transition: color 0.2s ease;
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  // ============== RIGHT column — booking preview card ==============
+  .marketing-cta__preview {
+    position: relative;
+    z-index: 1;
+    perspective: 1200px;
+  }
+
+  .marketing-cta__preview-card {
+    position: relative;
+    padding: 28px;
+    border-radius: 22px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(8px);
+    transform: rotateX(2deg) rotateY(-3deg);
+    transition: transform 0.5s ease;
+
+    &:hover {
+      transform: rotateX(0deg) rotateY(0deg) translateY(-4px);
+    }
+  }
+
+  .marketing-cta__preview-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    strong {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    small {
+      font-size: 12px;
+      opacity: 0.65;
+      margin-top: 2px;
+    }
+  }
+
+  .marketing-cta__preview-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(
+      135deg,
+      rgba(106, 90, 250, 0.35),
+      rgba(106, 90, 250, 0.1)
+    );
+    border: 1px solid rgba(106, 90, 250, 0.4);
+    color: var(--white);
+    font-size: 18px;
+  }
+
+  .marketing-cta__slots {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .marketing-cta__slot {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+    transition: var(--transition);
+
+    &:hover {
+      border-color: rgba(106, 90, 250, 0.4);
+      background: rgba(106, 90, 250, 0.05);
+    }
+
+    &--featured {
+      border-color: rgba(106, 90, 250, 0.55);
+      background: linear-gradient(
+        135deg,
+        rgba(106, 90, 250, 0.18),
+        rgba(106, 90, 250, 0.04)
+      );
+      box-shadow: 0 0 0 1px rgba(106, 90, 250, 0.35),
+        0 8px 20px rgba(106, 90, 250, 0.18);
+    }
+  }
+
+  .marketing-cta__slot-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    min-width: 38px;
+
+    strong {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--primary-color);
+    }
+    small {
+      font-size: 11px;
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+  }
+
+  .marketing-cta__slot-time {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: start;
+    // Grid items default to min-content min-size; force 0 so long times like
+    // "10:30 AM" can ellipsis-truncate instead of overflowing the slot row
+    // on narrow mobile widths.
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .marketing-cta__slot-status {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    line-height: 1;
+
+    &--open {
+      color: #2dd4bf;
+      background: rgba(45, 212, 191, 0.12);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+    }
+    &--limited {
+      color: #facc15;
+      background: rgba(250, 204, 21, 0.12);
+      border: 1px solid rgba(250, 204, 21, 0.3);
+    }
+    &--open-quiet {
+      color: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .marketing-cta__preview-divider {
+    height: 1px;
+    margin: 22px 0;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.12),
+      transparent
+    );
+  }
+
+  .marketing-cta__agenda {
+    .marketing-cta__agenda-heading {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 12px;
+    }
+    ul {
+      list-style: none;
+      padding-inline-start: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      opacity: 0.85;
+      i {
+        flex: 0 0 auto;
+        margin-top: 3px;
+        color: var(--primary-color);
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// =====================================================
+// Responsive
+// =====================================================
+@media only screen and (max-width: 1199.98px) {
+  .marketing-process {
+    .marketing-process__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .marketing-process__connector {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 991.98px) {
+  .marketing-services {
+    .marketing-services__lead {
+      margin-top: 16px;
+    }
+  }
+  .marketing-results {
+    .marketing-results__lead {
+      margin-top: 16px;
+    }
+    .marketing-results__metric {
+      font-size: 38px;
+    }
+  }
+  .marketing-why {
+    .marketing-why__intro {
+      padding-inline-end: 0;
+      margin-bottom: 24px;
+    }
+  }
+  .marketing-cta {
+    .marketing-cta__layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 48px 36px;
+    }
+    .marketing-cta__title {
+      font-size: 36px;
+    }
+    .marketing-cta__preview-card {
+      // Disable the 3D tilt on touch devices — looks broken without a mouse.
+      transform: none;
+      &:hover {
+        transform: translateY(-4px);
+      }
+    }
+  }
+}
+
+// Tablet portrait + large phones (576–767px).
+@media only screen and (max-width: 767.98px) {
+  .marketing-process {
+    .marketing-process__list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .marketing-faq {
+    .marketing-faq__question {
+      font-size: 16px;
+      padding: 18px 20px;
+    }
+    .marketing-faq__answer {
+      padding: 0 20px 20px;
+    }
+  }
+
+  .marketing-cta {
+    .marketing-cta__layout {
+      padding: 40px 28px;
+      gap: 32px;
+    }
+    .marketing-cta__title {
+      font-size: 32px;
+      letter-spacing: -0.01em;
+    }
+    .marketing-cta__lead {
+      font-size: 15px;
+      margin-bottom: 26px;
+    }
+    .marketing-cta__pill {
+      margin-bottom: 22px;
+    }
+
+    // Stack the action buttons full-width so the primary CTA always reads as
+    // the dominant action and tap targets stay generous (>= 48px).
+    .marketing-cta__actions {
+      gap: 10px;
+      width: 100%;
+    }
+    .marketing-cta__btn-primary,
+    .marketing-cta__btn-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .marketing-cta__preview-card {
+      padding: 22px;
+    }
+    .marketing-cta__preview-header {
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .marketing-cta__preview-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+    }
+    .marketing-cta__preview-divider {
+      margin: 18px 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .marketing-services {
+    .marketing-services__card {
+      padding: 28px 22px;
+    }
+    .marketing-services__title {
+      font-size: 20px;
+    }
+  }
+  .marketing-results {
+    .marketing-results__card {
+      padding: 28px 22px;
+    }
+    .marketing-results__metric {
+      font-size: 32px;
+    }
+  }
+  .marketing-process {
+    .marketing-process__card {
+      padding: 28px 22px;
+    }
+  }
+  .marketing-why {
+    .marketing-why__card {
+      padding: 24px 20px;
+    }
+  }
+  .marketing-cta {
+    .marketing-cta__panel {
+      border-radius: 24px;
+    }
+    .marketing-cta__layout {
+      padding: 32px 18px;
+      border-radius: 22.5px;
+      gap: 26px;
+    }
+    .marketing-cta__pill {
+      // Tighten the wide letter-spacing so the pill comfortably fits a 320px
+      // viewport without needing to wrap.
+      letter-spacing: 0.16em;
+      font-size: 10.5px;
+      padding: 7px 14px;
+      margin-bottom: 18px;
+    }
+    .marketing-cta__title {
+      font-size: 26px;
+      letter-spacing: -0.005em;
+    }
+    .marketing-cta__lead {
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+    .marketing-cta__btn-primary {
+      padding: 14px 20px;
+      font-size: 12.5px;
+    }
+    .marketing-cta__btn-secondary {
+      padding: 12px 18px;
+      font-size: 13px;
+    }
+    .marketing-cta__trust {
+      gap: 6px;
+      li {
+        font-size: 12px;
+        padding: 7px 12px;
+      }
+    }
+    .marketing-cta__preview-card {
+      padding: 18px;
+      border-radius: 18px;
+    }
+    .marketing-cta__preview-header {
+      strong {
+        font-size: 15px;
+      }
+      small {
+        font-size: 11px;
+      }
+    }
+    .marketing-cta__slot {
+      // 3 columns hold up surprisingly well at 320px because we kept times +
+      // status pills tight; we just shrink padding/gap a bit further.
+      padding: 10px 12px;
+      gap: 10px;
+    }
+    .marketing-cta__slot-day {
+      min-width: 32px;
+      strong {
+        font-size: 12px;
+      }
+      small {
+        font-size: 10px;
+      }
+    }
+    .marketing-cta__slot-time {
+      font-size: 13px;
+    }
+    .marketing-cta__slot-status {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+    .marketing-cta__agenda li {
+      font-size: 13px;
+    }
+  }
+
+  // Tighten the page section heads on tiny screens so the eyebrow + h2
+  // combo doesn't dominate the viewport.
+  .marketing-services,
+  .marketing-results,
+  .marketing-process,
+  .marketing-why,
+  .marketing-faq {
+    .sub-title {
+      font-size: 12px;
+    }
+  }
+}
+
+// Extra-small phones (≤359px) — galaxy fold front screen, etc.
+@media only screen and (max-width: 359.98px) {
+  .marketing-cta {
+    .marketing-cta__title {
+      font-size: 24px;
+    }
+    .marketing-cta__pill {
+      letter-spacing: 0.12em;
+      font-size: 10px;
+    }
+    .marketing-cta__slot-status {
+      // Status pills compete with the time on this width — hide the pill
+      // text and let the highlighted/featured slot border carry the meaning.
+      display: none;
+    }
+    .marketing-cta__slot {
+      grid-template-columns: auto 1fr;
+    }
+  }
+}

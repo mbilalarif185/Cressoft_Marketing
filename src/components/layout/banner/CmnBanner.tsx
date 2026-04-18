@@ -6,9 +6,17 @@ interface BannerProps {
   navigation?: any;
   parent?: any;
   parentLink?: any;
+  /** Intro paragraph shown beside the title; omit to hide the text column. */
+  description?: string;
 }
 
-const CmnBanner = ({ title, navigation, parent, parentLink }: BannerProps) => {
+const CmnBanner = ({
+  title,
+  navigation,
+  parent,
+  parentLink,
+  description,
+}: BannerProps) => {
   return (
     <>
       <section
@@ -17,9 +25,15 @@ const CmnBanner = ({ title, navigation, parent, parentLink }: BannerProps) => {
       >
         <div className="container">
           <div className="row gaper align-items-center">
-            <div className="col-12 col-lg-5 col-xl-7">
+            <div
+              className={
+                description
+                  ? "col-12 col-lg-5 col-xl-7"
+                  : "col-12 col-lg-10 col-xl-8"
+              }
+            >
               <div className="text-center text-lg-start">
-                <h2 className="title title-anim">{title}</h2>
+                <h1 className="title title-anim">{title}</h1>
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
@@ -40,15 +54,13 @@ const CmnBanner = ({ title, navigation, parent, parentLink }: BannerProps) => {
                 </nav>
               </div>
             </div>
-            <div className="col-12 col-lg-7 col-xl-5">
-              <div className="text-center text-lg-start">
-                <p className="primary-text">
-                  We&apos;re an UK-based top-notch design agency committed to
-                  partnering with good companies and hiring the right people for
-                  the right roles.
-                </p>
+            {description ? (
+              <div className="col-12 col-lg-7 col-xl-5">
+                <div className="text-center text-lg-start">
+                  <p className="primary-text">{description}</p>
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
       </section>

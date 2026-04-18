@@ -213,7 +213,7 @@ const HomeTwoPortfolio = () => {
             <SwiperSlide key={key}>
               <div className="portfolio__text-slider-single">
                 <p className={`h1${useStroke ? " str" : ""}`}>
-                  <Link href="/portfolio">
+                  <Link href="/success-stories">
                     digital portfolio
                     <i className="fa-sharp fa-solid fa-arrow-down-right" aria-hidden />
                   </Link>

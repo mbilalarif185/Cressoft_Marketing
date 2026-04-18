@@ -12,6 +12,7 @@ const ProjectDetails = () => {
         navigation="Brand Identity"
         parent="Projects"
         parentLink="our-projects"
+        description="A closer look at this brand identity programme: context, creative direction, and how the system comes to life across touchpoints."
       />
       <ProjectDetailsMain />
       <UxProcess />

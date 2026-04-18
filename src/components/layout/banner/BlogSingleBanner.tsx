@@ -1,7 +1,29 @@
 import React from "react";
 import Link from "next/link";
 
-const BlogSingleBanner = () => {
+type BlogSingleBannerProps = {
+  title: string;
+  category: string;
+  date: string;
+  readingMinutes: number;
+};
+
+const formatDate = (iso: string) => {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
+const BlogSingleBanner = ({
+  title,
+  category,
+  date,
+  readingMinutes,
+}: BlogSingleBannerProps) => {
   return (
     <section
       className="cmn-banner bg-img"
@@ -11,9 +33,13 @@ const BlogSingleBanner = () => {
         <div className="row gaper align-items-center">
           <div className="col-12">
             <div className="text-center text-lg-start">
-              <h2 className="title title-anim">
-                We denounce with righteous indignation
-              </h2>
+              <div className="blog-single-banner__meta">
+                <span className="blog-single-banner__pill">{category}</span>
+                <span>{formatDate(date)}</span>
+                <span aria-hidden="true">·</span>
+                <span>{readingMinutes} min read</span>
+              </div>
+              <h1 className="title title-anim">{title}</h1>
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
@@ -22,8 +48,11 @@ const BlogSingleBanner = () => {
                       Home
                     </Link>
                   </li>
+                  <li className="breadcrumb-item">
+                    <Link href="/blog">Blog</Link>
+                  </li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    Blog Details
+                    {category}
                   </li>
                 </ol>
               </nav>

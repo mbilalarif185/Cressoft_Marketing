@@ -9,7 +9,11 @@ import OurAchievement from "@/components/containers/OurAchievement";
 const OurStory = () => {
   return (
     <Layout header={2} footer={1} video={0}>
-      <CmnBanner title="Our Story" navigation="Our Story" />
+      <CmnBanner
+        title="Our Story"
+        navigation="Our Story"
+        description="How we started, what drives us today, and the principles that shape every engagement—from first workshop to final handover."
+      />
       <HomeTwoAward />
       <OurMission />
       <WorkStepsProject />

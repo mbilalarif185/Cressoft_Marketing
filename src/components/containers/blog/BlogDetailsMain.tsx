@@ -1,417 +1,387 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import poster from "public/images/news/poster.png";
-import groupone from "public/images/news/group-one.png";
-import grouptwo from "public/images/news/group-two.png";
-import ten from "public/images/news/ten.png";
-import eleven from "public/images/news/eleven.png";
-import twelve from "public/images/news/twelve.png";
-import thirteen from "public/images/news/thirteen.png";
-import fourteen from "public/images/news/fourteen.png";
-import { CRESSOFT_SOCIAL } from "@/constants/socialLinks";
+import { MDXRemote } from "next-mdx-remote";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import type { BlogPost, BlogPostMeta } from "@/types/blog";
 
-const BlogDetailsMain = () => {
+type BlogDetailsMainProps = {
+  post: Omit<BlogPost, "content">;
+  source: MDXRemoteSerializeResult;
+  related: BlogPostMeta[];
+  recentPosts: BlogPostMeta[];
+  prev: BlogPostMeta | null;
+  next: BlogPostMeta | null;
+  /** Absolute, canonical URL of the post — used by share buttons. */
+  url: string;
+};
+
+const formatDate = (iso: string) => {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};
+
+// Custom MDX components — keep typography aligned with the existing theme.
+const mdxComponents = {
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2 className="h3 bd-mdx__h2" {...props} />
+  ),
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h3 className="h4 bd-mdx__h3" {...props} />
+  ),
+  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
+    <ul className="bd-mdx__list" {...props} />
+  ),
+  ol: (props: React.OlHTMLAttributes<HTMLOListElement>) => (
+    <ol className="bd-mdx__list bd-mdx__list--ordered" {...props} />
+  ),
+  blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
+    <blockquote className="bd-mdx__quote" {...props} />
+  ),
+  a: ({ href, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    const isExternal = href?.startsWith("http");
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bd-mdx__link"
+          {...rest}
+        />
+      );
+    }
+    return (
+      <Link href={href ?? "#"} className="bd-mdx__link" {...(rest as any)} />
+    );
+  },
+  hr: () => <hr className="bd-mdx__hr" />,
+};
+
+const BlogDetailsMain = ({
+  post,
+  source,
+  related,
+  recentPosts,
+  prev,
+  next,
+  url,
+}: BlogDetailsMainProps) => {
+  const [copied, setCopied] = useState(false);
+
+  const shareText = encodeURIComponent(post.title);
+  const shareUrl = encodeURIComponent(url);
+
+  const shareLinks = {
+    twitter: `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
+    whatsapp: `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`,
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard blocked — silently no-op.
+    }
+  };
+
   return (
     <section className="section blog-main blog-details fade-wrapper">
       <div className="container">
         <div className="row gaper">
           <div className="col-12 col-xl-8">
-            <div className="blog-details__content">
+            <article className="blog-details__content">
               <div className="bd-thumb fade-top">
-                <Image src={poster} alt="Image" />
+                <Image
+                  src={post.cover}
+                  alt={post.title}
+                  width={1600}
+                  height={900}
+                  priority
+                  sizes="(min-width: 1200px) 800px, 100vw"
+                />
               </div>
+
               <div className="bd-content">
                 <div className="bd-meta">
                   <div className="meta__left">
                     <p>
-                      <strong>Written by :</strong>
-                      Marry biden
+                      <strong>Written by:</strong> {post.author}
                     </p>
                     <span></span>
-                    <p>10/01/2023</p>
+                    <p>{formatDate(post.date)}</p>
+                    <span></span>
+                    <p>{post.readingMinutes} min read</p>
                   </div>
                 </div>
-                <div className="bd-content-info">
-                  <h4 className="h4">
-                    Guide dog shortage: The blind people who train their
-                  </h4>
-                  <div className="paragraph">
-                    <p>
-                      Proin ultricies ultricies est vitae cursus. Nulla sit amet
-                      suscipit tortor. Maecenas dui erat, ornare eget tristique
-                      vitae, rutrum pretium justo. Phasellus vitae consequat
-                      nisi, quis luctus nisl. Praesent faucibus sem id massa
-                      semper ornare. Nam eu magna at mi pellentesque mattis.
-                      Morbi at condimentum velit. Phasellus aliquet, leo auctor
-                      volutpat ultrices, metus dolor dictum enim, sed convallis
-                      lacus urna nec erat.
-                    </p>
-                    <p>
-                      consectetur adipiscing elit. Etiam at mauris accumsan mi
-                      pulvinar lacinia a in justo. Ut tempor et libero quis
-                      dignissim. Nulla at convallis libero, vitae aliquam leo.
-                      Etiam ut augue nibh. In laoreet neque quis ex ornare, quis
-                      auctor elit facilisis. Mauris dapibus massa rhoncus ligula
-                      luctus vulputate. Fusce condimentum placerat vulputate.
-                      Praesent ullamcorper dui in dui sagittis commodo.
-                    </p>
-                  </div>
-                  <h4 className="h4">Where can I get some?</h4>
+
+                <div className="bd-content-info bd-mdx">
+                  <MDXRemote {...source} components={mdxComponents} />
                 </div>
               </div>
-              <div className="bd-group">
-                <Image src={groupone} alt="Image" className="fade-top" />
-                <Image src={grouptwo} alt="Image" className="fade-top" />
-              </div>
-              <div className="bd-content ">
-                <div className="bd-content__alt">
-                  <p>
-                    Proin ultricies ultricies est vitae cursus. Nulla sit amet
-                    suscipit tortor. Maecenas dui erat, ornare eget tristique
-                    vitae, rutrum pretium justo. Phasellus vitae consequat nisi,
-                    quis luctus nisl. Praesent faucibus sem id massa semper
-                    ornare. Nam eu magna at mi pellentesque mattis. Morbi at
-                    condimentum velit. Phasellus aliquet, leo auctor volutpat
-                    ultrices, metus dolor dictum enim, sed convallis lacus urna
-                    nec erat.
-                  </p>
-                  <ul>
-                    <li>Mauris maximus diam ac imperdiet dictum.</li>
-                    <li>
-                      Maecenas eget ipsum dapibus, rutrum mi non, ultricies
-                      massa.
-                    </li>
-                    <li>Nam non purus porta risus tincidunt cursus.</li>
-                    <li>Quisque blandit lacus vel urna pellentesque mattis.</li>
-                    <li>Maecenas vehicula tortor et consectetur faucibus.</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="bd-quote">
-                <blockquote>
-                  <q className="light-title-lg">
-                    Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                    amet, consectetur, adipisci velit...
-                  </q>
-                </blockquote>
-              </div>
-              <div className="bd-content">
-                <div className="bd-content__alt mt-0">
-                  <p>
-                    Proin ultricies ultricies est vitae cursus. Nulla sit amet
-                    suscipit tortor. Maecenas dui erat, ornare eget tristique
-                    vitae, rutrum pretium justo. Phasellus vitae consequat nisi,
-                    quis luctus nisl. Praesent faucibus sem id massa semper
-                    ornare. Nam eu magna at mi pellentesque mattis. Morbi at
-                    condimentum velit. Phasellus aliquet, leo auctor volutpat
-                    ultrices, metus dolor dictum enim, sed convallis lacus urna
-                    nec erat.
-                  </p>
-                </div>
-              </div>
+
               <div className="bd-tags">
                 <div className="tags-left">
                   <p>Tags:</p>
                   <div className="tags-content">
-                    <Link href="blog">Nature</Link>
-                    <Link href="blog">Health</Link>
+                    {post.tags.length === 0 ? (
+                      <span className="bd-tags__empty">—</span>
+                    ) : (
+                      post.tags.map((tag) => (
+                        <Link
+                          key={tag}
+                          href={`/blog?tag=${encodeURIComponent(tag)}`}
+                        >
+                          {tag}
+                        </Link>
+                      ))
+                    )}
                   </div>
                 </div>
                 <div className="tags-right">
                   <p>Share:</p>
-                  <ul className="social">
+                  <ul className="social bd-share">
                     <li>
-                      <Link
-                        href={CRESSOFT_SOCIAL.facebook}
+                      <a
+                        href={shareLinks.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Share on X (Twitter)"
+                      >
+                        <i className="fa-brands fa-x-twitter"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href={shareLinks.facebook}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Share on Facebook"
                       >
                         <i className="fa-brands fa-facebook-f"></i>
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        href={CRESSOFT_SOCIAL.linkedin}
+                      <a
+                        href={shareLinks.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Share on LinkedIn"
                       >
                         <i className="fa-brands fa-linkedin-in"></i>
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        href={CRESSOFT_SOCIAL.instagram}
+                      <a
+                        href={shareLinks.whatsapp}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Cressoft on Instagram"
+                        aria-label="Share on WhatsApp"
                       >
-                        <i className="fa-brands fa-instagram"></i>
-                      </Link>
+                        <i className="fa-brands fa-whatsapp"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={handleCopy}
+                        aria-label="Copy link"
+                        title={copied ? "Link copied!" : "Copy link"}
+                        className={copied ? "is-copied" : ""}
+                      >
+                        <i
+                          className={
+                            copied
+                              ? "fa-solid fa-check"
+                              : "fa-solid fa-link"
+                          }
+                        ></i>
+                      </button>
                     </li>
                   </ul>
                 </div>
               </div>
-            </div>
-            <div className="blog-details__pagination">
-              <div className="row gaper">
-                <div className="col-md-6">
-                  <div className="single">
-                    <Link href="blog">
-                      <i className="fa-solid fa-arrow-left-long"></i>
-                      Previous Blog
-                    </Link>
-                    <div className="latest-single">
-                      <div className="latest-thumb">
-                        <Link href="blog-single">
-                          <Image src={eleven} alt="Image" />
+
+              {related.length > 0 && (
+                <div className="bd-related">
+                  <div className="bd-related__head">
+                    <h3 className="h3">You might also like</h3>
+                  </div>
+                  <div className="row gaper">
+                    {related.map((rp) => (
+                      <div key={rp.slug} className="col-12 col-md-6">
+                        <Link
+                          href={`/blog/${rp.slug}`}
+                          className="bd-related__card"
+                        >
+                          <div className="bd-related__thumb">
+                            <Image
+                              src={rp.cover}
+                              alt={rp.title}
+                              width={600}
+                              height={360}
+                              sizes="(min-width: 768px) 360px, 100vw"
+                            />
+                          </div>
+                          <div className="bd-related__body">
+                            <span className="bd-related__cat">
+                              {rp.category}
+                            </span>
+                            <h4 className="h5">{rp.title}</h4>
+                            <span className="bd-related__cta">
+                              Read article
+                              <i className="fa-sharp fa-solid fa-arrow-up-right"></i>
+                            </span>
+                          </div>
                         </Link>
                       </div>
-                      <div className="latest-content">
-                        <p>10/01/2023</p>
-                        <p>
-                          <Link href="blog-single">
-                            Guide dog shortage: The blind peo ple who train
-                            their own guide
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <div className="single single--alt">
-                    <Link href="blog">
-                      Next Blog
-                      <i className="fa-solid fa-arrow-right-long"></i>
-                    </Link>
-                    <div className="latest-single">
-                      <div className="latest-thumb">
-                        <Link href="blog-single">
-                          <Image src={ten} alt="Image" />
+              )}
+
+              <div className="blog-details__pagination">
+                <div className="row gaper">
+                  <div className="col-md-6">
+                    {prev ? (
+                      <div className="single">
+                        <Link href={`/blog/${prev.slug}`}>
+                          <i className="fa-solid fa-arrow-left-long"></i>
+                          Previous Blog
                         </Link>
+                        <div className="latest-single">
+                          <div className="latest-thumb">
+                            <Link href={`/blog/${prev.slug}`}>
+                              <Image
+                                src={prev.cover}
+                                alt={prev.title}
+                                width={120}
+                                height={90}
+                              />
+                            </Link>
+                          </div>
+                          <div className="latest-content">
+                            <p>{formatDate(prev.date)}</p>
+                            <p>
+                              <Link href={`/blog/${prev.slug}`}>
+                                {prev.title}
+                              </Link>
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="latest-content">
-                        <p>10/01/2023</p>
-                        <p>
-                          <Link href="blog-single">
-                            Guide dog shortage: The blind peo ple who train
-                            their own guide
-                          </Link>
-                        </p>
+                    ) : null}
+                  </div>
+                  <div className="col-md-6">
+                    {next ? (
+                      <div className="single single--alt">
+                        <Link href={`/blog/${next.slug}`}>
+                          Next Blog
+                          <i className="fa-solid fa-arrow-right-long"></i>
+                        </Link>
+                        <div className="latest-single">
+                          <div className="latest-thumb">
+                            <Link href={`/blog/${next.slug}`}>
+                              <Image
+                                src={next.cover}
+                                alt={next.title}
+                                width={120}
+                                height={90}
+                              />
+                            </Link>
+                          </div>
+                          <div className="latest-content">
+                            <p>{formatDate(next.date)}</p>
+                            <p>
+                              <Link href={`/blog/${next.slug}`}>
+                                {next.title}
+                              </Link>
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ) : null}
                   </div>
                 </div>
               </div>
-              <div className="section pb-0 comment-form fade-top">
-                <div className="section__header">
-                  <h2 className="h2 text-start">Leave a comment</h2>
-                </div>
-                <form action="#" method="post">
-                  <div className="form-group-wrapper">
-                    <div className="form-group-single">
-                      <input
-                        type="text"
-                        name="comment-name"
-                        id="commentName"
-                        placeholder="Name"
-                      />
-                    </div>
-                    <div className="form-group-single">
-                      <input
-                        type="email"
-                        name="comment-email"
-                        id="commentemail"
-                        placeholder="Email"
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group-single">
-                    <textarea
-                      name="comment-message"
-                      id="commentMessage"
-                      placeholder="Write Comment..."
-                    ></textarea>
-                  </div>
-                  <div className="cta__group">
-                    <button type="submit" className="btn btn--ocotonary">
-                      post comment
-                      <i className="fa-solid fa-arrow-right-long"></i>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+            </article>
           </div>
-          <div className="col-12 col-xl-4">
+
+          <aside className="col-12 col-xl-4">
             <div className="blog-main__sidebar">
-              <div className="widget ">
+              <div className="widget">
                 <div className="widget__head">
                   <h5 className="h5">Search</h5>
                 </div>
                 <div className="widget-search">
-                  <form action="#" method="post">
+                  <form action="/blog" method="get">
                     <div className="form-group-input">
                       <input
                         type="search"
-                        name="blog-search"
-                        id="blogSearch"
-                        placeholder="Search here. . ."
+                        name="q"
+                        placeholder="Search articles…"
                       />
-                      <button type="submit">
+                      <button type="submit" aria-label="Search">
                         <i className="fa-solid fa-magnifying-glass"></i>
                       </button>
                     </div>
                   </form>
                 </div>
               </div>
-              <div className="widget ">
+
+              {recentPosts.length > 0 && (
+                <div className="widget">
+                  <div className="widget__head">
+                    <h5 className="h5">Recent Posts</h5>
+                  </div>
+                  <div className="widget__latest">
+                    {recentPosts.map((rp) => (
+                      <div key={rp.slug} className="latest-single">
+                        <div className="latest-thumb">
+                          <Link href={`/blog/${rp.slug}`}>
+                            <Image
+                              src={rp.cover}
+                              alt={rp.title}
+                              width={120}
+                              height={90}
+                            />
+                          </Link>
+                        </div>
+                        <div className="latest-content">
+                          <p>{formatDate(rp.date)}</p>
+                          <p>
+                            <Link href={`/blog/${rp.slug}`}>{rp.title}</Link>
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="widget">
                 <div className="widget__head">
-                  <h5 className="h5">Categories</h5>
+                  <h5 className="h5">Category</h5>
                 </div>
                 <div className="widget__list">
                   <ul>
                     <li>
-                      <Link href="blog">Business</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">Job Market</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">Marketing</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">News</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">Social Media</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">Trends</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">Writing</Link>
+                      <Link href="/blog">{post.category}</Link>
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div className="widget">
-                <div className="widget__head">
-                  <h5 className="h5">Recent Posts</h5>
-                </div>
-                <div className="widget__latest">
-                  <div className="latest-single ">
-                    <div className="latest-thumb">
-                      <Link href="blog-single">
-                        <Image src={ten} alt="Image" />
-                      </Link>
-                    </div>
-                    <div className="latest-content">
-                      <p>10/01/2023</p>
-                      <p>
-                        <Link href="blog-single">
-                          Guide dog shortage: The blind peo ple who train their
-                          own guide
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="latest-single ">
-                    <div className="latest-thumb">
-                      <Link href="blog-single">
-                        <Image src={eleven} alt="Image" />
-                      </Link>
-                    </div>
-                    <div className="latest-content">
-                      <p>10/01/2023</p>
-                      <p>
-                        <Link href="blog-single">
-                          Guide dog shortage: The blind peo ple who train their
-                          own guide
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="latest-single ">
-                    <div className="latest-thumb">
-                      <Link href="blog-single">
-                        <Image src={twelve} alt="Image" />
-                      </Link>
-                    </div>
-                    <div className="latest-content">
-                      <p>10/01/2023</p>
-                      <p>
-                        <Link href="blog-single">
-                          Guide dog shortage: The blind peo ple who train their
-                          own guide
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="latest-single ">
-                    <div className="latest-thumb">
-                      <Link href="blog-single">
-                        <Image src={thirteen} alt="Image" />
-                      </Link>
-                    </div>
-                    <div className="latest-content">
-                      <p>10/01/2023</p>
-                      <p>
-                        <Link href="blog-single">
-                          Guide dog shortage: The blind peo ple who train their
-                          own guide
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="widget">
-                <div className="widget__head">
-                  <h5 className="h5">Tags</h5>
-                </div>
-                <div className="widget__tags">
-                  <ul>
-                    <li>
-                      <Link href="blog">nature</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">health</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">galaxy</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">creative</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">art</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">business</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">space</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">biology</Link>
-                    </li>
-                    <li>
-                      <Link href="blog">environemnt</Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="widget widget-big ">
-                <Link href="blog-single">
-                  <Image src={fourteen} alt="Image" />
-                </Link>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
     </section>

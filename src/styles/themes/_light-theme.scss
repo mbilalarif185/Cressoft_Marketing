@@ -343,7 +343,9 @@
     }
 
     .work-steps__single {
-      h5 {
+      h5,
+      h3,
+      .work-steps__title {
         background-color: white;
       }
     }
@@ -548,9 +550,10 @@
 
   .testimonial {
     --theme-color: black;
-    .testimonial__text-slider {
-      --white: black;
-    }
+  }
+
+  .testimonial__text-slider {
+    --white: black;
   }
 
   .footer-four {

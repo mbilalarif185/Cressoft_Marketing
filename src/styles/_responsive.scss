@@ -154,14 +154,27 @@
 
   .work-steps {
     .work-steps__single {
-      h5 {
+      h5,
+      h3,
+      .work-steps__title {
         padding: 16px 20px;
         font-size: 16px;
       }
-      .work-thumb-hover {
-        width: 300px;
-        height: 120px;
-      }
+    }
+
+    .work-steps__preview {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 16px;
+      margin-top: 60px;
+    }
+
+    .work-steps__preview-title {
+      font-size: 18px;
+    }
+
+    .work-steps__preview-caption {
+      font-size: 14px;
     }
 
     .video-frame {
@@ -500,8 +513,8 @@
     }
 
     .content {
-      h2 {
-        height: 260px;
+      h3 {
+        font-size: 28px;
       }
     }
   }
@@ -643,12 +656,11 @@
     }
   }
 
-  .testimonial {
-    .testimonial__text-slider {
-      margin-bottom: 40px;
-    }
+  .testimonial__text-slider {
+    margin-bottom: 40px;
     .testimonial__text-slider-single {
-      h2 {
+      h2,
+      .h1 {
         margin-top: -14px;
       }
     }
@@ -771,6 +783,24 @@
   .faq {
     .faq__thumb {
       padding-right: 0px;
+    }
+  }
+
+  .cta-success {
+    .cta-success__wrapper {
+      padding: 56px 40px;
+    }
+    .cta-success__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .cta-success__title {
+      font-size: 36px;
+    }
+    // Tighten the stats panel to match the narrower content column when
+    // grid stacks vertically on tablet.
+    .cta-success__stats {
+      padding: 22px;
     }
   }
 }
@@ -1005,6 +1035,27 @@
       }
     }
   }
+
+  .cta-success {
+    .cta-success__wrapper {
+      padding: 48px 28px;
+    }
+    .cta-success__title {
+      font-size: 32px;
+    }
+    // 4 stats in a 2x2 grid still works at tablet portrait — but tighten
+    // the inner padding so individual cells don't feel oversized.
+    .cta-success__stats {
+      padding: 18px;
+      gap: 14px;
+    }
+    .cta-success__stat {
+      padding: 16px;
+    }
+    .cta-success__stat-value {
+      font-size: 28px;
+    }
+  }
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -1184,12 +1235,11 @@
     }
   }
 
-  .testimonial {
-    .testimonial__text-slider-single {
-      h2 {
-        margin-top: -8px;
-        -webkit-text-stroke: 0.5px var(--white);
-      }
+  .testimonial__text-slider-single {
+    h2,
+    .h1 {
+      margin-top: -8px;
+      -webkit-text-stroke: 0.5px var(--white);
     }
   }
 
@@ -1257,6 +1307,85 @@
   .cta-two {
     .cta-two-wrapper {
       padding: 80px 20px;
+    }
+  }
+
+  .cta-success {
+    .cta-success__wrapper {
+      padding: 36px 18px;
+      border-radius: 22px;
+    }
+    .cta-success__eyebrow {
+      // Long uppercase label + wide letter-spacing forces overflow on
+      // 320px viewports — tighten the spacing and trim the padding.
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      padding: 8px 14px;
+    }
+    .cta-success__title {
+      font-size: 26px;
+      letter-spacing: -0.005em;
+    }
+    .cta-success__lead {
+      font-size: 14.5px;
+      margin-bottom: 24px;
+    }
+    .cta-success__actions {
+      gap: 10px;
+      width: 100%;
+    }
+    // Full-width tap targets keep the primary action obvious and easy to
+    // hit on phones. >= 48px tall thanks to the existing padding.
+    .cta-success__btn-primary,
+    .cta-success__btn-ghost {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+    .cta-success__btn-primary {
+      padding: 14px 20px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+    .cta-success__btn-ghost {
+      padding: 12px 18px;
+      font-size: 13.5px;
+    }
+    .cta-success__phone {
+      gap: 12px;
+      strong {
+        font-size: 16px;
+      }
+      i {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+      }
+    }
+    .cta-success__stats {
+      grid-template-columns: 1fr;
+      padding: 16px;
+      gap: 10px;
+    }
+    .cta-success__stat {
+      padding: 14px 16px;
+    }
+    .cta-success__stat-value {
+      font-size: 26px;
+    }
+    // Decorative orbs are oversized at 80px blur — they leak past the
+    // tighter wrapper padding and dim the text on small screens.
+    .cta-success__orb--one {
+      width: 160px;
+      height: 160px;
+      top: -50px;
+      inset-inline-start: -50px;
+    }
+    .cta-success__orb--two {
+      width: 200px;
+      height: 200px;
+      bottom: -70px;
+      inset-inline-end: -60px;
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -14,71 +14,56 @@ import dotlarge from "public/images/agency/dot-large.png";
 
 gsap.registerPlugin(ScrollTrigger);
 const Agency = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
-    const percentElements = document.querySelectorAll("[data-percent]");
+    if (!sectionRef.current) return;
 
-    percentElements.forEach((el) => {
-      const skillBarPercent = el.querySelector(
-        ".skill-bar-percent"
-      ) as HTMLElement | null;
-      const percentValue = el.parentNode?.querySelector(
-        ".percent-value"
-      ) as HTMLElement | null;
+    // gsap.context scopes selectors to this section AND auto-reverts every
+    // tween + ScrollTrigger on cleanup (Strict Mode / Fast Refresh safe).
+    const ctx = gsap.context(() => {
+      const bars = gsap.utils.toArray<HTMLElement>(".skill-bar-single");
 
-      if (skillBarPercent && percentValue) {
-        const percent = el.getAttribute("data-percent") || "0%";
-        skillBarPercent.style.width = percent;
-        percentValue.textContent = percent;
-      }
-    });
+      bars.forEach((bar) => {
+        const wrapper = bar.querySelector<HTMLElement>("[data-percent]");
+        const fill = bar.querySelector<HTMLElement>(".skill-bar-percent");
+        const value = bar.querySelector<HTMLElement>(".percent-value");
+        if (!wrapper || !fill || !value) return;
 
-    const axProgressBar = document.querySelectorAll(".skill-bar-single");
-    axProgressBar.forEach((element) => {
-      const skillBarPercent = element.querySelector(
-        ".skill-bar-percent"
-      ) as HTMLElement | null;
-      const percentValue = element.querySelector(
-        ".percent-value"
-      ) as HTMLElement | null;
+        const percentAttr = wrapper.getAttribute("data-percent") || "0%";
+        const percentNum = parseFloat(percentAttr) || 0;
 
-      if (skillBarPercent && percentValue) {
-        const target = percentValue.textContent || "0%";
+        gsap.set(fill, { width: 0 });
+        value.textContent = "0%";
 
-        const axBarTimeline = gsap.timeline({
-          defaults: {
-            duration: 2,
-          },
+        const tl = gsap.timeline({
+          defaults: { duration: 2, ease: "power2.out" },
           scrollTrigger: {
-            trigger: element,
+            trigger: bar,
+            start: "top 85%",
+            once: true,
           },
         });
 
-        axBarTimeline.fromTo(
-          skillBarPercent,
+        tl.to(fill, { width: percentAttr }, 0).to(
+          value,
           {
-            width: 0,
-          },
-          {
-            width: target,
-          }
-        );
-
-        axBarTimeline.from(
-          percentValue,
-          {
-            textContent: "0%",
-            snap: {
-              textContent: 5,
+            textContent: String(percentNum),
+            snap: { textContent: 1 },
+            modifiers: {
+              textContent: (v: string) => `${Math.round(parseFloat(v))}%`,
             },
           },
-          "<"
+          0
         );
-      }
-    });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section className="section agency">
+    <section ref={sectionRef} className="section agency">
       <div className="container">
         <div className="row gaper align-items-center">
           <div className="col-12 col-lg-6">
@@ -99,28 +84,36 @@ const Agency = () => {
           </div>
           <div className="col-12 col-lg-6">
             <div className="agency__content section__content">
+              <h2 className="custom-heading">
               <span className="sub-title">
-                WELCOME
+                WELCOME TO CRESSOFT MARKETING
                 <i className="fa-solid fa-arrow-right"></i>
               </span>
+              </h2>
               <h2 className="title title-anim">
-                We are digital creative agency in London
+                We Are Your Digital Marketing Agency in Kuala Lumpur
+
               </h2>
               <div className="paragraph">
                 <p>
-                  Bring to the table win-win survival strategies to ensure
-                  proactive domination. At the end of the day, going forward, a
-                  new normal that has evolved from generation on the runway
-                  heading towards a streamlined cloud solution going forward
-                  porttitor dictum sapien.
+                  At Cressoft Marketing, we believe every business deserves to
+                  be found online. Based in the heart of Kuala Lumpur, we are a
+                  full-service digital marketing agency helping SMEs, startups,
+                  and growing brands across Malaysia cut through the noise and
+                  connect with the right audience, at the right time, on the
+                  right platform. From data-driven SEO strategies and
+                  high-converting Google Ads campaigns to scroll-stopping
+                  social media content and beautifully crafted websites, our
+                  team of specialists delivers integrated digital solutions
+                  that drive real business outcomes, not just vanity metrics.
                 </p>
               </div>
               <div className="skill-wrap">
-                <div className="skill-bar-single d-none">
+                <div className="skill-bar-single">
                   <div className="skill-bar-title">
-                    <p className="primary-text">Website design</p>
+                    <p className="primary-text">Web & App Development</p>
                   </div>
-                  <div className="skill-bar-wrapper" data-percent="75%">
+                  <div className="skill-bar-wrapper" data-percent="98%">
                     <div className="skill-bar">
                       <div className="skill-bar-percent">
                         <span className="percent-value"></span>
@@ -130,9 +123,9 @@ const Agency = () => {
                 </div>
                 <div className="skill-bar-single">
                   <div className="skill-bar-title">
-                    <p className="primary-text">Website design</p>
+                    <p className="primary-text">AI Solutions</p>
                   </div>
-                  <div className="skill-bar-wrapper" data-percent="75%">
+                  <div className="skill-bar-wrapper" data-percent="95%">
                     <div className="skill-bar">
                       <div className="skill-bar-percent">
                         <span className="percent-value"></span>
@@ -142,7 +135,7 @@ const Agency = () => {
                 </div>
                 <div className="skill-bar-single">
                   <div className="skill-bar-title">
-                    <p className="primary-text">Digital Marketing</p>
+                    <p className="primary-text">Search Engine Optimization</p>
                   </div>
                   <div className="skill-bar-wrapper" data-percent="90%">
                     <div className="skill-bar">
@@ -162,7 +155,7 @@ const Agency = () => {
                   rel="noopener noreferrer"
                   className="btn btn--primary"
                 >
-                  Know More
+                  Let's Grow Your Business
                 </Link>
               </div>
             </div>

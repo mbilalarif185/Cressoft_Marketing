@@ -5,16 +5,34 @@ const nextConfig = {
   reactStrictMode: true,
   // Ensure merged config always defines `experimental` (some tooling reads it unconditionally).
   experimental: {},
-  webpack: (config, { dev }) => {
-    // Disable webpack filesystem cache in dev — avoids occasional stale/corrupt
-    // `.next` chunks on Windows (e.g. ENOENT for `server/pages/_document.js`).
+  webpack: (config, { dev, isServer }) => {
+    // No persistent webpack disk cache in dev (avoids stale Windows builds), but use
+    // memory cache so HMR stays aligned. `cache: false` led to hot-update.json 404s
+    // and full Fast Refresh reloads after each route compile.
     if (dev) {
-      config.cache = false
-      // Some Windows setups miss file-change events; polling makes HMR reliable.
+      config.cache = { type: 'memory' }
+      // Avoid default polling: interval polling + webpack writing under `.next` can race
+      // and produce `*.webpack.hot-update.json` 404s + full Fast Refresh reloads.
       config.watchOptions = {
         ...config.watchOptions,
-        poll: 1000,
         aggregateTimeout: 300,
+      }
+      // Only on hosts where native file events are unreliable (network drive, VM, etc.):
+      // PowerShell: `$env:WATCHPACK_POLLING="true"; npm run dev`
+      if (process.env.WATCHPACK_POLLING === 'true') {
+        config.watchOptions.poll = 1000
+      }
+
+      // Inline server chunks in dev. Next 15 on Windows splits the server bundle into
+      // `.next/server/chunks/vendor-chunks/*.js` (e.g. `vendor-chunks/next.js`); the
+      // webpack-runtime can race the file writer and throw `MODULE_NOT_FOUND`, which
+      // cascades into 500s for every page + static asset until you wipe `.next`.
+      if (isServer) {
+        config.optimization = {
+          ...config.optimization,
+          splitChunks: false,
+          runtimeChunk: false,
+        }
       }
     }
     // Force a single React resolution (fixes "Can't resolve 'react'" from nested ESM like @dnd-kit)

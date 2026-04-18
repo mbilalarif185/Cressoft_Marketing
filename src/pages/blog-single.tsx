@@ -1,15 +1,18 @@
-import React from "react";
-import Layout from "@/components/layout/Layout";
-import BlogSingleBanner from "@/components/layout/banner/BlogSingleBanner";
-import BlogDetailsMain from "@/components/containers/blog/BlogDetailsMain";
+import type { GetServerSideProps } from "next";
+import { getAllPostMeta } from "@/lib/blog";
 
-const BlogSingle = () => {
-  return (
-    <Layout header={2} footer={5} video={0}>
-      <BlogSingleBanner />
-      <BlogDetailsMain />
-    </Layout>
-  );
+// Legacy URL — homepage Swiper components still link to `/blog-single`.
+// Redirect to the most-recent post so the link is never broken, and
+// callers/crawlers learn the canonical path.
+export const getServerSideProps: GetServerSideProps = async () => {
+  const [latest] = getAllPostMeta();
+  return {
+    redirect: {
+      destination: latest ? `/blog/${latest.slug}` : "/blog",
+      permanent: false,
+    },
+  };
 };
 
-export default BlogSingle;
+const BlogSingleRedirect = () => null;
+export default BlogSingleRedirect;

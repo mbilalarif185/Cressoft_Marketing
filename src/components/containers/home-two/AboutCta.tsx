@@ -17,9 +17,11 @@ const AboutCta = () => {
                 <div className="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-9">
                   <div className="section__header text-center">
                     <h2 className="title">
-                      Stay Ahead With Our Top Notch Digital Services
+                      Stay Ahead With Our Top-Notch Digital Marketing Services
                     </h2>
-                    
+                    <p className="custom-margin">
+                      Whether you're a startup finding your footing or an established brand ready to scale, Cressoft Marketing has the strategy, creative firepower, and technical expertise to help you dominate your digital space in Malaysia.
+                    </p>
                   </div>
                   <div className="section__header text-center">
                     <Link href="/contact">
