@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import type { BlogPost, BlogPostMeta } from "@/types/blog";
+import CressoftBlogHtml from "@/components/blog/CressoftBlogHtml";
 
 type BlogDetailsMainProps = {
   post: Omit<BlogPost, "content">;
@@ -21,27 +22,51 @@ const formatDate = (iso: string) => {
   if (Number.isNaN(d.getTime())) return iso;
   return d.toLocaleDateString("en-GB", {
     day: "2-digit",
-    month: "2-digit",
+    month: "short",
     year: "numeric",
   });
 };
 
-// Custom MDX components — keep typography aligned with the existing theme.
 const mdxComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="h3 bd-mdx__h2" {...props} />
+    <h2 className="bd-prose__h2" {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="h4 bd-mdx__h3" {...props} />
+    <h3 className="bd-prose__h3" {...props} />
+  ),
+  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
+    <p className="bd-prose__p" {...props} />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="bd-mdx__list" {...props} />
+    <ul className="bd-prose__ul" {...props} />
   ),
   ol: (props: React.OlHTMLAttributes<HTMLOListElement>) => (
-    <ol className="bd-mdx__list bd-mdx__list--ordered" {...props} />
+    <ol className="bd-prose__ol" {...props} />
   ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
-    <blockquote className="bd-mdx__quote" {...props} />
+    <blockquote className="bd-prose__quote" {...props} />
+  ),
+  table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
+    <div className="bd-prose__table-wrap">
+      <table className="bd-prose__table" {...props} />
+    </div>
+  ),
+  thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <thead {...props} />
+  ),
+  tbody: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <tbody {...props} />
+  ),
+  tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => <tr {...props} />,
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+    <th {...props} />
+  ),
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <td {...props} />
+  ),
+  hr: () => <hr className="bd-prose__hr" />,
+  strong: (props: React.HTMLAttributes<HTMLElement>) => (
+    <strong className="bd-prose__strong" {...props} />
   ),
   a: ({ href, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
     const isExternal = href?.startsWith("http");
@@ -51,16 +76,51 @@ const mdxComponents = {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="bd-mdx__link"
+          className="bd-prose__a"
           {...rest}
         />
       );
     }
     return (
-      <Link href={href ?? "#"} className="bd-mdx__link" {...(rest as any)} />
+      <Link href={href ?? "#"} className="bd-prose__a" {...(rest as any)} />
     );
   },
-  hr: () => <hr className="bd-mdx__hr" />,
+  CressoftBlogHtml,
+  img: ({
+    src,
+    alt,
+    width,
+    height,
+    className,
+    style,
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => {
+    if (!src || typeof src !== "string") return null;
+    const w =
+      typeof width === "number"
+        ? width
+        : typeof width === "string"
+          ? parseInt(width, 10) || 1200
+          : 1200;
+    const h =
+      typeof height === "number"
+        ? height
+        : typeof height === "string"
+          ? parseInt(height, 10) || 630
+          : 630;
+    return (
+      <Image
+        src={src}
+        alt={alt ?? ""}
+        width={w}
+        height={h}
+        sizes="(max-width: 768px) 100vw, min(792px, 85vw)"
+        className={["bd-prose__img", className].filter(Boolean).join(" ")}
+        style={style}
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  },
 };
 
 const BlogDetailsMain = ({
@@ -90,56 +150,60 @@ const BlogDetailsMain = ({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Clipboard blocked — silently no-op.
+      // Clipboard blocked
     }
   };
 
   return (
-    <section className="section blog-main blog-details fade-wrapper">
+    <section
+      className={[
+        "blog-article",
+        "section",
+        "blog-main",
+        "blog-details",
+        "fade-wrapper",
+        post.hideBlogBanner ? "blog-article--embedded-html" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <div className="container">
-        <div className="row gaper">
+        <div className="row g-4 g-xl-5">
           <div className="col-12 col-xl-8">
-            <article className="blog-details__content">
-              <div className="bd-thumb fade-top">
-                <Image
-                  src={post.cover}
-                  alt={post.title}
-                  width={1600}
-                  height={900}
-                  priority
-                  sizes="(min-width: 1200px) 800px, 100vw"
-                />
+            <article
+              className={[
+                "blog-article__paper",
+                post.hideBlogBanner ? "blog-article__paper--cressoft-html" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            >
+              <div
+                className={[
+                  "blog-article__body",
+                  "blog-article__body--first",
+                  "bd-mdx",
+                  "bd-prose",
+                  post.hideBlogBanner ? "blog-article__body--cressoft-html" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                <MDXRemote {...source} components={mdxComponents} />
               </div>
 
-              <div className="bd-content">
-                <div className="bd-meta">
-                  <div className="meta__left">
-                    <p>
-                      <strong>Written by:</strong> {post.author}
-                    </p>
-                    <span></span>
-                    <p>{formatDate(post.date)}</p>
-                    <span></span>
-                    <p>{post.readingMinutes} min read</p>
-                  </div>
-                </div>
-
-                <div className="bd-content-info bd-mdx">
-                  <MDXRemote {...source} components={mdxComponents} />
-                </div>
-              </div>
-
-              <div className="bd-tags">
-                <div className="tags-left">
-                  <p>Tags:</p>
-                  <div className="tags-content">
+              <footer className="blog-article__footer">
+                <div className="blog-article__tags">
+                  <span className="blog-article__tags-label">Tagged in</span>
+                  <div className="blog-article__tags-list">
                     {post.tags.length === 0 ? (
-                      <span className="bd-tags__empty">—</span>
+                      <span className="text-muted">—</span>
                     ) : (
                       post.tags.map((tag) => (
                         <Link
                           key={tag}
                           href={`/blog?tag=${encodeURIComponent(tag)}`}
+                          className="blog-article__tag"
                         >
                           {tag}
                         </Link>
@@ -147,82 +211,70 @@ const BlogDetailsMain = ({
                     )}
                   </div>
                 </div>
-                <div className="tags-right">
-                  <p>Share:</p>
-                  <ul className="social bd-share">
-                    <li>
-                      <a
-                        href={shareLinks.twitter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Share on X (Twitter)"
-                      >
-                        <i className="fa-brands fa-x-twitter"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={shareLinks.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Share on Facebook"
-                      >
-                        <i className="fa-brands fa-facebook-f"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={shareLinks.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Share on LinkedIn"
-                      >
-                        <i className="fa-brands fa-linkedin-in"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={shareLinks.whatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Share on WhatsApp"
-                      >
-                        <i className="fa-brands fa-whatsapp"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        onClick={handleCopy}
-                        aria-label="Copy link"
-                        title={copied ? "Link copied!" : "Copy link"}
-                        className={copied ? "is-copied" : ""}
-                      >
-                        <i
-                          className={
-                            copied
-                              ? "fa-solid fa-check"
-                              : "fa-solid fa-link"
-                          }
-                        ></i>
-                      </button>
-                    </li>
-                  </ul>
+
+                <div className="blog-article__share">
+                  <span className="blog-article__share-label">Share this post</span>
+                  <div className="blog-article__share-actions">
+                    <a
+                      href={shareLinks.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blog-article__share-btn"
+                      aria-label="Share on X"
+                    >
+                      <i className="fa-brands fa-x-twitter"></i>
+                    </a>
+                    <a
+                      href={shareLinks.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blog-article__share-btn"
+                      aria-label="Share on Facebook"
+                    >
+                      <i className="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a
+                      href={shareLinks.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blog-article__share-btn"
+                      aria-label="Share on LinkedIn"
+                    >
+                      <i className="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a
+                      href={shareLinks.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="blog-article__share-btn"
+                      aria-label="Share on WhatsApp"
+                    >
+                      <i className="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={handleCopy}
+                      className={`blog-article__share-btn ${copied ? "is-copied" : ""}`}
+                      aria-label={copied ? "Link copied" : "Copy link"}
+                      title={copied ? "Copied!" : "Copy link"}
+                    >
+                      <i
+                        className={
+                          copied ? "fa-solid fa-check" : "fa-solid fa-link"
+                        }
+                      ></i>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </footer>
 
               {related.length > 0 && (
-                <div className="bd-related">
-                  <div className="bd-related__head">
-                    <h3 className="h3">You might also like</h3>
-                  </div>
-                  <div className="row gaper">
+                <div className="blog-article__related">
+                  <h2 className="blog-article__related-title">Read next</h2>
+                  <div className="row g-4">
                     {related.map((rp) => (
                       <div key={rp.slug} className="col-12 col-md-6">
-                        <Link
-                          href={`/blog/${rp.slug}`}
-                          className="bd-related__card"
-                        >
+                        <Link href={`/blog/${rp.slug}`} className="bd-related__card h-100">
                           <div className="bd-related__thumb">
                             <Image
                               src={rp.cover}
@@ -233,10 +285,8 @@ const BlogDetailsMain = ({
                             />
                           </div>
                           <div className="bd-related__body">
-                            <span className="bd-related__cat">
-                              {rp.category}
-                            </span>
-                            <h4 className="h5">{rp.title}</h4>
+                            <span className="bd-related__cat">{rp.category}</span>
+                            <h3 className="h5 mb-0">{rp.title}</h3>
                             <span className="bd-related__cta">
                               Read article
                               <i className="fa-sharp fa-solid fa-arrow-up-right"></i>
@@ -249,136 +299,122 @@ const BlogDetailsMain = ({
                 </div>
               )}
 
-              <div className="blog-details__pagination">
-                <div className="row gaper">
+              <nav className="blog-article__pager" aria-label="Previous and next posts">
+                <div className="row g-4">
                   <div className="col-md-6">
                     {prev ? (
-                      <div className="single">
-                        <Link href={`/blog/${prev.slug}`}>
-                          <i className="fa-solid fa-arrow-left-long"></i>
-                          Previous Blog
-                        </Link>
-                        <div className="latest-single">
-                          <div className="latest-thumb">
-                            <Link href={`/blog/${prev.slug}`}>
-                              <Image
-                                src={prev.cover}
-                                alt={prev.title}
-                                width={120}
-                                height={90}
-                              />
-                            </Link>
-                          </div>
-                          <div className="latest-content">
-                            <p>{formatDate(prev.date)}</p>
-                            <p>
-                              <Link href={`/blog/${prev.slug}`}>
-                                {prev.title}
-                              </Link>
-                            </p>
-                          </div>
+                      <Link href={`/blog/${prev.slug}`} className="blog-article__pager-card">
+                        <div className="blog-article__pager-thumb">
+                          <Image
+                            src={prev.cover}
+                            alt=""
+                            width={72}
+                            height={72}
+                          />
                         </div>
-                      </div>
-                    ) : null}
+                        <div className="blog-article__pager-copy">
+                          <span className="blog-article__pager-label">
+                            <i className="fa-solid fa-arrow-left-long"></i>
+                            Previous
+                          </span>
+                          <span className="blog-article__pager-title">{prev.title}</span>
+                        </div>
+                      </Link>
+                    ) : (
+                      <div />
+                    )}
                   </div>
                   <div className="col-md-6">
                     {next ? (
-                      <div className="single single--alt">
-                        <Link href={`/blog/${next.slug}`}>
-                          Next Blog
-                          <i className="fa-solid fa-arrow-right-long"></i>
-                        </Link>
-                        <div className="latest-single">
-                          <div className="latest-thumb">
-                            <Link href={`/blog/${next.slug}`}>
-                              <Image
-                                src={next.cover}
-                                alt={next.title}
-                                width={120}
-                                height={90}
-                              />
-                            </Link>
-                          </div>
-                          <div className="latest-content">
-                            <p>{formatDate(next.date)}</p>
-                            <p>
-                              <Link href={`/blog/${next.slug}`}>
-                                {next.title}
-                              </Link>
-                            </p>
-                          </div>
+                      <Link
+                        href={`/blog/${next.slug}`}
+                        className="blog-article__pager-card blog-article__pager-card--next"
+                      >
+                        <div className="blog-article__pager-thumb">
+                          <Image
+                            src={next.cover}
+                            alt=""
+                            width={72}
+                            height={72}
+                          />
                         </div>
-                      </div>
+                        <div className="blog-article__pager-copy">
+                          <span className="blog-article__pager-label">
+                            Next
+                            <i className="fa-solid fa-arrow-right-long"></i>
+                          </span>
+                          <span className="blog-article__pager-title">{next.title}</span>
+                        </div>
+                      </Link>
                     ) : null}
                   </div>
                 </div>
-              </div>
+              </nav>
             </article>
           </div>
 
           <aside className="col-12 col-xl-4">
-            <div className="blog-main__sidebar">
-              <div className="widget">
-                <div className="widget__head">
-                  <h5 className="h5">Search</h5>
-                </div>
-                <div className="widget-search">
-                  <form action="/blog" method="get">
-                    <div className="form-group-input">
-                      <input
-                        type="search"
-                        name="q"
-                        placeholder="Search articles…"
-                      />
-                      <button type="submit" aria-label="Search">
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+            <div className="blog-sidebar blog-main__sidebar">
+              <div className="blog-sidebar__widget">
+                <h2 className="blog-sidebar__widget-title">Find an article</h2>
+                <form action="/blog" method="get" className="blog-sidebar__search">
+                  <label htmlFor="blog-search-q" className="visually-hidden">
+                    Search articles
+                  </label>
+                  <div className="blog-sidebar__search-row">
+                    <input
+                      id="blog-search-q"
+                      type="search"
+                      name="q"
+                      placeholder="Type a topic or keyword"
+                      autoComplete="off"
+                      aria-describedby="blog-search-hint"
+                    />
+                    <button type="submit" aria-label="Search">
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                  </div>
+                  <p id="blog-search-hint" className="blog-sidebar__hint">
+                    We&apos;ll take you to the blog with your search applied.
+                  </p>
+                </form>
               </div>
 
               {recentPosts.length > 0 && (
-                <div className="widget">
-                  <div className="widget__head">
-                    <h5 className="h5">Recent Posts</h5>
-                  </div>
-                  <div className="widget__latest">
+                <div className="blog-sidebar__widget">
+                  <h2 className="blog-sidebar__widget-title">Latest on the blog</h2>
+                  <ul className="blog-sidebar__recent">
                     {recentPosts.map((rp) => (
-                      <div key={rp.slug} className="latest-single">
-                        <div className="latest-thumb">
-                          <Link href={`/blog/${rp.slug}`}>
+                      <li key={rp.slug}>
+                        <Link href={`/blog/${rp.slug}`} className="blog-sidebar__recent-link">
+                          <div className="blog-sidebar__recent-thumb">
                             <Image
                               src={rp.cover}
-                              alt={rp.title}
-                              width={120}
-                              height={90}
+                              alt=""
+                              width={80}
+                              height={64}
                             />
-                          </Link>
-                        </div>
-                        <div className="latest-content">
-                          <p>{formatDate(rp.date)}</p>
-                          <p>
-                            <Link href={`/blog/${rp.slug}`}>{rp.title}</Link>
-                          </p>
-                        </div>
-                      </div>
+                          </div>
+                          <div>
+                            <time dateTime={rp.date}>{formatDate(rp.date)}</time>
+                            <span className="blog-sidebar__recent-title">{rp.title}</span>
+                          </div>
+                        </Link>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               )}
 
-              <div className="widget">
-                <div className="widget__head">
-                  <h5 className="h5">Category</h5>
-                </div>
-                <div className="widget__list">
-                  <ul>
-                    <li>
-                      <Link href="/blog">{post.category}</Link>
-                    </li>
-                  </ul>
-                </div>
+              <div className="blog-sidebar__widget blog-sidebar__widget--cta">
+                <h2 className="blog-sidebar__widget-title">This article</h2>
+                <p className="blog-sidebar__cta-lead mb-2">Filed under</p>
+                <Link href="/blog" className="blog-sidebar__category-pill">
+                  {post.category}
+                </Link>
+                <Link href="/contact" className="btn btn--primary w-100 mt-3">
+                  Talk to our team
+                </Link>
               </div>
             </div>
           </aside>

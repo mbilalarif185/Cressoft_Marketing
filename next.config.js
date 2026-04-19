@@ -1,16 +1,29 @@
 /** @type {import('next').NextConfig} */
+const path = require('path')
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'node_modules')],
+    // Bootstrap 5.3 SCSS triggers Dart Sass deprecations in `vendor/_rfs.scss` (abs + %).
+    // Those files load via includePaths → treated as deps; silence until Bootstrap updates.
+    quietDeps: true,
+    // `@import` is deprecated (Dart Sass 3.0). Our theme + Bootstrap 5.3 still use it;
+    // migrating `main.scss` alone would break mixin visibility across partials. Silence
+    // until a full `@use`/`@forward` pass (or Bootstrap ships module-first SCSS).
+    silenceDeprecations: ['import', 'legacy-js-api'],
+  },
   reactStrictMode: true,
-  // Hide the `X-Powered-By: Next.js` fingerprint and rely on Next's built-in
-  // gzip compression at the Node layer (most CDNs/PaaS layer brotli on top).
   poweredByHeader: false,
   compress: true,
   productionBrowserSourceMaps: false,
 
-  // Turn `/about-us/` into `/about-us` to avoid duplicate URL indexing.
+  compiler: {
+    removeConsole: isProd,
+  },
+
   trailingSlash: false,
 
-  // next/image — modern formats first, generous device sizes for hero art.
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1440, 1920, 2560],
@@ -22,21 +35,18 @@ const nextConfig = {
     ],
   },
 
-  experimental: {
-    // Tree-shake heavy libraries so we only ship what each page actually uses.
-    optimizePackageImports: ['swiper', 'gsap'],
-  },
+  // Production-only: fewer resolver round-trips; skip in dev to avoid extra
+  // rebuild surface during HMR (swiper/gsap are mostly used in lazy/dynamic paths).
+  experimental: isProd
+    ? {
+        optimizePackageImports: ['swiper', 'gsap'],
+      }
+    : {},
 
   async headers() {
-    const isProd = process.env.NODE_ENV === 'production'
     const longCache = 'public, max-age=31536000, immutable'
     const devNoStore = 'no-store, must-revalidate'
 
-    // Production: long cache for hashed assets.
-    // Development: force no-store on ALL `/_next/*` responses (static chunks,
-    // webpack HMR, hot-update JSON, etc.). Otherwise the browser can keep a
-    // stale webpack runtime that still requests an old
-    // `*.webpack.hot-update.json` hash → 404 → Fast Refresh full reload loop.
     const prodAssetCache = isProd
       ? [
           {
@@ -63,7 +73,6 @@ const nextConfig = {
     return [
       ...prodAssetCache,
       {
-        // Site-wide security & SEO-friendly headers.
         source: '/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -73,7 +82,6 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
           },
-          // HSTS only in production — avoids pinning odd behaviour on http://localhost during dev.
           ...(isProd
             ? [
                 {
@@ -111,50 +119,13 @@ const nextConfig = {
     ]
   },
 
-  // Windows dev: Next 15 can split the server bundle into
-  // `.next/server/chunks/vendor-chunks/*.js`. The webpack runtime sometimes
-  // races the file writer → intermittent ENOENT for `.next/server/pages/*.js`
-  // (e.g. faq.js) when multiple routes compile. Inlining the server bundle in
-  // dev avoids that torn state. Client + production builds are unchanged.
-  //
-  // Client dev: disable webpack filesystem cache so stale module graphs / HMR
-  // hashes cannot survive across restarts (reduces hot-update.json 404 loops).
-  webpack: (config, { dev, isServer }) => {
-    if (dev && isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: false,
-        runtimeChunk: false,
-      }
-    }
-    if (dev && !isServer) {
-      config.cache = false
-    }
-    return config
-  },
-
   async redirects() {
     return [
-      // Force the canonical /blog list when the legacy redirect stub is hit
-      // without a destination resolved by getServerSideProps (defensive safety).
       { source: '/index', destination: '/', permanent: true },
       { source: '/home', destination: '/', permanent: true },
-      // Common typo / legacy paths.
       { source: '/contact-us', destination: '/contact', permanent: true },
     ]
   },
-
-  // NOTE: no custom `webpack` block, no `experimental.turbo.resolveAlias`.
-  // A previous version of this file aliased `react` and `react-dom` via
-  // `config.resolve.alias` to "force a single React resolution" for nested
-  // packages (the original culprit was @dnd-kit, since removed). On Next 15
-  // + React 19 that override is harmful: Next ships React through its own
-  // framework chunk, and a manual alias produces TWO React instances in the
-  // client bundle. The result is a runtime "invalid hook call" guard that
-  // makes Fast Refresh refuse every update and force a full reload on every
-  // render — i.e. the dev "death loop" we just spent hours debugging.
-  // Next 15's defaults already deduplicate React correctly. Do not re-add
-  // this alias unless you can prove a specific package needs it.
 }
 
 module.exports = nextConfig

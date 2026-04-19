@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "public/images/white.png";
+import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import {
   CONTACT_ADDRESS,
   CONTACT_EMAIL,
@@ -24,9 +25,14 @@ const Footer = () => {
           <div className="col-12 col-lg-5 col-xl-6 ">
             <div className="footer__single ">
               <Link href="/" className="logo">
-                <Image src={logo} alt="Image"
-                  height={200}
-                  width={200} />
+                <Image
+                  src={logo}
+                  alt="Cressoft Marketing"
+                  width={LOGO_INTRINSIC.width}
+                  height={LOGO_INTRINSIC.height}
+                  sizes="(max-width: 768px) 180px, 220px"
+                  className="footer-logo-img"
+                />
               </Link>
                <div className="paragraph pt-3">
                 <p>

@@ -1,14 +1,45 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-import "swiper/swiper-bundle.css";
-import three from "public/images/blog/three.png";
-import four from "public/images/blog/four.png";
-import five from "public/images/blog/five.png";
+import "swiper/css";
+import "swiper/css/navigation";
+import type { BlogPostMeta } from "@/types/blog";
 
-const HomeTwoBlog = () => {
+function formatBlogDate(iso: string) {
+  try {
+    return new Date(iso).toLocaleDateString("en-MY", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+}
+
+type HomeTwoBlogProps = {
+  posts: BlogPostMeta[];
+};
+
+/**
+ * Homepage blog slider — drives content from `content/blog` (see `@/lib/blog`).
+ * Repeats entries when there are fewer than 6 so the Swiper loop stays smooth.
+ */
+const HomeTwoBlog = ({ posts }: HomeTwoBlogProps) => {
+  const slides = useMemo(() => {
+    if (posts.length === 0) return [];
+    if (posts.length >= 6) return posts.slice(0, 9);
+    return Array.from({ length: Math.max(6, posts.length) }, (_, i) =>
+      posts[i % posts.length]
+    );
+  }, [posts]);
+
+  if (slides.length === 0) {
+    return null;
+  }
+
   return (
     <section className="section blog blog-two">
       <div className="container">
@@ -19,11 +50,11 @@ const HomeTwoBlog = () => {
                 <div className="col-12 col-lg-8">
                   <div className="section__header text-center text-lg-start mb-0">
                     <span className="sub-title">
-                      news & Blog
+                      News &amp; blog
                       <i className="fa-solid fa-arrow-right"></i>
                     </span>
                     <h2 className="title title-anim">
-                      what&apos;s new in blog
+                      What&apos;s new on the blog
                     </h2>
                   </div>
                 </div>
@@ -32,12 +63,14 @@ const HomeTwoBlog = () => {
                     <button
                       aria-label="previous item"
                       className="slide-btn prev-blog"
+                      type="button"
                     >
                       <i className="fa-light fa-angle-left"></i>
                     </button>
                     <button
                       aria-label="next item"
                       className="slide-btn next-blog"
+                      type="button"
                     >
                       <i className="fa-light fa-angle-right"></i>
                     </button>
@@ -78,217 +111,44 @@ const HomeTwoBlog = () => {
           }}
           className="blog-two__slider"
         >
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={three} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    A Simple Social Media Marketing Checklist
+          {slides.map((post, idx) => (
+            <SwiperSlide key={`${post.slug}-${idx}`}>
+              <div className="blog-two__slider-single topy-tilt">
+                <div className="blog__single-thumb">
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="blog-two__thumb-link"
+                  >
+                    <Image
+                      src={post.cover}
+                      alt=""
+                      fill
+                      className="blog-two__thumb-img"
+                      sizes="(max-width: 420px) 100vw, 400px"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
+                </div>
+                <div className="blog__single-content">
+                  <h4>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h4>
+                  <div className="blog__single-meta">
+                    <Link href="/blog" className="sub-title">
+                      {post.category}
+                      <i className="fa-solid fa-arrow-right"></i>
+                    </Link>
+                    <p>{formatBlogDate(post.date)}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={four} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    Transforming Challenges into Opportunities
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={five} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    A Simple Social Media Marketing Checklist
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={three} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    A Simple Social Media Marketing Checklist
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={four} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    Transforming Challenges into Opportunities
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={five} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    A Simple Social Media Marketing Checklist
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={three} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    A Simple Social Media Marketing Checklist
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={four} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    Transforming Challenges into Opportunities
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="blog-two__slider-single topy-tilt">
-              <div className="blog__single-thumb">
-                <Link href="blog-single">
-                  <Image src={five} alt="Image" />
-                </Link>
-              </div>
-              <div className="blog__single-content">
-                <h4>
-                  <Link href="blog-single">
-                    A Simple Social Media Marketing Checklist
-                  </Link>
-                </h4>
-                <div className="blog__single-meta">
-                  <Link href="blog" className="sub-title">
-                    creative
-                    <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                  <p>MARCH 23, 2023</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </section>
   );
 };
 
-export default HomeTwoBlog;
+export default memo(HomeTwoBlog);

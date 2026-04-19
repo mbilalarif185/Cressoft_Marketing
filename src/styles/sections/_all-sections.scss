@@ -1046,6 +1046,36 @@
   }
 }
 
+// Homepage blog slider: square cover thumbnails at 400×400 (overrides generic `.blog` thumb rules)
+.blog.blog-two {
+  .blog__single-thumb {
+    a.blog-two__thumb-link {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      width: 400px;
+      height: 400px;
+      max-width: 100%;
+      margin-inline: auto;
+      border-radius: 0;
+    }
+
+    img.blog-two__thumb-img {
+      min-height: 0 !important;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .blog.blog-two .blog__single-thumb a.blog-two__thumb-link {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+
 // 5.14 blog three styles
 .blog-three {
   .blog-three__wrapper {

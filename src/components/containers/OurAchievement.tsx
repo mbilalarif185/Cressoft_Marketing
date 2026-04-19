@@ -1,13 +1,27 @@
 import React from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import "swiper/swiper-bundle.css";
+import "swiper/css";
+import "swiper/css/autoplay";
 import one from "public/images/achievement/one.png";
 import two from "public/images/achievement/two.png";
 import three from "public/images/achievement/three.png";
 import four from "public/images/achievement/four.png";
 import five from "public/images/achievement/five.png";
+function AchievementLogo({ src, label }: { src: StaticImageData; label: string }) {
+  return (
+    <Image
+      src={src}
+      alt={`Achievement: ${label}`}
+      width={160}
+      height={160}
+      sizes="(max-width: 400px) 45vw, (max-width: 768px) 22vw, 140px"
+      loading="lazy"
+      decoding="async"
+    />
+  );
+}
 
 const OurAchievement = () => {
   return (
@@ -55,52 +69,52 @@ const OurAchievement = () => {
               >
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={one} alt="Image" />
+                    <AchievementLogo src={one} label="Milestone one" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={two} alt="Image" />
+                    <AchievementLogo src={two} label="Milestone two" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={three} alt="Image" />
+                    <AchievementLogo src={three} label="Milestone three" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={four} alt="Image" />
+                    <AchievementLogo src={four} label="Milestone four" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={five} alt="Image" />
+                    <AchievementLogo src={five} label="Milestone five" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={one} alt="Image" />
+                    <AchievementLogo src={one} label="Milestone one" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={two} alt="Image" />
+                    <AchievementLogo src={two} label="Milestone two" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={three} alt="Image" />
+                    <AchievementLogo src={three} label="Milestone three" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={four} alt="Image" />
+                    <AchievementLogo src={four} label="Milestone four" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="achievements__slider-single">
-                    <Image src={five} alt="Image" />
+                    <AchievementLogo src={five} label="Milestone five" />
                   </div>
                 </SwiperSlide>
               </Swiper>

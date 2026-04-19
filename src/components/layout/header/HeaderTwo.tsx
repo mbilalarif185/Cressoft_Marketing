@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import logo from "public/images/white.png";
 import logoLight from "public/images/logo-light.png";
+import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import Offcanvas from "./Offcanvas";
 
 interface HeaderProps {
@@ -14,21 +15,28 @@ interface HeaderProps {
 
 const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
   const [scrolled, setScrolled] = useState(false);
+  const scrolledRef = useRef(false);
+  const rafRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      if (scrollPosition > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      if (rafRef.current) return;
+      rafRef.current = window.requestAnimationFrame(() => {
+        rafRef.current = 0;
+        const next = window.scrollY > 50;
+        if (next !== scrolledRef.current) {
+          scrolledRef.current = next;
+          setScrolled(next);
+        }
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current) window.cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
@@ -55,9 +63,15 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
                 <nav className="navbar p-0">
                   <div className="navbar__logo">
                     <Link href="/" aria-label="go to home">
-                      <Image src={logoSrc} priority alt="Image" 
-                      height={200}
-                      width={200}/>
+                      <Image
+                        src={logoSrc}
+                        priority
+                        alt="Cressoft Marketing"
+                        width={LOGO_INTRINSIC.width}
+                        height={LOGO_INTRINSIC.height}
+                        sizes="(max-width: 768px) 160px, 200px"
+                        className="navbar-logo-img"
+                      />
                     </Link>
                   </div>
                   <div className="navbar__menu">

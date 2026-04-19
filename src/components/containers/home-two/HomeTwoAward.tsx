@@ -11,9 +11,12 @@ const HomeTwoAward = () => {
             <div className="award__thumb dir-rtl">
               <Image
                 src="/images/about-us.png"
-                alt=""
+                alt="Cressoft digital marketing team and office in Malaysia"
                 width={1200}
                 height={900}
+                sizes="(max-width: 991px) 100vw, 50vw"
+                loading="lazy"
+                decoding="async"
                 className="unset fade-left"
               />
             </div>
@@ -73,28 +76,44 @@ const HomeTwoAward = () => {
         alt=""
         width={120}
         height={120}
+        sizes="80px"
+        loading="lazy"
+        decoding="async"
         className="star"
+        aria-hidden
       />
       <Image
         src="/images/star.png"
         alt=""
         width={120}
         height={120}
+        sizes="80px"
+        loading="lazy"
+        decoding="async"
         className="star-two"
+        aria-hidden
       />
       <Image
         src="/images/agency/dot-large.png"
         alt=""
         width={80}
         height={80}
+        sizes="48px"
+        loading="lazy"
+        decoding="async"
         className="dot"
+        aria-hidden
       />
       <Image
         src="/images/agency/dot-large.png"
         alt=""
         width={80}
         height={80}
+        sizes="48px"
+        loading="lazy"
+        decoding="async"
         className="dot-two"
+        aria-hidden
       />
     </section>
   );

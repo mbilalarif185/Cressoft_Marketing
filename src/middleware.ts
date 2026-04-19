@@ -25,8 +25,9 @@ export function middleware(_request: NextRequest) {
 }
 
 export const config = {
+  // Skip `/_next/*` and common static files — `next.config.js` already applies
+  // dev `no-store` to `/_next`; running middleware on chunk/HMR paths is unnecessary.
   matcher: [
-    "/",
-    "/:path*",
+    "/((?!_next/|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:ico|png|jpg|jpeg|gif|webp|svg|woff2?)$).*)",
   ],
 };

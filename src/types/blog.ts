@@ -14,6 +14,8 @@ export type BlogPostMeta = {
   readingMinutes: number;
   /** Whether this post should be highlighted as the lead article. */
   featured?: boolean;
+  /** When true, the default cover hero banner is omitted (custom in-article layout). */
+  hideBlogBanner?: boolean;
 };
 
 export type BlogPost = BlogPostMeta & {

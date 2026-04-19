@@ -35,6 +35,7 @@ const readPostFile = (filename: string): BlogPost => {
     cover: String(data.cover ?? "/images/news/poster.png"),
     readingMinutes: Math.max(1, Math.ceil(stats.minutes)),
     featured: Boolean(data.featured),
+    hideBlogBanner: Boolean(data.hideBlogBanner),
     content,
   };
 };

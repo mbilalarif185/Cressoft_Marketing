@@ -3,14 +3,13 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Inter } from "next/font/google";
 
-// bootstrap (still used for grid + utility classes across hundreds of JSX nodes)
-import "bootstrap/dist/css/bootstrap.min.css";
+// Bootstrap: slim SCSS build (grid/reboot/utilities/accordion) — not full min.css.
+import "@/styles/bootstrap-slim.scss";
 
 // Custom inline-SVG icon subset (replaces Font Awesome's 511 KB CSS + ~5 MB
 // of webfonts). All `<i className="fa-…">` markup keeps working unchanged.
 import "@/styles/icons.scss";
 
-// custom icons (Glyphter — small, brand-specific glyph set)
 import "public/icons/glyphter/css/xpovio.css";
 
 // main scss
@@ -34,9 +33,11 @@ import {
 // `--inter` in src/styles/abstracts/_variables.scss.
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  // Trim weights: 300 unused in SCSS — fewer WOFF2 downloads = faster LCP / TBT.
+  weight: ["400", "500", "600", "700", "900"],
   display: "swap",
   preload: true,
+  adjustFontFallback: true,
   variable: "--font-inter",
   fallback: [
     "system-ui",
@@ -103,6 +104,24 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppErrorBoundary>
       <Head>
+        {/* Moved from `_document` — keeps custom Document as a thin shell (stable dev on Windows). */}
+        <link rel="dns-prefetch" href="https://www.google.com" key="dns-google" />
+        <link rel="dns-prefetch" href="https://wa.me" key="dns-wa" />
+        <link
+          rel="icon"
+          type="image/png"
+          href="/images/digital-marketing-agency.png"
+          key="icon-png"
+        />
+        <link rel="shortcut icon" href="/favicon.ico" key="icon-ico" />
+        <link
+          rel="apple-touch-icon"
+          href="/images/digital-marketing-agency.png"
+          key="apple-touch"
+        />
+        <meta name="theme-color" content="#0b0b0b" key="theme-color" />
+        <meta name="format-detection" content="telephone=no" key="format-detection" />
+
         {/* Defaults — every page is expected to override <title> and <meta description> via <Seo>. */}
         <meta
           httpEquiv="X-UA-Compatible"

@@ -1,8 +1,9 @@
 import React from "react";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import "swiper/swiper-bundle.css";
+import "swiper/css";
+import "swiper/css/autoplay";
 import one from "public/images/sponsor/Best-Car-Rental-Dubai-.png";
 import two from "public/images/sponsor/CMS.png";
 import three from "public/images/sponsor/Educrest.png";
@@ -12,6 +13,19 @@ import seven from "public/images/sponsor/roshan-consultancy.png";
 import eight from "public/images/sponsor/Stla.png";
 import nine from "public/images/sponsor/Top-ranked-solar.png";
 import ten from "public/images/sponsor/Webcloud.png";
+function SponsorLogo({ src, label }: { src: StaticImageData; label: string }) {
+  return (
+    <Image
+      src={src}
+      alt={`Client logo: ${label}`}
+      width={220}
+      height={100}
+      sizes="(max-width: 576px) 50vw, (max-width: 1200px) 22vw, 16vw"
+      loading="lazy"
+      decoding="async"
+    />
+  );
+}
 
 const HomeTwoSponsor = () => {
   return (
@@ -63,94 +77,92 @@ const HomeTwoSponsor = () => {
               >
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={one} alt="Image" />
+                    <SponsorLogo src={one} label="Best Car Rental Dubai" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={two} alt="Image" />
+                    <SponsorLogo src={two} label="CMS" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={three} alt="Image" />
+                    <SponsorLogo src={three} label="Educrest" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={four} alt="Image" />
-                  </div>
-                </SwiperSlide>
-               
-                <SwiperSlide>
-                  <div className="sponsor__slider-item">
-                    <Image src={six} alt="Image" />
+                    <SponsorLogo src={four} label="Golf club" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={seven} alt="Image" />
+                    <SponsorLogo src={six} label="Legendary" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={eight} alt="Image" />
+                    <SponsorLogo src={seven} label="Roshan Consultancy" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={nine} alt="Image" />
+                    <SponsorLogo src={eight} label="Stla" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={ten} alt="Image" />
-                  </div>
-                </SwiperSlide>
-                 <SwiperSlide>
-                  <div className="sponsor__slider-item">
-                    <Image src={one} alt="Image" />
+                    <SponsorLogo src={nine} label="Top ranked solar" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={two} alt="Image" />
+                    <SponsorLogo src={ten} label="Webcloud" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={three} alt="Image" />
+                    <SponsorLogo src={one} label="Best Car Rental Dubai" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={four} alt="Image" />
-                  </div>
-                </SwiperSlide>
-               
-                <SwiperSlide>
-                  <div className="sponsor__slider-item">
-                    <Image src={six} alt="Image" />
+                    <SponsorLogo src={two} label="CMS" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={seven} alt="Image" />
+                    <SponsorLogo src={three} label="Educrest" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={eight} alt="Image" />
+                    <SponsorLogo src={four} label="Golf club" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={nine} alt="Image" />
+                    <SponsorLogo src={six} label="Legendary" />
                   </div>
                 </SwiperSlide>
                 <SwiperSlide>
                   <div className="sponsor__slider-item">
-                    <Image src={ten} alt="Image" />
+                    <SponsorLogo src={seven} label="Roshan Consultancy" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="sponsor__slider-item">
+                    <SponsorLogo src={eight} label="Stla" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="sponsor__slider-item">
+                    <SponsorLogo src={nine} label="Top ranked solar" />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className="sponsor__slider-item">
+                    <SponsorLogo src={ten} label="Webcloud" />
                   </div>
                 </SwiperSlide>
               </Swiper>

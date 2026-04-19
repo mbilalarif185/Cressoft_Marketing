@@ -98,12 +98,16 @@ const BlogSinglePage = ({
         ))}
       </Seo>
 
-      <BlogSingleBanner
-        title={post.title}
-        category={post.category}
-        date={post.date}
-        readingMinutes={post.readingMinutes}
-      />
+      {!post.hideBlogBanner ? (
+        <BlogSingleBanner
+          title={post.title}
+          description={post.description}
+          category={post.category}
+          author={post.author}
+          date={post.date}
+          readingMinutes={post.readingMinutes}
+        />
+      ) : null}
       <BlogDetailsMain
         post={post}
         source={source}

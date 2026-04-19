@@ -22,18 +22,25 @@ const ClientAnimations: React.FC = () => {
   useEffect(() => {
     let cancelled = false;
     let cleanups: Array<() => void> = [];
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    let loadHandler: (() => void) | null = null;
 
     const run = async () => {
       const [{ default: gsap }, { ScrollTrigger }, { default: SplitType }, { default: VanillaTilt }] =
         await Promise.all([
           import("gsap"),
-          import("gsap/dist/ScrollTrigger"),
+          import("gsap/ScrollTrigger"),
           import("split-type"),
           import("vanilla-tilt"),
         ]);
 
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({
+        limitCallbacks: true,
+        ignoreMobileResize: true,
+      });
 
       // ---- Vanilla Tilt -----------------------------------------------
       const tiltElements = document.querySelectorAll<HTMLElement>(".topy-tilt");
@@ -127,10 +134,38 @@ const ClientAnimations: React.FC = () => {
       }
     };
 
-    run();
+    const schedule = () => {
+      if (cancelled) return;
+      const w = window as Window & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+        cancelIdleCallback?: (id: number) => void;
+      };
+      if (typeof w.requestIdleCallback === "function") {
+        idleId = w.requestIdleCallback(() => {
+          if (!cancelled) void run();
+        }, { timeout: 3200 });
+      } else {
+        timeoutId = window.setTimeout(() => {
+          if (!cancelled) void run();
+        }, 250);
+      }
+    };
+
+    if (document.readyState === "complete") {
+      schedule();
+    } else {
+      loadHandler = () => schedule();
+      window.addEventListener("load", loadHandler);
+    }
 
     return () => {
       cancelled = true;
+      if (loadHandler) window.removeEventListener("load", loadHandler);
+      const w = window as Window & { cancelIdleCallback?: (id: number) => void };
+      if (idleId != null && typeof w.cancelIdleCallback === "function") {
+        w.cancelIdleCallback(idleId);
+      }
+      if (timeoutId != null) window.clearTimeout(timeoutId);
       cleanups.forEach((fn) => {
         try {
           fn();

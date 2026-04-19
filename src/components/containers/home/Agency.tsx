@@ -28,7 +28,7 @@ const Agency = () => {
     const init = async () => {
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
         import("gsap"),
-        import("gsap/dist/ScrollTrigger"),
+        import("gsap/ScrollTrigger"),
       ]);
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
@@ -107,15 +107,23 @@ const Agency = () => {
             <div className="agency__thumb">
               <Image
                 src={thumbone}
-                alt="Image"
-                className="thumb-one fade-left"
+                alt="Cressoft Marketing agency team Kuala Lumpur"
+                width={451}
+                height={585}
+                sizes="(max-width: 991px) 100vw, 45vw"
                 priority
+                fetchPriority="high"
+                className="thumb-one fade-left"
               />
               <Image
                 src={thumbtwo}
-                alt="Image"
+                alt="Digital marketing strategy discussion at Cressoft"
+                width={450}
+                height={584}
+                sizes="(max-width: 991px) 100vw, 45vw"
+                loading="lazy"
+                decoding="async"
                 className="thumb-two fade-right"
-                priority
               />
             </div>
           </div>
@@ -199,8 +207,28 @@ const Agency = () => {
           </div>
         </div>
       </div>
-      <Image src={star} alt="Image" className="star" priority />
-      <Image src={dotlarge} alt="Image" className="dot-large" priority />
+      <Image
+        src={star}
+        alt=""
+        width={64}
+        height={64}
+        sizes="40px"
+        loading="lazy"
+        decoding="async"
+        className="star"
+        aria-hidden
+      />
+      <Image
+        src={dotlarge}
+        alt=""
+        width={80}
+        height={80}
+        sizes="48px"
+        loading="lazy"
+        decoding="async"
+        className="dot-large"
+        aria-hidden
+      />
     </section>
   );
 };

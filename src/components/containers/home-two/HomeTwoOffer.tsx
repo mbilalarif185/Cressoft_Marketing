@@ -109,14 +109,19 @@ const HomeTwoOffer = () => {
     let cards: HTMLElement[] = [];
     let rects: DOMRect[] = [];
     let rafId = 0;
+    let rectRaf = 0;
     let attached = false;
     let observer: IntersectionObserver | null = null;
 
     const refreshRects = () => {
-      cards = Array.from(
-        section.querySelectorAll<HTMLElement>(".offer__cta-single")
-      );
-      rects = cards.map((c) => c.getBoundingClientRect());
+      if (rectRaf) return;
+      rectRaf = window.requestAnimationFrame(() => {
+        rectRaf = 0;
+        cards = Array.from(
+          section.querySelectorAll<HTMLElement>(".offer__cta-single")
+        );
+        rects = cards.map((c) => c.getBoundingClientRect());
+      });
     };
 
     const onPointerMove = (event: MouseEvent) => {
@@ -161,6 +166,10 @@ const HomeTwoOffer = () => {
       if (rafId) {
         window.cancelAnimationFrame(rafId);
         rafId = 0;
+      }
+      if (rectRaf) {
+        window.cancelAnimationFrame(rectRaf);
+        rectRaf = 0;
       }
       attached = false;
     };

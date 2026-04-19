@@ -10,12 +10,21 @@
   right: 0px;
   width: 100%;
   z-index: 999;
+  background-color: var(--black);
   .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 60px;
     flex-wrap: wrap;
+  }
+
+  // next/image uses intrinsic width/height — constrain display size for LCP logo.
+  .navbar__logo .navbar-logo-img {
+    width: auto;
+    height: auto;
+    max-height: 48px;
+    max-width: min(200px, 45vw);
   }
 
   .navbar__menu {
@@ -271,6 +280,13 @@
       flex-wrap: wrap;
       padding: 0px 20px 0px 20px;
       justify-content: space-between;
+
+      .offcanvas-logo-img {
+        width: auto;
+        height: auto;
+        max-height: 44px;
+        max-width: min(200px, 60vw);
+      }
     }
 
     .close-offcanvas-menu {

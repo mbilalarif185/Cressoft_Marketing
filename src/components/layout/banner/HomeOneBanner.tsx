@@ -10,23 +10,26 @@ import {
 import { CRESSOFT_SOCIAL } from "@/constants/socialLinks";
 import banneronethumb from "public/images/home/banner.webp";
 import star from "public/images/star.png";
+import { HERO_BANNER, STAR_ICON } from "@/lib/image-dimensions";
 
 const HomeOneBanner = () => {
-  // Defer GSAP entirely until the hero image has painted. We `await import`
-  // both libraries inside the effect so they are *not* part of the page's
-  // initial JS payload and never block LCP — the parallax tween adds polish
-  // post-LCP on viewports >576px only.
+  // GSAP loads after `load` + idle — avoids competing with LCP image/font.
   useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth <= 576) return;
+    if (typeof window === "undefined") return;
+    const wideEnough = window.matchMedia("(min-width: 577px)");
+    if (!wideEnough.matches) return;
     if (document.querySelectorAll(".g-ban-one").length === 0) return;
 
     let cancelled = false;
     let revert: (() => void) | null = null;
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    let loadHandler: (() => void) | null = null;
 
-    (async () => {
+    const runGsap = async () => {
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
         import("gsap"),
-        import("gsap/dist/ScrollTrigger"),
+        import("gsap/ScrollTrigger"),
       ]);
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
@@ -51,10 +54,40 @@ const HomeOneBanner = () => {
         });
       });
       revert = () => ctx.revert();
-    })();
+    };
+
+    const schedule = () => {
+      if (cancelled) return;
+      const w = window as Window & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+        cancelIdleCallback?: (id: number) => void;
+      };
+      if (typeof w.requestIdleCallback === "function") {
+        idleId = w.requestIdleCallback(() => {
+          if (!cancelled) void runGsap();
+        }, { timeout: 2800 });
+      } else {
+        timeoutId = window.setTimeout(() => {
+          if (!cancelled) void runGsap();
+        }, 200);
+      }
+    };
+
+    if (document.readyState === "complete") {
+      schedule();
+    } else {
+      loadHandler = () => schedule();
+      window.addEventListener("load", loadHandler);
+    }
 
     return () => {
       cancelled = true;
+      if (loadHandler) window.removeEventListener("load", loadHandler);
+      const w = window as Window & { cancelIdleCallback?: (id: number) => void };
+      if (idleId != null && typeof w.cancelIdleCallback === "function") {
+        w.cancelIdleCallback(idleId);
+      }
+      if (timeoutId != null) window.clearTimeout(timeoutId);
       revert?.();
     };
   }, []);
@@ -99,16 +132,22 @@ const HomeOneBanner = () => {
           src={banneronethumb}
           alt="Cressoft digital marketing agency Malaysia hero illustration"
           className="banner-one-thumb d-none d-sm-block g-ban-one"
+          width={HERO_BANNER.width}
+          height={HERO_BANNER.height}
           priority
           fetchPriority="high"
-          sizes="(max-width: 992px) 80vw, 60vw"
+          sizes="(max-width: 576px) 0px, (max-width: 992px) 70vw, min(60vw, 720px)"
         />
         <Image
           src={star}
           alt=""
           aria-hidden="true"
           className="star"
+          width={STAR_ICON.width}
+          height={STAR_ICON.height}
           loading="lazy"
+          decoding="async"
+          sizes="48px"
         />
         <div className="banner-left-text banner-social-text d-none d-md-flex">
           <Link href={CONTACT_MAILTO_HREF}>mail : {CONTACT_EMAIL}</Link>
