@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import type { BlogPost, BlogPostMeta } from "@/types/blog";
 import CressoftBlogHtml from "@/components/blog/CressoftBlogHtml";
+import { CRESSOFT_SOCIAL } from "@/constants/socialLinks";
 
 type BlogDetailsMainProps = {
   post: Omit<BlogPost, "content">;
@@ -132,27 +133,10 @@ const BlogDetailsMain = ({
   next,
   url,
 }: BlogDetailsMainProps) => {
-  const [copied, setCopied] = useState(false);
-
-  const shareText = encodeURIComponent(post.title);
-  const shareUrl = encodeURIComponent(url);
-
-  const shareLinks = {
-    twitter: `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`,
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
-    whatsapp: `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`,
-  };
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Clipboard blocked
-    }
-  };
+  // `url` retained in the props contract for future share-tracking / canonical
+  // helpers; not currently rendered now that the blog footer surfaces the
+  // brand's own social profiles instead of per-post share buttons.
+  void url;
 
   return (
     <section
@@ -212,58 +196,44 @@ const BlogDetailsMain = ({
                   </div>
                 </div>
 
+                {/* Brand social profiles — mirrors `Footer` so blog readers
+                    can follow Cressoft directly. Uses only icons that exist in
+                    the slim icon subset (`facebook-f`, `linkedin-in`,
+                    `instagram`); avoids the previous `fa-x-twitter` /
+                    `fa-link` glyphs which weren't shipped and rendered as
+                    empty squares. */}
                 <div className="blog-article__share">
-                  <span className="blog-article__share-label">Share this post</span>
+                  <span className="blog-article__share-label">
+                    Follow Cressoft
+                  </span>
                   <div className="blog-article__share-actions">
                     <a
-                      href={shareLinks.twitter}
+                      href={CRESSOFT_SOCIAL.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="blog-article__share-btn"
-                      aria-label="Share on X"
-                    >
-                      <i className="fa-brands fa-x-twitter"></i>
-                    </a>
-                    <a
-                      href={shareLinks.facebook}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="blog-article__share-btn"
-                      aria-label="Share on Facebook"
+                      aria-label="Cressoft on Facebook"
                     >
                       <i className="fa-brands fa-facebook-f"></i>
                     </a>
                     <a
-                      href={shareLinks.linkedin}
+                      href={CRESSOFT_SOCIAL.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="blog-article__share-btn"
-                      aria-label="Share on LinkedIn"
+                      aria-label="Cressoft on LinkedIn"
                     >
                       <i className="fa-brands fa-linkedin-in"></i>
                     </a>
                     <a
-                      href={shareLinks.whatsapp}
+                      href={CRESSOFT_SOCIAL.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="blog-article__share-btn"
-                      aria-label="Share on WhatsApp"
+                      aria-label="Cressoft on Instagram"
                     >
-                      <i className="fa-brands fa-whatsapp"></i>
+                      <i className="fa-brands fa-instagram"></i>
                     </a>
-                    <button
-                      type="button"
-                      onClick={handleCopy}
-                      className={`blog-article__share-btn ${copied ? "is-copied" : ""}`}
-                      aria-label={copied ? "Link copied" : "Copy link"}
-                      title={copied ? "Copied!" : "Copy link"}
-                    >
-                      <i
-                        className={
-                          copied ? "fa-solid fa-check" : "fa-solid fa-link"
-                        }
-                      ></i>
-                    </button>
                   </div>
                 </div>
               </footer>

@@ -62,7 +62,7 @@ const Footer = () => {
                 
               </div>
               <div className="footer__cta text-start">
-                <Link href="contact" className="btn btn--secondary">
+                <Link href="/contact" className="btn btn--secondary">
                   book a call now
                 </Link>
               </div>
@@ -79,13 +79,13 @@ const Footer = () => {
                     <Link href="/">Home</Link>
                   </li>
                   <li>
-                      <Link href="success-stories">Our Work</Link>
+                      <Link href="/success-stories">Our Work</Link>
                   </li>
                   <li>
-                    <Link href="blog">News & Blog</Link>
+                    <Link href="/blog">News & Blog</Link>
                   </li>
                   <li>
-                    <Link href="contact">Contact Us</Link>
+                    <Link href="/contact">Contact Us</Link>
                   </li>
                 </ul>
               </div>
@@ -99,16 +99,16 @@ const Footer = () => {
               <div className="footer__single-content">
                 <ul>
                   <li>
-                    <Link href="marketing-solutions">SEO</Link>
+                    <Link href="/marketing-solutions">SEO</Link>
                   </li>
                   <li>
-                    <Link href="marketing-solutions">AI Solutions</Link>
+                    <Link href="/marketing-solutions">AI Solutions</Link>
                   </li>
                   <li>
-                    <Link href="marketing-solutions">Web Development</Link>
+                    <Link href="/marketing-solutions">Web Development</Link>
                   </li>
                   <li>
-                    <Link href="marketing-solutions">App Development</Link>
+                    <Link href="/marketing-solutions">App Development</Link>
                   </li>
                   
                 </ul>
@@ -123,16 +123,16 @@ const Footer = () => {
               <div className="footer__single-content">
                 <ul>
                   <li>
-                    <Link href="about-us">Who We Are</Link>
+                    <Link href="/about-us">Who We Are</Link>
                   </li>
                   <li>
-                    <Link href="faq">FAQs</Link>
+                    <Link href="/faq">FAQs</Link>
                   </li>
                   <li>
-                    <Link href="blog">Privacy Policy</Link>
+                    <Link href="/blog">Privacy Policy</Link>
                   </li>
                   <li>
-                    <Link href="contact-us">Terms & Condition</Link>
+                    <Link href="/contact">Terms & Condition</Link>
                   </li>
                 </ul>
               </div>

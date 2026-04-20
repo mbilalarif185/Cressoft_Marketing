@@ -1076,6 +1076,56 @@
   }
 }
 
+// Homepage blog slider — overlay text legibility.
+//
+// `.blog-two .blog__single-content` is absolutely positioned over the cover
+// image (revealed on `.swiper-slide-active` and on hover). Without an
+// explicit colour the `<h4><Link>` and `.sub-title` inherit the default link
+// colour (`--primary-color`, brand blue) which sits on top of a dark image
+// with almost no contrast — see the unreadable middle card on /blog and the
+// homepage slider. These overrides force light-on-dark text + a subtle
+// text-shadow for legibility regardless of the cover image used.
+.blog.blog-two {
+  .blog-two__slider-single {
+    .blog__single-content {
+      h4 {
+        margin-bottom: 0;
+        a {
+          color: #ffffff;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+          transition: color 0.25s ease;
+
+          &:hover,
+          &:focus-visible {
+            color: var(--primary-color);
+            text-decoration: none;
+          }
+        }
+      }
+
+      .blog__single-meta {
+        a.sub-title {
+          color: #ffffff;
+          border-color: rgba(255, 255, 255, 0.45);
+          background-color: rgba(0, 0, 0, 0.35);
+
+          &:hover,
+          &:focus-visible {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            background-color: rgba(0, 0, 0, 0.55);
+          }
+        }
+
+        p {
+          color: rgba(255, 255, 255, 0.85);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+        }
+      }
+    }
+  }
+}
+
 // 5.14 blog three styles
 .blog-three {
   .blog-three__wrapper {

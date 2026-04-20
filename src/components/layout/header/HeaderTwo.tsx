@@ -81,13 +81,13 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
                       </li>
                      
                       <li className="navbar__item nav-fade">
-                        <Link href="about-us">Who We Are</Link>
+                        <Link href="/about-us">Who We Are</Link>
                       </li>
                       <li className="navbar__item navbar__item--has-children nav-fade">
                         <button
                           
                         >
-                           <Link href="marketing-solutions">Marketing Solutions</Link>
+                           <Link href="/marketing-solutions">Marketing Solutions</Link>
                         </button>
                        
                       </li>
@@ -95,7 +95,7 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
                         <button
                         
                         >
-                         <Link href="success-stories">Work</Link>
+                         <Link href="/success-stories">Work</Link>
                         </button>
                         
                       </li>
@@ -104,18 +104,18 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
                         <button
                           
                         >
-                          <Link href="blog">Blog</Link>
+                          <Link href="/blog">Blog</Link>
                         </button>
                         
                       </li>
                        <li className="navbar__item nav-fade">
-                        <Link href="contact">Contact Us</Link>
+                        <Link href="/contact">Contact Us</Link>
                       </li>
                     </ul>
                   </div>
                   <div className="navbar__options">
                     <div className="navbar__mobile-options d-none d-sm-flex">
-                      <Link href="contact" className="btn btn--secondary">
+                      <Link href="/contact" className="btn btn--secondary">
                         Let&apos;s Talk
                       </Link>
                     </div>

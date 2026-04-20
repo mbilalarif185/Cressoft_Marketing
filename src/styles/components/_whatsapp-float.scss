@@ -1,0 +1,173 @@
+// Floating WhatsApp CTA — shown site-wide via `<WhatsAppFloat>` in `Layout`.
+//
+// Design goals
+// -------------
+// * Anchored bottom-right on every page, with safe-area inset support for
+//   iPhone notched devices.
+// * Tappable target ≥56px on mobile (Apple HIG / Material guidance).
+// * Subtle pulsing ring to draw attention without being noisy.
+// * Expands on hover (desktop) to reveal a "Chat with us" label; on mobile
+//   the icon-only pill is used to save space and avoid covering content.
+// * Sits below the offcanvas overlay (`z-index: 9999`) so the mobile menu
+//   still overlays it when opened.
+// * Hidden in print output and respects `prefers-reduced-motion`.
+
+.wa-float {
+  --wa-green: #25d366;
+  --wa-green-dark: #128c7e;
+
+  position: fixed;
+  right: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vw, 28px);
+  bottom: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-bottom, 0px));
+  z-index: 998;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  height: 56px;
+  padding: 0;
+  border-radius: 999px;
+  background-color: var(--wa-green);
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.18),
+    0 4px 10px rgba(37, 211, 102, 0.35);
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    padding 0.3s ease,
+    gap 0.3s ease;
+
+  &:hover,
+  &:focus-visible {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: var(--wa-green-dark);
+    transform: translateY(-2px);
+    outline: none;
+    box-shadow:
+      0 14px 28px rgba(0, 0, 0, 0.22),
+      0 6px 14px rgba(37, 211, 102, 0.45);
+  }
+
+  &:focus-visible {
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.9),
+      0 0 0 6px var(--wa-green),
+      0 14px 28px rgba(0, 0, 0, 0.22);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.wa-float__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  line-height: 1;
+  flex-shrink: 0;
+  color: #ffffff;
+
+  // Inline WhatsApp SVG sizing — `currentColor` on the path inherits white
+  // from the parent, so brand recolouring stays in one place.
+  svg {
+    width: 30px;
+    height: 30px;
+    display: block;
+  }
+}
+
+// Label is hidden by default (icon-only pill). Revealed on hover/focus on
+// devices that support hover — keeps the mobile UI clean while giving
+// desktop visitors extra context.
+.wa-float__label {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-width 0.3s ease,
+    opacity 0.25s ease,
+    padding 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wa-float {
+    &:hover,
+    &:focus-visible {
+      gap: 8px;
+      padding-right: 22px;
+    }
+
+    &:hover .wa-float__label,
+    &:focus-visible .wa-float__label {
+      max-width: 160px;
+      opacity: 1;
+    }
+  }
+}
+
+// Soft expanding ring behind the icon — pure CSS, no JS.
+.wa-float__pulse {
+  position: absolute;
+  top: 50%;
+  left: 28px;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-radius: 50%;
+  background-color: var(--wa-green);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: waFloatPulse 2.4s ease-out infinite;
+  z-index: -1;
+}
+
+@keyframes waFloatPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  80% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+// Accessibility & output overrides.
+@media (prefers-reduced-motion: reduce) {
+  .wa-float {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
+
+  .wa-float__pulse {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@media print {
+  .wa-float {
+    display: none !important;
+  }
+}

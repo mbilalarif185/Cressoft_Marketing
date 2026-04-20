@@ -101,28 +101,28 @@ const Offcanvas = ({ openNav, setOpenNav }: HeaderProps) => {
                       </li>
                      
                       <li className="navbar__item nav-fade">
-                        <Link href="about-us">Who We Are</Link>
+                        <Link href="/about-us">Who We Are</Link>
                       </li>
                        <li className="navbar__item nav-fade">
-                        <Link href="marketing-solutions">Marketing Solutions</Link>
+                        <Link href="/marketing-solutions">Marketing Solutions</Link>
                       </li>
                        <li className="navbar__item nav-fade">
-                        <Link href="success-stories">Our Work</Link>
+                        <Link href="/success-stories">Our Work</Link>
                       </li>
                       <li className="navbar__item nav-fade">
-                        <Link href="blog">Blog</Link>
+                        <Link href="/blog">Blog</Link>
                       </li>
                       
                     
                        <li className="navbar__item nav-fade">
-                        <Link href="contact">Contact Us</Link>
+                        <Link href="/contact">Contact Us</Link>
                       </li>
                     </ul>
                   </div>
           </div>
           <div className="offcanvas-menu__options nav-fade">
             <div className="offcanvas__mobile-options d-flex">
-              <Link href="contact-us" className="btn btn--secondary">
+              <Link href="/contact" className="btn btn--secondary">
                 Let&apos;s Talk
               </Link>
             </div>

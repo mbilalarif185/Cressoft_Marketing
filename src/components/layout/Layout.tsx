@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import dynamic from "next/dynamic";
 import HeaderTwo from "./header/HeaderTwo";
 import Footer from "./footer/Footer";
+import WhatsAppFloat from "@/components/common/WhatsAppFloat";
 
 /**
  * Animation glue (gsap + ScrollTrigger + split-type + vanilla-tilt) is loaded
@@ -43,6 +44,9 @@ const Layout = ({ children, header, footer }: LayoutProps) => {
 
         <main>{children}</main>
         {footer === 1 && <Footer />}
+
+        {/* Floating WhatsApp CTA — site-wide, see `_whatsapp-float.scss`. */}
+        <WhatsAppFloat />
 
         <ClientAnimations />
       </div>
