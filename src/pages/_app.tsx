@@ -1,7 +1,14 @@
 import React, { Suspense, ErrorInfo } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import Script from "next/script";
 import { Inter } from "next/font/google";
+
+// Google Analytics 4 measurement ID. Hard-coded fallback keeps tracking working
+// even if the env var isn't set in the deploy target; override with
+// NEXT_PUBLIC_GA_MEASUREMENT_ID in production for property changes.
+const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-4PFEZQR2XN";
 
 // Bootstrap: slim SCSS build (grid/reboot/utilities/accordion) — not full min.css.
 import "@/styles/bootstrap-slim.scss";
@@ -160,6 +167,30 @@ export default function App({ Component, pageProps }: AppProps) {
           />
         ))}
       </Head>
+
+      {/* Google Analytics (gtag.js) — loaded via next/script with
+          `afterInteractive` so it never blocks the LCP paint. The inline
+          bootstrap initialises dataLayer + sends the initial config event
+          exactly once per page load. SPA route changes are tracked separately
+          by GA4's enhanced measurement (page_view on history change). */}
+      {GA_MEASUREMENT_ID ? (
+        <>
+          <Script
+            id="ga-loader"
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="ga-init" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_MEASUREMENT_ID}');
+            `}
+          </Script>
+        </>
+      ) : null}
+
       <Suspense fallback={null}>
         <Component {...pageProps} />
       </Suspense>
