@@ -1,163 +1,25 @@
 import React from "react";
-import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/autoplay";
 
+/**
+ * Decorative "next page" sentinel rendered at the bottom of the homepage.
+ *
+ * Performance note
+ * ----------------
+ * The previous version imported `swiper/react`, the `Autoplay` module and
+ * two Swiper CSS files purely so a slider could be commented-out — the
+ * markup was never rendered, but webpack still pulled the entire Swiper
+ * runtime (~70 KB minified, on top of what other home-two sections already
+ * load) into this chunk. PageSpeed flagged it under "Unused JavaScript".
+ * Stripping the imports removes Swiper from this code path entirely.
+ *
+ * If the marquee is ever re-enabled, lift it into its own dynamic chunk
+ * via `next/dynamic` so the Swiper cost is paid only when the marquee is
+ * actually mounted.
+ */
 const NextPageNull = () => {
   return (
-    <section className="section next-page pb-0">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-lg-8">
-            <div className="section__header text-center">
-              {/* <Link href="about-us" className="sub-title mb-0">
-                Next Page
-                <i className="fa-solid fa-arrow-right"></i>
-              </Link> */}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="next__text-slider-w">
-        {/* <Swiper
-          slidesPerView="auto"
-          spaceBetween={40}
-          speed={5000}
-          loop={true}
-          centeredSlides={true}
-          modules={[Autoplay]}
-          autoplay={{
-            delay: 1,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-            reverseDirection: false,
-          }}
-          className="next__text-slider"
-        >
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1 str">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1 str">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1 str">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1 str">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1 str">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="next__text-slider-single">
-              <h2 className="h1">
-                <Link href="about-us">
-                  About Us
-                  <i className="fa-sharp fa-solid fa-arrow-down-right"></i>
-                </Link>
-              </h2>
-            </div>
-          </SwiperSlide>
-        </Swiper> */}
-      </div>
+    <section className="section next-page pb-0" aria-hidden="true">
+      <div className="next__text-slider-w" />
       <div className="lines d-none d-lg-flex">
         <div className="line"></div>
         <div className="line"></div>
@@ -169,4 +31,4 @@ const NextPageNull = () => {
   );
 };
 
-export default NextPageNull;
+export default React.memo(NextPageNull);

@@ -37,9 +37,26 @@ const nextConfig = {
 
   // Production-only: fewer resolver round-trips; skip in dev to avoid extra
   // rebuild surface during HMR (swiper/gsap are mostly used in lazy/dynamic paths).
+  //
+  // `optimizePackageImports` rewrites named imports from these packages so
+  // Next.js can tree-shake away the modules we don't actually use. Swiper
+  // matters most here — `import { Autoplay } from 'swiper/modules'` would
+  // otherwise pull the full barrel (~50 KB of unused Pagination/Scrollbar/
+  // Mousewheel/EffectFade/EffectCube/etc. into every Swiper-using chunk).
+  // GSAP gets the same treatment so unused easings/utilities drop out.
+  //
+  // Note: we deliberately do NOT use `modularizeImports` to remap
+  // `swiper/modules` to per-file deep paths (e.g. `swiper/modules/autoplay`)
+  // because Swiper's `package.json#exports` only declares `./modules` —
+  // deep paths would error out under Node's strict ESM resolver.
   experimental: isProd
     ? {
-        optimizePackageImports: ['swiper', 'gsap'],
+        optimizePackageImports: [
+          'swiper',
+          'swiper/modules',
+          'swiper/react',
+          'gsap',
+        ],
       }
     : {},
 

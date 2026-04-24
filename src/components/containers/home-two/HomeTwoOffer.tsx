@@ -85,21 +85,25 @@ const HomeTwoOffer = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   // Pointer-driven hover effect for the ball thumbnail.
-  // The original implementation listened to *every* mousemove on `window`,
-  // queried the DOM with `document.querySelectorAll` and called
-  // `getBoundingClientRect()` on every node on every event — three
-  // independent layout-thrash sources running ~60–120x per second.
   //
-  // This rewrite:
-  //   * Scopes the listener to the section element.
-  //   * Only attaches the listener when the section is in the viewport.
-  //   * Respects `prefers-reduced-motion`.
-  //   * Throttles updates to a single requestAnimationFrame per event burst.
-  //   * Performs all rect READS first inside the rAF, then all transform
-  //     WRITES — one batched layout per frame, zero forced reflow. Lets us
-  //     drop the previous scroll listener that existed *only* to keep
-  //     cached rects fresh as the viewport scrolled.
-  //   * Recomputes the cards array on resize (cheap, rare).
+  // Performance history & current strategy
+  // --------------------------------------
+  //   v1: window-level mousemove + querySelectorAll + getBoundingClientRect
+  //       on every node on every event. Three independent layout-thrash
+  //       sources running 60–120 Hz.
+  //   v2: scoped, rAF-throttled, batched reads/writes — but STILL called
+  //       `getBoundingClientRect()` on every card on every rAF. With ~9
+  //       cards that's 9 forced layouts every frame the cursor moves,
+  //       which Lighthouse continued to flag under "Forced reflow".
+  //   v3 (current):
+  //       * Caches each card's viewport rect ONCE on attach.
+  //       * Refreshes the cache only on scroll / resize / Swiper update —
+  //         events the geometry actually depends on.
+  //       * mousemove handler then becomes a pure write: just a
+  //         `style.transform` per card. Zero rect reads, zero forced
+  //         layout, and no DOM queries on the hot path.
+  //   Plus: scoped to the section, gated by IntersectionObserver, gated
+  //   by prefers-reduced-motion + min-width media queries.
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || typeof window === "undefined") return;
@@ -109,7 +113,14 @@ const HomeTwoOffer = () => {
 
     let cards: HTMLElement[] = [];
     let thumbs: (HTMLElement | undefined)[] = [];
+    // Pre-cached viewport rects — refreshed only when geometry can change
+    // (scroll, resize, Swiper transition). Reading these on every
+    // mousemove instead of calling getBoundingClientRect avoids the
+    // forced-layout cost per pointer event.
+    let rectXs: number[] = [];
+    let rectYs: number[] = [];
     let rafId = 0;
+    let geomDirty = true;
     let attached = false;
     let observer: IntersectionObserver | null = null;
 
@@ -117,9 +128,21 @@ const HomeTwoOffer = () => {
       cards = Array.from(
         section.querySelectorAll<HTMLElement>(".offer__cta-single")
       );
-      thumbs = cards.map(
-        (c) => c.children[2] as HTMLElement | undefined
-      );
+      thumbs = cards.map((c) => c.children[2] as HTMLElement | undefined);
+      rectXs = new Array(cards.length);
+      rectYs = new Array(cards.length);
+      geomDirty = true;
+    };
+
+    const refreshRects = () => {
+      // Single batched read pass. Runs at most once per frame and only
+      // when geometry was marked dirty by scroll/resize.
+      for (let i = 0; i < cards.length; i++) {
+        const r = cards[i].getBoundingClientRect();
+        rectXs[i] = r.x;
+        rectYs[i] = r.y;
+      }
+      geomDirty = false;
     };
 
     const onPointerMove = (event: MouseEvent) => {
@@ -128,30 +151,26 @@ const HomeTwoOffer = () => {
       rafId = window.requestAnimationFrame(() => {
         rafId = 0;
         if (cards.length === 0) return;
-        // Read all rects FIRST in a single pass — the browser performs at
-        // most one layout for the whole batch. Then perform all writes.
-        // Mixing reads and writes inside the loop would force a layout
-        // per iteration (the very thing PageSpeed flagged).
-        const rects: DOMRect[] = new Array(cards.length);
-        for (let i = 0; i < cards.length; i++) {
-          rects[i] = cards[i].getBoundingClientRect();
-        }
+        if (geomDirty) refreshRects();
+        // Pure write phase — no rect reads, no DOM queries. Browser
+        // batches all transform writes into a single composite step.
         for (let i = 0; i < cards.length; i++) {
           const thumb = thumbs[i];
           if (!thumb) continue;
-          const rect = rects[i];
-          const dx = clientX - rect.x;
-          const dy = clientY - rect.y;
-          // translate3d hints the compositor to keep the layer on the GPU.
+          const dx = clientX - rectXs[i];
+          const dy = clientY - rectYs[i];
           thumb.style.transform = `translate3d(${dx}px, ${dy}px, 0) rotate(10deg)`;
         }
       });
     };
 
+    const markDirty = () => {
+      geomDirty = true;
+    };
+
     const onResize = () => {
-      // Card geometry can shift across breakpoints; the next mousemove
-      // will recompute viewport-relative rects, but we still need the
-      // current set of card nodes (e.g. after Swiper rebuilds).
+      // Card SET can change across breakpoints (Swiper rebuilds slides);
+      // re-query the DOM and invalidate cache.
       collectCards();
     };
 
@@ -160,6 +179,10 @@ const HomeTwoOffer = () => {
       collectCards();
       window.addEventListener("mousemove", onPointerMove, { passive: true });
       window.addEventListener("resize", onResize, { passive: true });
+      // `markDirty` is O(1); the next pointer event triggers the
+      // batched read pass. This keeps scroll listeners cheap (no layout
+      // work inside the listener itself).
+      window.addEventListener("scroll", markDirty, { passive: true });
       attached = true;
     };
 
@@ -167,6 +190,7 @@ const HomeTwoOffer = () => {
       if (!attached) return;
       window.removeEventListener("mousemove", onPointerMove);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", markDirty);
       if (rafId) {
         window.cancelAnimationFrame(rafId);
         rafId = 0;

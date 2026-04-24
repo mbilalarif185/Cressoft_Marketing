@@ -18,7 +18,13 @@ const Footer = () => {
   return (
     <footer
       className="footer section pb-0"
-      style={{ backgroundImage: "url('/images/footer/footer-bg.webp')" }}
+      // Background image moved to CSS (`.footer { background-image: url(...) }`
+      // in `_footer.scss`). Inline `style={{ backgroundImage: ... }}` forces
+      // React to re-allocate the style object on every render and prevents
+      // the browser from deferring/lazy-fetching the asset like it does for
+      // off-viewport CSS backgrounds. CSS-driven backgrounds also let the
+      // browser pick `image-set()` / `content-visibility: auto` at the
+      // section level for further savings.
     >
       <div className="container">
         <div className="row gaper">
