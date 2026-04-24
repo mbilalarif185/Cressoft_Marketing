@@ -7,22 +7,38 @@ import MarketingResults from "@/components/containers/marketing-solutions/Market
 import MarketingProcess from "@/components/containers/marketing-solutions/MarketingProcess";
 import MarketingCta from "@/components/containers/marketing-solutions/MarketingCta";
 
-import { PRIMARY_SERVICES, SITE_URL, serviceSchema } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
+
+const MARKETING_SOLUTIONS_OFFERS = [
+  "AI Solutions",
+  "Web Development",
+  "Search Engine Optimization",
+  "Social Media Marketing",
+  "Mobile App Development",
+  "Ecommerce Solutions",
+  "ERP Solutions",
+  "UI/UX Design",
+] as const;
 
 const MarketingSolutions = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Marketing Solutions — SEO, Google Ads & Social Media Malaysia"
-        description="Full-funnel digital marketing in Malaysia — SEO, Google Ads, social media marketing, and web development for SMEs across Kuala Lumpur, Selangor, Penang, and Johor."
+        title="Digital Marketing Solutions Malaysia — SEO, Web, AI & More | Cressoft Marketing"
+        description="Explore Cressoft Marketing's full range of digital solutions for Malaysian businesses — SEO, web development, AI solutions, social media marketing, mobile apps, e-commerce, ERP, and UI/UX design."
         pathname="/marketing-solutions"
         keywords={[
-          "digital marketing services Malaysia",
-          "SEO agency Malaysia",
-          "Google Ads agency Malaysia",
+          "digital marketing solutions Malaysia",
+          "SEO services Malaysia",
+          "web development Malaysia",
+          "AI solutions Malaysia",
           "social media marketing Malaysia",
-          "marketing solutions Kuala Lumpur",
+          "mobile app development Malaysia",
+          "ecommerce Malaysia",
+          "ERP Malaysia",
         ]}
+        image={`${SITE_URL}/images/home/banner.webp`}
+        imageAlt="Digital marketing solutions offered by Cressoft Marketing Malaysia"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },
           {
@@ -30,13 +46,26 @@ const MarketingSolutions = () => {
             url: `${SITE_URL}/marketing-solutions`,
           },
         ]}
-        jsonLd={PRIMARY_SERVICES.map((s) =>
-          serviceSchema({
-            name: s.name,
-            description: s.description,
-            url: `${SITE_URL}/marketing-solutions`,
-          })
-        )}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: "Digital Marketing Solutions",
+          serviceType: "Digital Marketing Solutions",
+          provider: { "@id": `${SITE_URL}/#organization` },
+          areaServed: { "@type": "Country", name: "Malaysia" },
+          url: `${SITE_URL}/marketing-solutions`,
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Cressoft Marketing Solutions",
+            itemListElement: MARKETING_SOLUTIONS_OFFERS.map((name) => ({
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name,
+              },
+            })),
+          },
+        }}
       />
       <CmnBanner
         title="Marketing Solutions"

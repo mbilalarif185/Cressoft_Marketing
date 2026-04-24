@@ -5,7 +5,7 @@ const ServiceDetailsBanner = () => {
   return (
     <section
       className="cmn-banner service-single-banner bg-img"
-      style={{ backgroundImage: "url('/images/banner/cmn-banner-bg.png')" }}
+      style={{ backgroundImage: "url('/images/banner/cmn-banner-bg.webp')" }}
     >
       <div className="container">
         <div className="row gaper align-items-center">

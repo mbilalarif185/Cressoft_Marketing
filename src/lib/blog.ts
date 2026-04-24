@@ -32,7 +32,7 @@ const readPostFile = (filename: string): BlogPost => {
     author: String(data.author ?? "Cressoft Editorial"),
     category: String(data.category ?? "General"),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
-    cover: String(data.cover ?? "/images/news/poster.png"),
+    cover: String(data.cover ?? "/images/news/poster.webp"),
     readingMinutes: Math.max(1, Math.ceil(stats.minutes)),
     featured: Boolean(data.featured),
     hideBlogBanner: Boolean(data.hideBlogBanner),

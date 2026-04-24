@@ -55,22 +55,38 @@ const ClientAnimations: React.FC = () => {
       });
 
       // ---- Fade up ----------------------------------------------------
+      // Performance notes:
+      //   1. The previous implementation declared `scrub: 0.5` on every
+      //      trigger even though the tween fires once via `onEnter` +
+      //      `once: true`. `scrub` forces ScrollTrigger to read each
+      //      element's `getBoundingClientRect()` on every scroll frame for
+      //      the rest of the page lifetime — pure waste. Removing it cuts
+      //      the dominant "forced reflow" source flagged by Lighthouse.
+      //   2. The original loop interleaved writes (`gsap.set` on each
+      //      element) with reads (`ScrollTrigger.create` computing the
+      //      trigger position) → layout thrash on first paint. We now do
+      //      ALL the writes in a single `gsap.set(targets, …)` pass, then
+      //      hand the targets to `ScrollTrigger.batch` which performs all
+      //      DOM reads in one batched layout instead of N separate ones.
       const fadeCtx = gsap.context(() => {
-        document.querySelectorAll(".fade-wrapper").forEach((wrap) => {
-          wrap.querySelectorAll(".fade-top").forEach((element, idx) => {
-            const delay = idx * 0.15;
-            gsap.set(element, { opacity: 0, y: 100 });
-            ScrollTrigger.create({
-              trigger: element,
-              start: "top 100%",
-              end: "bottom 20%",
-              scrub: 0.5,
-              onEnter: () => {
-                gsap.to(element, { opacity: 1, y: 0, duration: 1, delay });
-              },
-              once: true,
+        const targets = gsap.utils.toArray<HTMLElement>(
+          ".fade-wrapper .fade-top"
+        );
+        if (targets.length === 0) return;
+        gsap.set(targets, { opacity: 0, y: 100, willChange: "opacity, transform" });
+        ScrollTrigger.batch(targets, {
+          start: "top 100%",
+          once: true,
+          onEnter: (batch) => {
+            gsap.to(batch, {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              stagger: 0.15,
+              overwrite: true,
+              clearProps: "willChange",
             });
-          });
+          },
         });
       });
       cleanups.push(() => fadeCtx.revert());

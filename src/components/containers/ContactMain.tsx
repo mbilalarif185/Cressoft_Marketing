@@ -14,10 +14,10 @@ import {
   CONTACT_WHATSAPP_MESSAGE_SHORT,
   contactWhatsAppHref,
 } from "@/constants/contact";
-import phone from "public/images/phone.png";
-import mail from "public/images/mail.png";
-import location from "public/images/location.png";
-import time from "public/images/time.png";
+import phone from "public/images/phone.webp";
+import mail from "public/images/mail.webp";
+import location from "public/images/location.webp";
+import time from "public/images/time.webp";
 
 const ContactMain = () => {
   return (

@@ -1,0 +1,133 @@
+// Long-form legal pages (Privacy Policy, Terms & Conditions).
+// Loads after `_all-sections.scss` so these rules can layer on top of the
+// shared `.section`, `.container`, and `.row` utilities.
+
+.legal-page {
+  // Soften the default `.section` padding on smaller screens — the content
+  // itself is dense, so we don't need oversized vertical whitespace.
+  padding: 100px 0 110px;
+
+  @media (max-width: 767.98px) {
+    padding: 70px 0 80px;
+  }
+
+  &__content {
+    color: var(--text-color, #d2d2d4);
+
+    .legal-page__meta {
+      display: inline-block;
+      padding: 14px 22px;
+      margin-bottom: 36px;
+      border-radius: 12px;
+      background: rgba(103, 84, 233, 0.08);
+      border: 1px solid rgba(103, 84, 233, 0.18);
+      color: var(--theme-color, #ffffff);
+      font-size: 14px;
+      line-height: 1.6;
+
+      strong {
+        color: var(--theme-color, #ffffff);
+        font-weight: 600;
+      }
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.78;
+      margin: 0 0 1.4rem;
+      color: inherit;
+    }
+
+    p.primary-text {
+      font-size: 19px;
+      line-height: 1.7;
+      margin-bottom: 2.2rem;
+    }
+
+    a {
+      color: var(--primary-color, #6754e9);
+      text-decoration: underline;
+      text-decoration-color: rgba(103, 84, 233, 0.45);
+      text-underline-offset: 3px;
+      font-weight: 500;
+      transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+      &:hover,
+      &:focus {
+        color: var(--theme-color, #ffffff);
+        text-decoration-color: rgba(103, 84, 233, 0.85);
+      }
+    }
+
+    strong {
+      color: var(--theme-color, #ffffff);
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+  }
+
+  &__h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin: 2.75rem 0 1.1rem;
+    color: var(--theme-color, #ffffff);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    scroll-margin-top: 96px;
+
+    &::before {
+      content: "";
+      flex: 0 0 4px;
+      width: 4px;
+      margin-top: 0.35em;
+      height: 1.05em;
+      border-radius: 4px;
+      background: linear-gradient(
+        180deg,
+        var(--primary-color, #6754e9),
+        #4e3cb5
+      );
+    }
+
+    @media (max-width: 575.98px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__list {
+    margin: 0 0 1.6rem;
+    padding-left: 1.25rem;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: 0.7rem;
+      font-size: 17px;
+      line-height: 1.72;
+      color: inherit;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.7em;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--primary-color, #6754e9);
+        box-shadow: 0 0 0 4px rgba(103, 84, 233, 0.12);
+      }
+
+      strong {
+        color: var(--theme-color, #ffffff);
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import thumbone from "public/images/service/thumb-one.png";
-import thumbtwo from "public/images/service/thumb-two.png";
+import thumbone from "public/images/service/thumb-one.webp";
+import thumbtwo from "public/images/service/thumb-two.webp";
 
 const ServiceDetailsMain = () => {
   return (

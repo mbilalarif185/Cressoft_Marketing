@@ -7,8 +7,8 @@ import {
 } from "@/constants/contact";
 import thumbone from "public/images/agency/pic1.webp";
 import thumbtwo from "public/images/agency/pic2.webp";
-import star from "public/images/star.png";
-import dotlarge from "public/images/agency/dot-large.png";
+import star from "public/images/star.webp";
+import dotlarge from "public/images/agency/dot-large.webp";
 
 const Agency = () => {
   const sectionRef = useRef<HTMLElement | null>(null);

@@ -8,7 +8,7 @@ export type BlogPostMeta = {
   author: string;
   category: string;
   tags: string[];
-  /** Public-relative cover image path, e.g. /images/news/eight.png. */
+  /** Public-relative cover image path, e.g. /images/news/eight.webp. */
   cover: string;
   /** Estimated reading time in minutes (rounded up). */
   readingMinutes: number;

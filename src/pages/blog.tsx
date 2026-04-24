@@ -23,14 +23,21 @@ const BlogPage = ({ posts, categories, tags }: BlogPageProps) => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Digital Marketing Blog Malaysia — SEO, Ads & Growth Insights"
-        description="Practical articles on SEO, Google Ads, social media marketing, and digital growth — written by the Cressoft team for businesses in Malaysia."
+        title="Digital Marketing Blog Malaysia — SEO, Ads & Growth Insights | Cressoft Marketing"
+        description="Articles on branding, SEO, digital marketing, and web design — practical ideas and growth insights for Malaysian businesses and SMEs from the Cressoft Marketing team."
         pathname="/blog"
         keywords={[
           "digital marketing blog Malaysia",
           "SEO tips Malaysia",
-          "Google Ads tips Malaysia",
+          "web design blog",
+          "lead generation Malaysia",
+          "Google ranking tips",
+          "local SEO Malaysia",
+          "SME marketing blog",
         ]}
+        image={`${SITE_URL}/images/blog2.webp`}
+        imageAlt="Cressoft Marketing digital marketing blog Malaysia"
+        webPageType="Blog"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },
           { name: "Blog", url: `${SITE_URL}/blog` },

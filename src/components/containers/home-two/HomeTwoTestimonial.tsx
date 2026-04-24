@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import star from "public/images/testimonial/star.png";
+import star from "public/images/testimonial/star.webp";
 import thumb from "public/images/test-.webp";
 
 type HomeTwoTestimonialProps = {

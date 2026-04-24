@@ -31,6 +31,8 @@ const STATIC_ROUTES: SitemapEntry[] = [
   { loc: "/blog", changefreq: "daily", priority: 0.9 },
   { loc: "/faq", changefreq: "monthly", priority: 0.6 },
   { loc: "/contact", changefreq: "monthly", priority: 0.8 },
+  { loc: "/privacy-policy", changefreq: "yearly", priority: 0.3 },
+  { loc: "/terms-and-conditions", changefreq: "yearly", priority: 0.3 },
 ];
 
 const escapeXml = (s: string) =>

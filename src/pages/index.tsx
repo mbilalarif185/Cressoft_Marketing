@@ -7,7 +7,7 @@ import HomeTwoBanner from "@/components/layout/banner/HomeOneBanner";
 import { getAllPostMeta } from "@/lib/blog";
 import type { BlogPostMeta } from "@/types/blog";
 
-import { PRIMARY_SERVICES, serviceSchema, SITE_URL } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
 
 // Below-the-fold sections — defer their JS so the LCP banner ships first.
 // HomeTwoOffer pulls in the Swiper runtime; deferring it keeps Swiper out of
@@ -57,16 +57,42 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Digital Marketing Agency in Malaysia"
-        description="Cressoft Marketing is a results-driven digital marketing agency in Malaysia offering SEO, Google Ads, social media marketing, and web development for SMEs across Kuala Lumpur, Selangor, Penang, and Johor."
+        title="Digital Marketing Agency in Malaysia | Cressoft Marketing"
+        description="We help Malaysian businesses attract more customers, rank higher on Google, and build a brand that stands out through strategic digital marketing, high-converting websites, and data-driven results."
         pathname="/"
-        jsonLd={PRIMARY_SERVICES.map((s) =>
-          serviceSchema({
-            name: s.name,
-            description: s.description,
-            url: `${SITE_URL}/marketing-solutions`,
-          })
-        )}
+        keywords={[
+          "digital marketing agency Malaysia",
+          "SEO Malaysia",
+          "web development Malaysia",
+          "social media marketing Malaysia",
+          "digital agency Kuala Lumpur",
+          "Malaysian SME marketing",
+        ]}
+        image={`${SITE_URL}/images/home/banner.webp`}
+        imageAlt="Cressoft Marketing — Malaysia's Trusted Digital Growth Partner"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Cressoft Marketing",
+          image: `${SITE_URL}/images/home/banner.webp`,
+          url: SITE_URL,
+          telephone: "+601128890942",
+          email: "info@cressoft.net",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Cova Square",
+            addressLocality: "Kota Damansara",
+            addressRegion: "Selangor",
+            addressCountry: "MY",
+          },
+          openingHours: "Mo-Sa 10:00-19:00",
+          foundingDate: "2014",
+          sameAs: [
+            "https://www.instagram.com/cressoft/",
+            "https://www.linkedin.com/company/cressoftmarketing",
+            "https://web.facebook.com/cressoftmarketing",
+          ],
+        }}
       />
       <HomeTwoBanner />
 

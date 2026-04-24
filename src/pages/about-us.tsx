@@ -22,14 +22,19 @@ const AboutUs = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="About Us — Digital Marketing Agency in Kuala Lumpur"
-        description="Cressoft Marketing is a results-driven digital marketing agency based in Kota Damansara, Selangor — helping Malaysian SMEs grow online through SEO, Google Ads, social media, and web development."
+        title="About Us — Digital Marketing Agency in Kuala Lumpur | Cressoft Marketing"
+        description="We are a results-driven digital marketing agency in Kuala Lumpur, dedicated to helping Malaysian businesses grow their online presence and generate measurable results since 2014."
         pathname="/about-us"
         keywords={[
-          "about Cressoft",
+          "about Cressoft Marketing",
           "digital marketing agency Kuala Lumpur",
-          "marketing agency Selangor",
+          "KL digital agency",
+          "Malaysian marketing team",
+          "full service agency Malaysia",
         ]}
+        image={`${SITE_URL}/images/about-us.webp`}
+        imageAlt="Cressoft Marketing agency team Kuala Lumpur"
+        webPageType="AboutPage"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },
           { name: "About Us", url: `${SITE_URL}/about-us` },

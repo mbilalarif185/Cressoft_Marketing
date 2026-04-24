@@ -95,10 +95,11 @@ const HomeTwoOffer = () => {
   //   * Only attaches the listener when the section is in the viewport.
   //   * Respects `prefers-reduced-motion`.
   //   * Throttles updates to a single requestAnimationFrame per event burst.
-  //   * Caches each card's bounding rect and only invalidates it on
-  //     resize / scroll instead of on every pointer move.
-  //   * Writes via a CSS variable (single style mutation) rather than
-  //     re-allocating a transform string with template literals.
+  //   * Performs all rect READS first inside the rAF, then all transform
+  //     WRITES — one batched layout per frame, zero forced reflow. Lets us
+  //     drop the previous scroll listener that existed *only* to keep
+  //     cached rects fresh as the viewport scrolled.
+  //   * Recomputes the cards array on resize (cheap, rare).
   useEffect(() => {
     const section = sectionRef.current;
     if (!section || typeof window === "undefined") return;
@@ -107,21 +108,18 @@ const HomeTwoOffer = () => {
     const widthQuery = window.matchMedia("(min-width: 577px)");
 
     let cards: HTMLElement[] = [];
-    let rects: DOMRect[] = [];
+    let thumbs: (HTMLElement | undefined)[] = [];
     let rafId = 0;
-    let rectRaf = 0;
     let attached = false;
     let observer: IntersectionObserver | null = null;
 
-    const refreshRects = () => {
-      if (rectRaf) return;
-      rectRaf = window.requestAnimationFrame(() => {
-        rectRaf = 0;
-        cards = Array.from(
-          section.querySelectorAll<HTMLElement>(".offer__cta-single")
-        );
-        rects = cards.map((c) => c.getBoundingClientRect());
-      });
+    const collectCards = () => {
+      cards = Array.from(
+        section.querySelectorAll<HTMLElement>(".offer__cta-single")
+      );
+      thumbs = cards.map(
+        (c) => c.children[2] as HTMLElement | undefined
+      );
     };
 
     const onPointerMove = (event: MouseEvent) => {
@@ -129,47 +127,49 @@ const HomeTwoOffer = () => {
       const { clientX, clientY } = event;
       rafId = window.requestAnimationFrame(() => {
         rafId = 0;
+        if (cards.length === 0) return;
+        // Read all rects FIRST in a single pass — the browser performs at
+        // most one layout for the whole batch. Then perform all writes.
+        // Mixing reads and writes inside the loop would force a layout
+        // per iteration (the very thing PageSpeed flagged).
+        const rects: DOMRect[] = new Array(cards.length);
         for (let i = 0; i < cards.length; i++) {
+          rects[i] = cards[i].getBoundingClientRect();
+        }
+        for (let i = 0; i < cards.length; i++) {
+          const thumb = thumbs[i];
+          if (!thumb) continue;
           const rect = rects[i];
-          if (!rect) continue;
           const dx = clientX - rect.x;
           const dy = clientY - rect.y;
-          const thumb = cards[i].children[2] as HTMLElement | undefined;
-          if (thumb) {
-            // Single transform write per frame; translate3d hints the
-            // compositor to keep this on the GPU.
-            thumb.style.transform = `translate3d(${dx}px, ${dy}px, 0) rotate(10deg)`;
-          }
+          // translate3d hints the compositor to keep the layer on the GPU.
+          thumb.style.transform = `translate3d(${dx}px, ${dy}px, 0) rotate(10deg)`;
         }
       });
     };
 
-    const onResizeOrScroll = () => {
-      // Cheap: just refresh cached rects.
-      if (cards.length) refreshRects();
+    const onResize = () => {
+      // Card geometry can shift across breakpoints; the next mousemove
+      // will recompute viewport-relative rects, but we still need the
+      // current set of card nodes (e.g. after Swiper rebuilds).
+      collectCards();
     };
 
     const attach = () => {
       if (attached || motionQuery.matches || !widthQuery.matches) return;
-      refreshRects();
+      collectCards();
       window.addEventListener("mousemove", onPointerMove, { passive: true });
-      window.addEventListener("resize", onResizeOrScroll, { passive: true });
-      window.addEventListener("scroll", onResizeOrScroll, { passive: true });
+      window.addEventListener("resize", onResize, { passive: true });
       attached = true;
     };
 
     const detach = () => {
       if (!attached) return;
       window.removeEventListener("mousemove", onPointerMove);
-      window.removeEventListener("resize", onResizeOrScroll);
-      window.removeEventListener("scroll", onResizeOrScroll);
+      window.removeEventListener("resize", onResize);
       if (rafId) {
         window.cancelAnimationFrame(rafId);
         rafId = 0;
-      }
-      if (rectRaf) {
-        window.cancelAnimationFrame(rectRaf);
-        rectRaf = 0;
       }
       attached = false;
     };

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import star from "public/images/testimonial/star.png";
+import star from "public/images/testimonial/star.webp";
 import Link from "next/link";
 
 const AboutCta = () => {
@@ -11,7 +11,7 @@ const AboutCta = () => {
           <div className="col-12">
             <div
               className="cta__wrapper"
-              data-background="assets/images/cta-bg.png"
+              data-background="assets/images/cta-bg.webp"
             >
               <div className="row justify-content-center">
                 <div className="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-9">

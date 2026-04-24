@@ -5,15 +5,15 @@ import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
-import poster from "public/images/projects/poster.png";
+import poster from "public/images/projects/poster.webp";
 import iconone from "public/images/projects/icon-one.webp";
 import icontwo from "public/images/projects/icon-two.webp";
-import iconthree from "public/images/projects/icon-three.png";
-import done from "public/images/projects/d-one.png";
-import dtwo from "public/images/projects/d-two.png";
-import dthree from "public/images/projects/d-three.png";
-import dfour from "public/images/projects/d-four.png";
-import dfive from "public/images/projects/d-five.png";
+import iconthree from "public/images/projects/icon-three.webp";
+import done from "public/images/projects/d-one.webp";
+import dtwo from "public/images/projects/d-two.webp";
+import dthree from "public/images/projects/d-three.webp";
+import dfour from "public/images/projects/d-four.webp";
+import dfive from "public/images/projects/d-five.webp";
 
 const ProjectDetailsMain = () => {
   return (

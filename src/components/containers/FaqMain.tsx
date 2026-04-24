@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import thumb from "public/images/faq-thumb.png";
-
+import dynamic from "next/dynamic";
+import thumb from "public/images/faq-thumb.webp";
+const MarketingFaq = dynamic(
+  () => import("@/components/containers/marketing-solutions/MarketingFaq"),
+  { loading: () => null }
+);
 const FaqMain = () => {
   const [imgTab, setImgTab] = useState(0);
   return (
@@ -14,7 +18,7 @@ const FaqMain = () => {
             </div>
           </div>
           <div className="col-12 col-lg-6">
-            <div className="accordion" id="accordion">
+            {/* <div className="accordion" id="accordion">
               <div
                 className={
                   "accordion-item content__space fade-top" +
@@ -171,7 +175,8 @@ const FaqMain = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
+            <MarketingFaq />
           </div>
         </div>
       </div>

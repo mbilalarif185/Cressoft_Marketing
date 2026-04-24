@@ -9,7 +9,7 @@ import {
 } from "@/constants/contact";
 import { CRESSOFT_SOCIAL } from "@/constants/socialLinks";
 import banneronethumb from "public/images/home/banner.webp";
-import star from "public/images/star.png";
+import star from "public/images/star.webp";
 import { HERO_BANNER, STAR_ICON } from "@/lib/image-dimensions";
 
 const HomeOneBanner = () => {

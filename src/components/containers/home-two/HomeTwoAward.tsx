@@ -10,7 +10,7 @@ const HomeTwoAward = () => {
           <div className="col-12 col-lg-6">
             <div className="award__thumb dir-rtl">
               <Image
-                src="/images/about-us.png"
+                src="/images/about-us.webp"
                 alt="Cressoft digital marketing team and office in Malaysia"
                 width={1200}
                 height={900}
@@ -72,7 +72,7 @@ const HomeTwoAward = () => {
         </div>
       </div>
       <Image
-        src="/images/star.png"
+        src="/images/star.webp"
         alt=""
         width={120}
         height={120}
@@ -83,7 +83,7 @@ const HomeTwoAward = () => {
         aria-hidden
       />
       <Image
-        src="/images/star.png"
+        src="/images/star.webp"
         alt=""
         width={120}
         height={120}
@@ -94,7 +94,7 @@ const HomeTwoAward = () => {
         aria-hidden
       />
       <Image
-        src="/images/agency/dot-large.png"
+        src="/images/agency/dot-large.webp"
         alt=""
         width={80}
         height={80}
@@ -105,7 +105,7 @@ const HomeTwoAward = () => {
         aria-hidden
       />
       <Image
-        src="/images/agency/dot-large.png"
+        src="/images/agency/dot-large.webp"
         alt=""
         width={80}
         height={80}

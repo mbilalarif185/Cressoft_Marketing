@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import logo from "public/images/white.png";
-import logoLight from "public/images/logo-light.png";
+import logo from "public/images/white.webp";
+import logoLight from "public/images/logo-light.webp";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import Offcanvas from "./Offcanvas";
 

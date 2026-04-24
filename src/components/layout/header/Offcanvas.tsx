@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/images/white.png";
+import logo from "public/images/white.webp";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import { CRESSOFT_SOCIAL } from "@/constants/socialLinks";
 

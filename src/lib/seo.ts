@@ -1,7 +1,7 @@
 /**
  * Single source of truth for every SEO-relevant constant on the site.
  * - Domain is forced to https + non-www (canonical = https://cressoft.net/...)
- * - Default OG/Twitter image is the digital-marketing-agency.png hero asset
+ * - Default OG/Twitter image is the digital-marketing-agency.webp hero asset
  * - Business / contact data mirrors src/constants/contact.ts so we don't
  *   duplicate values that may change.
  */
@@ -41,10 +41,10 @@ export const DEFAULT_KEYWORDS = [
 ];
 
 /** Absolute URL of the default Open Graph / Twitter card image. */
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/digital-marketing-agency.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/digital-marketing-agency.webp`;
 
 /** Brand logo, used in Organization JSON-LD. */
-export const ORGANIZATION_LOGO = `${SITE_URL}/_next/static/media/white.dbd12a11.png`;
+export const ORGANIZATION_LOGO = `${SITE_URL}/images/white.webp`;
 
 /** Cities we explicitly target — used in LocalBusiness `areaServed`. */
 export const SERVICE_AREAS_MY = [
@@ -245,14 +245,29 @@ export function breadcrumbSchema(
   };
 }
 
+/**
+ * Specialised WebPage subtypes Google understands. Falls back to plain
+ * "WebPage" when no override is supplied.
+ */
+export type WebPageType =
+  | "WebPage"
+  | "AboutPage"
+  | "ContactPage"
+  | "FAQPage"
+  | "CollectionPage"
+  | "Blog"
+  | "ItemPage"
+  | "ProfilePage";
+
 export function webPageSchema(input: {
   title: string;
   description: string;
   url: string;
+  type?: WebPageType;
 }) {
   return {
     "@context": "https://schema.org",
-    "@type": "WebPage",
+    "@type": input.type ?? "WebPage",
     "@id": `${input.url}#webpage`,
     url: input.url,
     name: input.title,
@@ -260,6 +275,25 @@ export function webPageSchema(input: {
     inLanguage: SITE_LANG,
     isPartOf: { "@id": `${SITE_URL}/#website` },
     about: { "@id": `${SITE_URL}/#organization` },
+  };
+}
+
+/**
+ * Build an FAQPage JSON-LD block from a list of question/answer pairs.
+ * Use as an extra `jsonLd` entry on FAQ-style pages.
+ */
+export function faqPageSchema(items: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((qa) => ({
+      "@type": "Question",
+      name: qa.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: qa.answer,
+      },
+    })),
   };
 }
 

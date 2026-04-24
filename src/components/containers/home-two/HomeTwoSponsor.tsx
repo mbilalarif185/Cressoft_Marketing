@@ -4,15 +4,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import one from "public/images/sponsor/Best-Car-Rental-Dubai-.png";
-import two from "public/images/sponsor/CMS.png";
-import three from "public/images/sponsor/Educrest.png";
+import one from "public/images/sponsor/Best-Car-Rental-Dubai-.webp";
+import two from "public/images/sponsor/CMS.webp";
+import three from "public/images/sponsor/Educrest.webp";
 import four from "public/images/sponsor/Golf-club.webp";
-import six from "public/images/sponsor/Legendary.png";
-import seven from "public/images/sponsor/roshan-consultancy.png";
-import eight from "public/images/sponsor/Stla.png";
-import nine from "public/images/sponsor/Top-ranked-solar.png";
-import ten from "public/images/sponsor/Webcloud.png";
+import six from "public/images/sponsor/Legendary.webp";
+import seven from "public/images/sponsor/roshan-consultancy.webp";
+import eight from "public/images/sponsor/Stla.webp";
+import nine from "public/images/sponsor/Top-ranked-solar.webp";
+import ten from "public/images/sponsor/Webcloud.webp";
 function SponsorLogo({ src, label }: { src: StaticImageData; label: string }) {
   return (
     <Image

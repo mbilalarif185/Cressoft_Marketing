@@ -11,23 +11,51 @@ const ContactUs = () => {
     <Layout header={2} footer={1}>
       <Seo
         title="Contact Cressoft — Digital Marketing Agency in Malaysia"
-        description="Talk to Cressoft Marketing — a digital marketing agency in Kota Damansara, Selangor helping Malaysian SMEs and startups grow with SEO, Google Ads, and social media marketing."
+        description="Get in touch with Cressoft Marketing, a digital marketing agency based in Kota Damansara, Selangor. Contact us via phone, WhatsApp, or email to grow your business online."
         pathname="/contact"
         keywords={[
-          "contact digital marketing agency Malaysia",
-          "marketing agency Kota Damansara",
+          "contact Cressoft Marketing",
+          "digital agency contact Malaysia",
+          "hire digital marketing agency Malaysia",
+          "WhatsApp digital agency Malaysia",
+          "Kota Damansara marketing agency",
         ]}
+        image={`${SITE_URL}/images/home/banner.webp`}
+        imageAlt="Contact Cressoft Marketing — Digital Agency Malaysia"
+        webPageType="ContactPage"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },
-          { name: "Contact", url: `${SITE_URL}/contact` },
+          { name: "Contact Us", url: `${SITE_URL}/contact` },
         ]}
         jsonLd={{
           "@context": "https://schema.org",
-          "@type": "ContactPage",
-          name: "Contact Cressoft Marketing",
-          url: `${SITE_URL}/contact`,
-          inLanguage: "en-MY",
-          mainEntity: { "@id": `${SITE_URL}/#organization` },
+          "@type": "Organization",
+          name: "Cressoft Marketing",
+          url: SITE_URL,
+          email: "info@cressoft.net",
+          telephone: "+601128890942",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Cova Square",
+            addressLocality: "Kota Damansara",
+            addressRegion: "Selangor",
+            addressCountry: "MY",
+          },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+              ],
+              opens: "10:00",
+              closes: "19:00",
+            },
+          ],
         }}
       />
       <CmnBanner

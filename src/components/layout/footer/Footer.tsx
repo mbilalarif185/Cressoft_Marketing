@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/images/white.png";
+import logo from "public/images/white.webp";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import {
   CONTACT_ADDRESS,
@@ -18,7 +18,7 @@ const Footer = () => {
   return (
     <footer
       className="footer section pb-0"
-      style={{ backgroundImage: "url('/images/footer/footer-bg.png')" }}
+      style={{ backgroundImage: "url('/images/footer/footer-bg.webp')" }}
     >
       <div className="container">
         <div className="row gaper">
@@ -129,10 +129,10 @@ const Footer = () => {
                     <Link href="/faq">FAQs</Link>
                   </li>
                   <li>
-                    <Link href="/blog">Privacy Policy</Link>
+                    <Link href="/privacy-policy">Privacy Policy</Link>
                   </li>
                   <li>
-                    <Link href="/contact">Terms & Condition</Link>
+                    <Link href="/terms-and-conditions">Terms & Conditions</Link>
                   </li>
                 </ul>
               </div>

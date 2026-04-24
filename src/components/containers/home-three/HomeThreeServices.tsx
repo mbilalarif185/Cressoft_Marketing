@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import dotlarge from "public/images/agency/dot-large.png";
+import dotlarge from "public/images/agency/dot-large.webp";
 import serviceResults from "public/images/service/results.webp";
 import serviceModernization from "public/images/service/deep.webp";
 import serviceInnovation from "public/images/service/full.webp";

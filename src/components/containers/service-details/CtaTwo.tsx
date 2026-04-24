@@ -13,7 +13,7 @@ const CtaTwo = () => {
           <div className="col-12 col-xxl-11">
             <div
               className="cta-two-wrapper bg-img"
-              style={{ backgroundImage: "url('/images/cta-two-bg.png')" }}
+              style={{ backgroundImage: "url('/images/cta-two-bg.webp')" }}
             >
               <div className="row gaper align-items-center">
                 <div className="col-12 col-lg-8">

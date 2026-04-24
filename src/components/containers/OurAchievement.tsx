@@ -4,11 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import one from "public/images/achievement/one.png";
-import two from "public/images/achievement/two.png";
-import three from "public/images/achievement/three.png";
-import four from "public/images/achievement/four.png";
-import five from "public/images/achievement/five.png";
+import one from "public/images/achievement/one.webp";
+import two from "public/images/achievement/two.webp";
+import three from "public/images/achievement/three.webp";
+import four from "public/images/achievement/four.webp";
+import five from "public/images/achievement/five.webp";
 function AchievementLogo({ src, label }: { src: StaticImageData; label: string }) {
   return (
     <Image

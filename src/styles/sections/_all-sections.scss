@@ -20,7 +20,7 @@
       right: 10%;
       width: 40px;
       height: 40px;
-      background-image: url("../../../public/images/agency/dot-large.png");
+      background-image: url("../../../public/images/agency/dot-large.webp");
       background-size: cover;
       z-index: -1;
     }
@@ -31,7 +31,7 @@
       left: 0px;
       width: 40px;
       height: 40px;
-      background-image: url("../../../public/images/agency/dot-large.png");
+      background-image: url("../../../public/images/agency/dot-large.webp");
       background-size: cover;
       z-index: -1;
     }
@@ -892,7 +892,7 @@
 
 // 5.10 testimonial two styles
 .testimonial-two {
-  background: url("../../../public/images/testimonial/line.png"),
+  background: url("../../../public/images/testimonial/line.webp"),
     var(--tertiary-color);
   background-repeat: no-repeat;
   background-size: contain;

@@ -18,17 +18,22 @@ const OurProjects = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Success Stories — Digital Marketing Wins in Malaysia"
-        description="See how Malaysian SMEs, startups, and regional brands grow with Cressoft Marketing — from Petaling Jaya and Penang to Johor Bahru and Kota Kinabalu."
+        title="Our Work & Success Stories — Digital Marketing Portfolio | Cressoft Marketing"
+        description="Explore Cressoft Marketing's portfolio of successful digital projects — web development, brand identity, app development, and digital marketing campaigns for clients across Malaysia and beyond."
         pathname="/success-stories"
         keywords={[
-          "digital marketing success stories Malaysia",
-          "marketing case studies Kuala Lumpur",
-          "SEO results Malaysia",
+          "Cressoft portfolio",
+          "digital marketing case studies Malaysia",
+          "web development projects Malaysia",
+          "success stories digital agency",
+          "marketing results Malaysia",
         ]}
+        image={`${SITE_URL}/images/home/banner.webp`}
+        imageAlt="Cressoft Marketing portfolio and success stories"
+        webPageType="CollectionPage"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },
-          { name: "Success Stories", url: `${SITE_URL}/success-stories` },
+          { name: "Our Work", url: `${SITE_URL}/success-stories` },
         ]}
       />
       <CmnBanner
