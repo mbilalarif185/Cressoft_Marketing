@@ -1,0 +1,48 @@
+// (1.02) variables
+
+// Inter is now loaded via `next/font/google` in `src/pages/_app.tsx` and
+// exposed through the CSS variable `--font-inter`. Self-hosted, preloaded,
+// and with `display: swap` to eliminate render-blocking and FOIT.
+
+:root {
+  // font family — fall back to system stack if next/font hasn't initialized
+  // (e.g. before hydration, in legacy browsers, or in error pages).
+  --inter: var(--font-inter, "Inter"), system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  // Display face for headings — distinctive geometric grotesque (Sora).
+  --display: var(--font-display, "Sora"), var(--inter);
+
+  // theme default — dark navy base for the Quantel enterprise-SaaS aesthetic.
+  --theme-font: var(--inter);
+  --theme-bg: #0a0f1e;
+  --theme-color: #ffffff;
+
+  // colors
+  --white: #ffffff;
+  --black: #000000;
+
+  // Quantel brand palette
+  --navy: #0a0f1e; // dark hero / footer base
+  --navy-soft: #0f1730; // raised navy surface
+  --brand-blue: #4f8ef7; // primary bright-blue accent
+  --brand-purple: #a259ff; // secondary purple accent
+  --brand-gradient: linear-gradient(120deg, #4f8ef7 0%, #a259ff 100%);
+
+  --primary-color: #4f8ef7;
+  --secondary-color: #757575;
+  --tertiary-color: #0e0e0e;
+  --quaternary-color: #040404;
+  --quinary-color: #c1c1c1;
+  --senary-color: #191919;
+  --septenary-color: #101010;
+  --octonary-color: #1a1a1a;
+  --nonary-color: #d9d9d9;
+
+  // transitions
+  --transition: all 0.3s ease-in-out;
+
+  // box shadow
+  --shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  --shadow-secondary: 0 0 31px rgba(0, 0, 0, 0.1);
+}

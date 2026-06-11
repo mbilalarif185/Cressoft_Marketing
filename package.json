@@ -1,0 +1,48 @@
+{
+  "name": "quantel-solutions",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.cjs",
+    "dev:turbo": "node scripts/dev.cjs",
+    "dev:webpack": "node scripts/dev.cjs --webpack",
+    "dev:clean": "npm run clean && node scripts/dev.cjs",
+    "dev:clean:webpack": "npm run clean && node scripts/dev.cjs --webpack",
+    "dev:safe": "node scripts/dev-safe.cjs",
+    "clean": "node -e \"const fs=require('fs');['.next','node_modules/.cache'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "optimize:images": "node scripts/optimize-images.mjs && node scripts/update-image-imports.mjs"
+  },
+  "dependencies": {
+    "@types/node": "20.5.7",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "bootstrap": "^5.3.1",
+    "gray-matter": "^4.0.3",
+    "gsap": "^3.12.2",
+    "next": "15.2.4",
+    "next-mdx-remote": "^6.0.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "reading-time": "^1.5.0",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "sass": "^1.66.1",
+    "sharp": "^0.32.5",
+    "split-type": "^0.3.3",
+    "swiper": "^10.2.0",
+    "typescript": "^5.2.2",
+    "vanilla-tilt": "^1.8.1"
+  },
+  "devDependencies": {
+    "eslint": "8.48.0",
+    "eslint-config-next": "15.2.4"
+  },
+  "overrides": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}

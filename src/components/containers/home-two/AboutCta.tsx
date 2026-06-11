@@ -1,0 +1,62 @@
+import React from "react";
+import Image from "next/image";
+import star from "public/images/testimonial/star.webp";
+import Link from "next/link";
+
+const AboutCta = () => {
+  return (
+    <section className="cta-s section">
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <div
+              className="cta__wrapper"
+              data-background="assets/images/cta-bg.webp"
+            >
+              <div className="row justify-content-center">
+                <div className="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-9">
+                  <div className="section__header text-center">
+                    <h2 className="title">
+                      Stay Ahead With World-Class Technology &amp; Growth Solutions
+                    </h2>
+                    <p className="custom-margin">
+                      Whether you&apos;re a startup finding your footing or an established enterprise ready to scale, Quantel Solutions has the strategy, engineering firepower, and technical expertise to help you build and grow across global markets.
+                    </p>
+                  </div>
+                  <div className="section__header text-center">
+                    <Link href="/contact">
+              <span className="sub-title">
+                what we offer
+                <i className="fa-solid fa-arrow-right"></i>
+              </span>
+              </Link>
+              </div>
+                  {/* <div className="footer__single-form">
+                    <form action="#" method="post">
+                      <div className="input-email">
+                        <input
+                          type="email"
+                          name="subscribe-news"
+                          id="subscribeNews"
+                          placeholder="Enter Your Email"
+                          required
+                        />
+                        <button type="submit" className="subscribe">
+                          <i className="fa-sharp fa-solid fa-paper-plane"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div> */}
+                </div>
+              </div>
+              <Image src={star} alt="Image" className="star" />
+              <Image src={star} alt="Image" className="star-two" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AboutCta;
