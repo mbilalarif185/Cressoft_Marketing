@@ -44,7 +44,7 @@ export const DEFAULT_KEYWORDS = [
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/digital-marketing-agency.webp`;
 
 /** Brand logo, used in Organization JSON-LD. */
-export const ORGANIZATION_LOGO = `${SITE_URL}/images/white.webp`;
+export const ORGANIZATION_LOGO = `${SITE_URL}/images/logo/quantel_solutions_light.png`;
 
 /** Markets we explicitly serve — used in LocalBusiness `areaServed`. */
 export const SERVICE_AREAS = [

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/images/white.webp";
+import logo from "public/images/logo/quantel_solutions_dark.png";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import { QUANTEL_SOCIAL } from "@/constants/socialLinks";
 
@@ -80,7 +80,7 @@ const Offcanvas = ({ openNav, setOpenNav }: HeaderProps) => {
                   height={LOGO_INTRINSIC.height}
                   alt="Quantel Solutions"
                   priority
-                  sizes="180px"
+                  sizes="200px"
                   className="offcanvas-logo-img"
                 />
               </Link>

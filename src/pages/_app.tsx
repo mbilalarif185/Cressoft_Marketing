@@ -19,14 +19,15 @@ const GTM_ID = "GTM-546P2F53";
 // Bootstrap: slim SCSS build (grid/reboot/utilities/accordion) — not full min.css.
 import "@/styles/bootstrap-slim.scss";
 
-// Custom inline-SVG icon subset (replaces Font Awesome's 511 KB CSS + ~5 MB
-// of webfonts). All `<i className="fa-…">` markup keeps working unchanged.
-import "@/styles/icons.scss";
-
 import "public/icons/glyphter/css/xpovio.css";
 
 // main scss
 import "@/styles/main.scss";
+
+// Icon styles load after main.scss so mask rules win the cascade over theme
+// partials. FA webfont faces below cover legacy SCSS pseudo-element glyphs.
+import "@/styles/icons.scss";
+import "@/styles/fa-font-compat.scss";
 
 import {
   organizationSchema,

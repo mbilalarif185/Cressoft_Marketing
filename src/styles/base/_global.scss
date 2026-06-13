@@ -10,7 +10,9 @@ img {
   object-fit: cover;
 }
 
-i {
+// Font Awesome `<i class="fa-*">` icons use inline-block + SVG masks in
+// `icons.scss`. Applying inline-flex here breaks mask sizing (solid squares).
+i:not([class*="fa-"]) {
   display: inline-flex;
   align-items: center;
   justify-content: center;

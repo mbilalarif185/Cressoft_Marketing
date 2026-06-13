@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/images/white.webp";
+import logo from "public/images/logo/quantel_solutions_dark.png";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import {
   CONTACT_ADDRESS,
@@ -36,7 +36,7 @@ const Footer = () => {
                   alt="Quantel Solutions"
                   width={LOGO_INTRINSIC.width}
                   height={LOGO_INTRINSIC.height}
-                  sizes="(max-width: 768px) 180px, 220px"
+                  sizes="(max-width: 768px) 200px, 260px"
                   className="footer-logo-img"
                 />
               </Link>

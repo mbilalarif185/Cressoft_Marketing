@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import logo from "public/images/white.webp";
-import logoLight from "public/images/logo-light.webp";
+import logoDarkBg from "public/images/logo/quantel_solutions_dark.png";
+import logoLightBg from "public/images/logo/quantel_solutions_light.png";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import Offcanvas from "./Offcanvas";
 
@@ -46,12 +46,9 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
     scrolled ? " navbar-active" : " "
   } ${defaultClasses}`;
 
-  let logoSrc = logo;
-
   const router = useRouter();
-  if (router.pathname === "/index-two-light") {
-    logoSrc = logoLight;
-  }
+  const logoSrc =
+    router.pathname === "/index-two-light" ? logoLightBg : logoDarkBg;
 
   return (
     <>
@@ -69,7 +66,7 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
                         alt="Quantel Solutions"
                         width={LOGO_INTRINSIC.width}
                         height={LOGO_INTRINSIC.height}
-                        sizes="(max-width: 768px) 160px, 200px"
+                        sizes="(max-width: 768px) 180px, 220px"
                         className="navbar-logo-img"
                       />
                     </Link>

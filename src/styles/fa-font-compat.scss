@@ -1,0 +1,47 @@
+/**
+ * Font Awesome webfont faces for legacy SCSS pseudo-elements that still use
+ * `font-family: "Font Awesome 6 Pro"` + unicode `content` (toggle buttons,
+ * dropdown chevrons, scroll-to-top, etc.).
+ *
+ * `<i class="fa-*">` icons are rendered via `icons.scss` SVG masks instead.
+ */
+
+@font-face {
+  font-family: "Font Awesome 6 Pro";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("/icons/font-awesome/webfonts/fa-solid-900.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Pro";
+  font-style: normal;
+  font-weight: 300;
+  font-display: block;
+  src: url("/icons/font-awesome/webfonts/fa-light-300.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/icons/font-awesome/webfonts/fa-regular-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Pro";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("/icons/font-awesome/webfonts/fa-sharp-solid-900.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Font Awesome 6 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/icons/font-awesome/webfonts/fa-brands-400.woff2") format("woff2");
+}
