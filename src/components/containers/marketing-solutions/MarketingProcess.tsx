@@ -12,7 +12,7 @@ const STEPS: Step[] = [
     number: "01",
     title: "Discover",
     description:
-      "We audit your product, stack, existing channels, and competitors. We're looking for the gaps quietly costing you growth and revenue — before a single pound is spent on new activity.",
+      "We audit your product, stack, existing channels, and competitors. We're looking for the gaps quietly costing you growth and revenue - before a single pound is spent on new activity.",
    icon: "fa-solid fa-compass",
   },
   {

@@ -14,6 +14,7 @@
 .marketing-services {
   position: relative;
   z-index: 1;
+  scroll-margin-top: 96px;
 
   .marketing-services__lead {
     margin: 0;
@@ -837,6 +838,14 @@
       color: #25d366;
       font-size: 18px;
     }
+
+    .wa-icon {
+      width: 18px;
+      height: 18px;
+      color: #25d366;
+      flex-shrink: 0;
+    }
+
     &:hover,
     &:focus-visible {
       border-color: rgba(255, 255, 255, 0.35);

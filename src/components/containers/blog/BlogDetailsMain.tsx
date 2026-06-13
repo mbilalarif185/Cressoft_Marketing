@@ -181,7 +181,7 @@ const BlogDetailsMain = ({
                   <span className="blog-article__tags-label">Tagged in</span>
                   <div className="blog-article__tags-list">
                     {post.tags.length === 0 ? (
-                      <span className="text-muted">—</span>
+                      <span className="text-muted">-</span>
                     ) : (
                       post.tags.map((tag) => (
                         <Link

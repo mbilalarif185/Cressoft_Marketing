@@ -92,13 +92,13 @@ const HomeTwoOffer = () => {
   //   v1: window-level mousemove + querySelectorAll + getBoundingClientRect
   //       on every node on every event. Three independent layout-thrash
   //       sources running 60–120 Hz.
-  //   v2: scoped, rAF-throttled, batched reads/writes — but STILL called
+  //   v2: scoped, rAF-throttled, batched reads/writes - but STILL called
   //       `getBoundingClientRect()` on every card on every rAF. With ~9
   //       cards that's 9 forced layouts every frame the cursor moves,
   //       which Lighthouse continued to flag under "Forced reflow".
   //   v3 (current):
   //       * Caches each card's viewport rect ONCE on attach.
-  //       * Refreshes the cache only on scroll / resize / Swiper update —
+  //       * Refreshes the cache only on scroll / resize / Swiper update  - 
   //         events the geometry actually depends on.
   //       * mousemove handler then becomes a pure write: just a
   //         `style.transform` per card. Zero rect reads, zero forced
@@ -114,7 +114,7 @@ const HomeTwoOffer = () => {
 
     let cards: HTMLElement[] = [];
     let thumbs: (HTMLElement | undefined)[] = [];
-    // Pre-cached viewport rects — refreshed only when geometry can change
+    // Pre-cached viewport rects - refreshed only when geometry can change
     // (scroll, resize, Swiper transition). Reading these on every
     // mousemove instead of calling getBoundingClientRect avoids the
     // forced-layout cost per pointer event.
@@ -153,7 +153,7 @@ const HomeTwoOffer = () => {
         rafId = 0;
         if (cards.length === 0) return;
         if (geomDirty) refreshRects();
-        // Pure write phase — no rect reads, no DOM queries. Browser
+        // Pure write phase - no rect reads, no DOM queries. Browser
         // batches all transform writes into a single composite step.
         for (let i = 0; i < cards.length; i++) {
           const thumb = thumbs[i];
@@ -239,7 +239,7 @@ const HomeTwoOffer = () => {
   );
 
   // Schema.org ItemList helps Google understand this is a list of services
-  // offered by the business — improves rich-result eligibility without any
+  // offered by the business - improves rich-result eligibility without any
   // visual change to the page.
   const jsonLd = useMemo(
     () => ({
@@ -295,14 +295,14 @@ const HomeTwoOffer = () => {
               </h2>
               <p>
                 From SaaS platforms and white-label products to AI, web, and
-                growth marketing — we cover every layer of your digital roadmap.
+                growth marketing - we cover every layer of your digital roadmap.
               </p>
             </header>
           </div>
         </div>
       </div>
 
-      {/* Primary marquee — exposed to assistive tech & crawlers. */}
+      {/* Primary marquee - exposed to assistive tech & crawlers. */}
       <div className="offer-two__slider-w" dir="rtl">
         <Swiper
           slidesPerView="auto"

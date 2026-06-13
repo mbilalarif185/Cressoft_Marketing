@@ -26,8 +26,8 @@ const MarketingSolutions = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Technology & SaaS Solutions — SaaS, White-Label, AI & More | Quantel Solutions"
-        description="Explore Quantel Solutions' full range of capabilities for global teams — SaaS product development, white-label platforms, AI & automation, web and mobile apps, e-commerce, ERP, SEO, and UI/UX design."
+        title="Technology & SaaS Solutions - SaaS, White-Label, AI & More | Quantel Solutions"
+        description="Explore Quantel Solutions' full range of capabilities for global teams - SaaS product development, white-label platforms, AI & automation, web and mobile apps, e-commerce, ERP, SEO, and UI/UX design."
         pathname="/marketing-solutions"
         keywords={[
           "SaaS development UK",
@@ -74,8 +74,7 @@ const MarketingSolutions = () => {
         navigation="Services"
         description="Quantel Solutions is a results-first technology company headquartered in London.
          We design, build, and scale SaaS products, white-label platforms, AI, and growth programmes
-         for startups, scaleups, and enterprises across the UK, US, UAE, and beyond
-          — turning ambitious roadmaps into real, measurable outcomes."
+         for startups, scaleups, and enterprises across the UK, US, UAE, and beyond -  turning ambitious roadmaps into real, measurable outcomes."
       />
       <MarketingServices />
       <MarketingResults />

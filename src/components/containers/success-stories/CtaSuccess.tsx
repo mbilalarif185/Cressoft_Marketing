@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import {
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_TEL_HREF,
@@ -14,7 +15,7 @@ type Stat = {
 
 const STATS: Stat[] = [
   { value: "500+", label: "Projects delivered" },
-  { value: "12 yrs", label: "Delivering globally" },
+  { value: "5 yrs", label: "Delivering globally" },
   { value: "98%", label: "Client retention rate" },
   { value: "48 hrs", label: "Discovery call turnaround" },
 ];
@@ -28,7 +29,7 @@ const CtaSuccess = () => {
         <div className="row justify-content-center">
           <div className="col-12 col-xxl-11">
             <div className="cta-success__wrapper">
-              {/* Decorative gradient orbs — purely visual */}
+              {/* Decorative gradient orbs - purely visual */}
               <span className="cta-success__orb cta-success__orb--one" aria-hidden="true" />
               <span className="cta-success__orb cta-success__orb--two" aria-hidden="true" />
 
@@ -44,7 +45,7 @@ const CtaSuccess = () => {
                   </h2>
                   <p className="cta-success__lead">
                     We partner with a limited number of new clients each quarter.
-                    Let&apos;s see if we&apos;re a good fit — no pressure, no hard sell.
+                    Let&apos;s see if we&apos;re a good fit - no pressure, no hard sell.
                   </p>
 
                   <div className="cta-success__actions">
@@ -59,7 +60,7 @@ const CtaSuccess = () => {
                       className="cta-success__btn-ghost"
                       aria-label="Chat with our team on WhatsApp"
                     >
-                      <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                      <WhatsAppIcon className="wa-icon" />
                       Message Us on WhatsApp
                     </Link>
                   </div>

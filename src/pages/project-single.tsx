@@ -7,7 +7,7 @@ import UxProcess from "@/components/containers/service-details/UxProcess";
 
 import { SITE_URL } from "@/lib/seo";
 
-// ProjectDetailsMain renders multiple Swiper galleries — defer it so the
+// ProjectDetailsMain renders multiple Swiper galleries - defer it so the
 // Swiper runtime does not enter this page's First Load chunk.
 const ProjectDetailsMain = dynamic(
   () => import("@/components/containers/project/ProjectDetailsMain")
@@ -17,7 +17,7 @@ const ProjectDetails = () => {
   return (
     <Layout header={2} footer={5}>
       <Seo
-        title="Project Details — Quantel Solutions"
+        title="Project Details - Quantel Solutions"
         description="Inside view of a technology and product project delivered by Quantel Solutions for businesses across the UK, US, and UAE."
         pathname="/project-single"
         breadcrumbs={[

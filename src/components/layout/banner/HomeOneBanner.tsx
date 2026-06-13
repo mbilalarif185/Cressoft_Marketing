@@ -13,7 +13,7 @@ import star from "public/images/star.webp";
 import { HERO_BANNER, STAR_ICON } from "@/lib/image-dimensions";
 
 const HomeOneBanner = () => {
-  // GSAP loads after `load` + idle — avoids competing with LCP image/font.
+  // GSAP loads after `load` + idle - avoids competing with LCP image/font.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const wideEnough = window.matchMedia("(min-width: 577px)");
@@ -103,7 +103,7 @@ const HomeOneBanner = () => {
                   <i className="fa-solid fa-globe" aria-hidden="true"></i>
                   Global Technology Partner
                 </span>
-                <h1 className="text-start fw-9 mb-0 title-anim">
+                <h1 className="text-start fw-9 mb-0">
                   Scale Your Business with
                   <span className="text-stroke"> Intelligent</span>
                   <span className="interval">
@@ -113,7 +113,7 @@ const HomeOneBanner = () => {
                 <div className="banner__content-inner">
                   <p>
                     From SaaS platforms and white-label products to enterprise
-                    AI and growth marketing — we help startups and enterprises
+                    AI and growth marketing - we help startups and enterprises
                     across the UK, US, UAE, and beyond build smarter.
                   </p>
                   <div className="banner__cta-group">
@@ -126,7 +126,7 @@ const HomeOneBanner = () => {
                   </div>
                   <div className="cta section__content-cta banner__stats">
                     <div className="single">
-                      <h5 className="fw-7">12+</h5>
+                      <h5 className="fw-7">5+</h5>
                       <p className="fw-5">Years of delivery</p>
                     </div>
                     <div className="single">

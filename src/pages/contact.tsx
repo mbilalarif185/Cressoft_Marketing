@@ -10,7 +10,7 @@ const ContactUs = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Contact Quantel Solutions — Global Technology & SaaS Partner"
+        title="Contact Quantel Solutions - Global Technology & SaaS Partner"
         description="Get in touch with Quantel Solutions, a London-headquartered technology company. Contact us via phone, WhatsApp, or email to build your SaaS product, white-label platform, or growth programme."
         pathname="/contact"
         keywords={[
@@ -21,7 +21,7 @@ const ContactUs = () => {
           "London software company",
         ]}
         image={`${SITE_URL}/images/home/banner.webp`}
-        imageAlt="Contact Quantel Solutions — Global Technology & SaaS Partner"
+        imageAlt="Contact Quantel Solutions - Global Technology & SaaS Partner"
         webPageType="ContactPage"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },

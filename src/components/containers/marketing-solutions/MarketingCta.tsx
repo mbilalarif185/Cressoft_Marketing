@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import {
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_TEL_HREF,
@@ -59,7 +60,7 @@ function computeSlots(count: number, from: Date = new Date()): Slot[] {
 // render (so React's hydration check passes), then replaced on mount with the
 // real upcoming dates via `useEffect`.
 const PLACEHOLDER_SLOTS: Slot[] = SLOT_TIMES.map((time, i) => ({
-  day: "—",
+  day: "-",
   date: "Loading",
   time,
   status: SLOT_STATUSES[i],
@@ -136,7 +137,7 @@ const MarketingCta = () => {
                     Book a no-obligation call with a senior Quantel strategist.
                      We&apos;ll review your product and growth goals, identify your three
                      biggest quick-win opportunities, and send you a
-                     written 90-day roadmap within 24 hours — completely free, no strings attached.
+                     written 90-day roadmap within 24 hours - completely free, no strings attached.
                   </p>
 
                   <div className="marketing-cta__actions">
@@ -157,10 +158,7 @@ const MarketingCta = () => {
                       className="marketing-cta__btn-secondary"
                       aria-label="Message us on WhatsApp"
                     >
-                      <i
-                        className="fa-brands fa-whatsapp"
-                        aria-hidden="true"
-                      ></i>
+                      <WhatsAppIcon className="wa-icon" />
                       WhatsApp US Now
                     </Link>
                   </div>

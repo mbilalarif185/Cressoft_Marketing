@@ -14,10 +14,10 @@ const FAQS: Faq[] = [
     a: "Both. We partner with early-stage startups shipping their first product, scaleups hardening their platform for growth, and enterprises modernising legacy systems. We scope every engagement to the actual size and stage of the business, so a startup gets a lean, fast-moving team while an enterprise gets the governance, documentation, and security posture it needs."  },
   {
     q: "What's included in the free discovery call?",
-    a: "Your discovery call is a genuine working session with a senior Quantel strategist — not a sales pitch dressed up as a consultation. We'll review your goals, your current stack, and identify the highest-leverage opportunities, then outline a practical roadmap you could act on with or without us. Within 24 hours we'll follow up with a written summary of the findings and recommendations. No obligation."  },
+    a: "Your discovery call is a genuine working session with a senior Quantel strategist - not a sales pitch dressed up as a consultation. We'll review your goals, your current stack, and identify the highest-leverage opportunities, then outline a practical roadmap you could act on with or without us. Within 24 hours we'll follow up with a written summary of the findings and recommendations. No obligation."  },
   {
     q: "Can you work alongside our existing in-house engineering or marketing team?",
-    a: "Absolutely. We're set up to augment internal teams, not replace them. Many clients embed us to own a specific workstream — a SaaS module, an AI feature, or a paid-acquisition channel — while their in-house team handles the rest. We're flexible on structure and always start by understanding what's already in place before recommending changes."  },
+    a: "Absolutely. We're set up to augment internal teams, not replace them. Many clients embed us to own a specific workstream - a SaaS module, an AI feature, or a paid-acquisition channel - while their in-house team handles the rest. We're flexible on structure and always start by understanding what's already in place before recommending changes."  },
   {
     q: "Which regions and time zones do you work across?",
     a: "We're headquartered in London and deliver for clients across the UK, US, UAE, and Asia-Pacific. Our delivery model is remote-first with overlapping working hours arranged around your core team, so collaboration stays smooth regardless of time zone. Calls run over Zoom or Google Meet, and day-to-day communication runs through Slack, email, and WhatsApp."  },
@@ -117,7 +117,7 @@ const MarketingFaq = () => {
         </div>
       </section>
 
-      {/* schema.org/FAQPage — surfaces these answers in Google search results */}
+      {/* schema.org/FAQPage - surfaces these answers in Google search results */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

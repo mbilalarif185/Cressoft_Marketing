@@ -10,7 +10,7 @@ const OurPortfolio = () => {
   return (
     <Layout header={2} footer={5}>
       <Seo
-        title="Portfolio — Technology & SaaS Case Studies | Quantel Solutions"
+        title="Portfolio - Technology & SaaS Case Studies | Quantel Solutions"
         description="A selection of SaaS platforms, white-label products, AI solutions, and web projects delivered by Quantel Solutions for clients across the UK, US, UAE, and beyond."
         pathname="/portfolio"
         keywords={[
@@ -25,7 +25,7 @@ const OurPortfolio = () => {
       <CmnBanner
         title="Portfolio Gallery"
         navigation="Portfolio Gallery"
-        description="A curated selection of campaigns, identities, and digital experiences—showing how we translate briefs into work that performs and resonates."
+        description="A curated selection of campaigns, identities, and digital experiences - showing how we translate briefs into work that performs and resonates."
       />
       <PortfolioMain />
     </Layout>

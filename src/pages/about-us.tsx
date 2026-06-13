@@ -9,7 +9,7 @@ import AboutCta from "@/components/containers/home-two/AboutCta";
 
 import { SITE_URL } from "@/lib/seo";
 
-// Below-the-fold sections that pull in Swiper — defer them so the LCP banner
+// Below-the-fold sections that pull in Swiper - defer them so the LCP banner
 // and Agency block don't have to wait on the carousel runtime.
 const HomeTwoTestimonial = dynamic(
   () => import("@/components/containers/home-two/HomeTwoTestimonial")
@@ -22,8 +22,8 @@ const AboutUs = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="About Us — Global Technology Partner Based in London | Quantel Solutions"
-        description="Quantel Solutions is a London-headquartered technology company helping startups, scaleups, and enterprises across the UK, US, and UAE build SaaS products and drive measurable growth since 2014."
+        title="About Us - Global Technology Partner Based in London | Quantel Solutions"
+        description="Quantel Solutions is a London-headquartered technology company helping startups, scaleups, and enterprises across the UK, US, and UAE build SaaS products and drive measurable growth since 2021."
         pathname="/about-us"
         keywords={[
           "about Quantel Solutions",

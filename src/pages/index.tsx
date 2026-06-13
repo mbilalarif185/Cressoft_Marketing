@@ -9,7 +9,7 @@ import type { BlogPostMeta } from "@/types/blog";
 
 import { SITE_URL } from "@/lib/seo";
 
-// Below-the-fold sections — defer their JS so the LCP banner ships first.
+// Below-the-fold sections - defer their JS so the LCP banner ships first.
 // HomeTwoOffer pulls in the Swiper runtime; deferring it keeps Swiper out of
 // the page-level chunk while still SSR-rendering for SEO + first paint.
 const HomeTwoAward = dynamic(
@@ -69,7 +69,7 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
           "technology partner UAE",
         ]}
         image={`${SITE_URL}/images/home/banner.webp`}
-        imageAlt="Quantel Solutions — Global Technology & SaaS Partner"
+        imageAlt="Quantel Solutions - Global Technology & SaaS Partner"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Organization",
@@ -86,7 +86,7 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
             postalCode: "EC3M 3BY",
             addressCountry: "GB",
           },
-          foundingDate: "2014",
+          foundingDate: "2021",
           sameAs: [
             "https://instagram.com/quantelsolutions",
             "https://linkedin.com/company/quantel-solutions",

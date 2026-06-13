@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "public/images/logo/quantel_solutions_dark.png";
+import logo from "public/images/logo/quantel_solutions_dark.webp";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import {
   CONTACT_ADDRESS,

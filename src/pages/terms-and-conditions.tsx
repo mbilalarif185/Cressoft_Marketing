@@ -10,7 +10,7 @@ const TermsAndConditionsPage = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Terms & Conditions — Quantel Solutions"
+        title="Terms & Conditions - Quantel Solutions"
         description="The terms that govern your use of quantel.uk and the technology services provided by Quantel Solutions."
         pathname="/terms-and-conditions"
         breadcrumbs={[

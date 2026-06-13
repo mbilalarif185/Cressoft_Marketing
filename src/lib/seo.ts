@@ -13,7 +13,7 @@ import {
 } from "@/constants/contact";
 import { QUANTEL_SOCIAL } from "@/constants/socialLinks";
 
-/** Canonical site origin — always https, no www, no trailing slash. */
+/** Canonical site origin - always https, no www, no trailing slash. */
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://quantel.uk"
 ).replace(/^http:\/\//, "https://").replace(/^https:\/\/www\./, "https://");
@@ -23,7 +23,7 @@ export const SITE_LEGAL_NAME = "Quantel Solutions Ltd";
 export const SITE_LOCALE = "en_GB";
 export const SITE_LANG = "en-GB";
 
-/** Default branded title suffix — kept short to leave room for page titles. */
+/** Default branded title suffix - kept short to leave room for page titles. */
 export const DEFAULT_TITLE = `Global Technology & SaaS Partner | ${SITE_NAME}`;
 
 export const DEFAULT_DESCRIPTION =
@@ -46,7 +46,7 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/digital-marketing-agency.web
 /** Brand logo, used in Organization JSON-LD. */
 export const ORGANIZATION_LOGO = `${SITE_URL}/images/logo/quantel_solutions_light.png`;
 
-/** Markets we explicitly serve — used in LocalBusiness `areaServed`. */
+/** Markets we explicitly serve - used in LocalBusiness `areaServed`. */
 export const SERVICE_AREAS = [
   "United Kingdom",
   "United States",
@@ -59,7 +59,7 @@ export const PRIMARY_SERVICES = [
     slug: "saas-development",
     name: "SaaS Product Development",
     description:
-      "End-to-end SaaS product development — architecture, multi-tenant platforms, billing, and scalable cloud infrastructure for startups and enterprises.",
+      "End-to-end SaaS product development - architecture, multi-tenant platforms, billing, and scalable cloud infrastructure for startups and enterprises.",
   },
   {
     slug: "white-label-solutions",
@@ -71,7 +71,7 @@ export const PRIMARY_SERVICES = [
     slug: "ai-automation",
     name: "AI & Automation",
     description:
-      "Custom AI solutions and intelligent automation — from LLM-powered features and copilots to workflow automation that cuts operational cost.",
+      "Custom AI solutions and intelligent automation - from LLM-powered features and copilots to workflow automation that cuts operational cost.",
   },
 ] as const;
 

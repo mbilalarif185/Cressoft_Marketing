@@ -23,8 +23,8 @@ const BlogPage = ({ posts, categories, tags }: BlogPageProps) => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Blog — SaaS, AI & Growth Insights | Quantel Solutions"
-        description="Articles on SaaS, AI, product engineering, and digital growth — practical ideas and insights for startups, scaleups, and enterprises from the Quantel Solutions team."
+        title="Blog - SaaS, AI & Growth Insights | Quantel Solutions"
+        description="Articles on SaaS, AI, product engineering, and digital growth - practical ideas and insights for startups, scaleups, and enterprises from the Quantel Solutions team."
         pathname="/blog"
         keywords={[
           "SaaS blog",
@@ -53,7 +53,7 @@ const BlogPage = ({ posts, categories, tags }: BlogPageProps) => {
       <CmnBanner
         title="Blog"
         navigation="Blog"
-        description="Articles on branding, marketing, and digital product thinking — practical ideas you can apply to your next launch or refresh."
+        description="Articles on branding, marketing, and digital product thinking - practical ideas you can apply to your next launch or refresh."
       />
       <BlogMain posts={posts} categories={categories} tags={tags} />
     </Layout>

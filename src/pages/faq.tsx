@@ -33,7 +33,7 @@ const FaqPage = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="FAQs — Global Technology & SaaS Partner | Quantel Solutions"
+        title="FAQs - Global Technology & SaaS Partner | Quantel Solutions"
         description="Answers to common questions about how Quantel Solutions works, timelines, deliverables, pricing, and what to expect when you engage our technology team."
         pathname="/faq"
         keywords={[
@@ -44,7 +44,7 @@ const FaqPage = () => {
           "how SaaS development works",
         ]}
         image={`${SITE_URL}/images/home/banner.webp`}
-        imageAlt="Frequently asked questions — Quantel Solutions"
+        imageAlt="Frequently asked questions - Quantel Solutions"
         webPageType="FAQPage"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },

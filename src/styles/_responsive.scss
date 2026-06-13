@@ -133,11 +133,8 @@
 
   .work-steps {
     .work-steps__single {
-      h5,
-      h3,
       .work-steps__title {
-        padding: 16px 20px;
-        font-size: 16px;
+        font-size: 17px;
       }
     }
 
@@ -180,7 +177,16 @@
 
 @media only screen and (max-width: 1199.98px) {
   .primary-navbar {
-    padding: 21px 0px;
+    padding: 16px 0px;
+
+    .navbar {
+      align-items: center;
+    }
+
+    .navbar__options {
+      align-items: center;
+    }
+
     .navbar__menu {
       display: none;
     }
@@ -461,12 +467,11 @@
   }
 
   .work-steps {
-    .work-three {
-      margin-top: 60px;
-    }
-
+    // Timeline is flat now — drop the legacy staircase offsets.
+    .work-two,
+    .work-three,
     .work-four {
-      margin-top: 120px;
+      margin-top: 0;
     }
   }
 
@@ -591,11 +596,14 @@
   .portfolio-two {
     .portfolio__text-slider {
       margin-bottom: 40px;
+      overflow: visible;
     }
     .portfolio__text-slider-single {
       h2,
       p.h1 {
-        margin-top: -14px;
+        margin-top: 0;
+        line-height: 1.15;
+        padding-block: 0.1em;
       }
     }
   }
@@ -780,6 +788,10 @@
 
   .offcanvas-nav {
     .offcanvas-menu {
+      .offcanvas-menu__header {
+        padding: 0 20px;
+      }
+
       .offcanvas-menu__wrapper {
         padding: 60px 0px;
       }
@@ -832,6 +844,17 @@
       padding-left: 0px;
     }
 
+    .banner__stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 20px;
+      width: 100%;
+
+      .single {
+        min-width: 0;
+      }
+    }
+
     .banner-one-thumb {
       top: 240px;
       left: 60%;
@@ -862,25 +885,48 @@
   }
 
   .work-steps {
-    .work-steps__single {
-      padding-top: 140px;
-      &:hover {
-        span {
-          &::after {
-            height: 40px;
-          }
-        }
-      }
-    }
-    .work-two {
-      margin-top: 0px;
-    }
-    .work-three {
-      margin-top: 40px;
+    .work-steps__list {
+      row-gap: 10px;
     }
 
-    .work-four {
-      margin-top: 40px;
+    .work-steps__item {
+      margin-bottom: 16px;
+
+      &.work-two,
+      &.work-three,
+      &.work-four {
+        margin-top: 0 !important;
+      }
+    }
+
+    // Compact mobile rows: node on the left, title to its right.
+    .work-steps__single {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      padding: 0;
+
+      .work-steps__percent {
+        flex-shrink: 0;
+        width: 54px;
+        height: 54px;
+        min-width: 54px;
+        font-size: 13px;
+      }
+
+      .work-steps__title {
+        flex: 1;
+        min-width: 0;
+        font-size: 15px;
+        line-height: 1.35;
+        text-align: left;
+        justify-content: flex-start;
+      }
+    }
+
+    .work-steps__preview {
+      margin-top: 32px;
+      padding: 14px;
     }
   }
 
@@ -1079,10 +1125,35 @@
 
     .banner__content-inner {
       margin-top: 24px;
+
       .cta {
         flex-direction: column;
         align-items: flex-start;
         margin-top: 40px;
+      }
+
+      .banner__stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex-direction: unset;
+        align-items: start;
+        gap: 20px 16px;
+        margin-top: 32px;
+        width: 100%;
+
+        .single {
+          min-width: 0;
+
+          h5 {
+            font-size: clamp(18px, 5vw, 22px);
+            line-height: 1.2;
+          }
+
+          p {
+            font-size: 13px;
+            margin-top: 4px;
+          }
+        }
       }
     }
 
@@ -1128,7 +1199,9 @@
     .portfolio__text-slider-single {
       h2,
       p.h1 {
-        margin-top: -8px;
+        margin-top: 0;
+        line-height: 1.12;
+        padding-block: 0.08em;
       }
       &:nth-of-type(even) {
         h2,
@@ -1204,7 +1277,22 @@
 
   .work-steps {
     .work-two {
-      margin-top: 40px;
+      margin-top: 0;
+    }
+
+    .work-steps__single {
+      gap: 8px;
+
+      .work-steps__percent {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        font-size: 12px;
+      }
+
+      .work-steps__title {
+        font-size: 14px;
+      }
     }
   }
 
@@ -1256,14 +1344,33 @@
       font-size: 13.5px;
     }
     .cta-success__phone {
-      gap: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      margin-top: 4px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+
       strong {
         font-size: 16px;
       }
+
+      small {
+        opacity: 0.78;
+      }
+
       i {
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+
+      span {
+        min-width: 0;
       }
     }
     .cta-success__stats {

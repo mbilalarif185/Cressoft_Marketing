@@ -41,22 +41,22 @@ const HomeTwoAward = () => {
                 <p>
                   We don&apos;t believe in one-size-fits-all packages. Every
                   solution we craft is tailored to your industry, your market,
-                  and your goals — engineered to scale across borders.
+                  and your goals - engineered to scale across borders.
                 </p>
               </div>
               <div className="award__content-meta">
                 <div className="single">
-                  <h4>2014</h4>
+                  <h4>2021</h4>
                   <h4>Where It All Began</h4>
                   <p>Founded with a mission to help ambitious businesses grow through better technology.</p>
                 </div>
                 <div className="single">
-                  <h4>2018</h4>
+                  <h4>2023</h4>
                   <h4>100+ Clients Served</h4>
                   <p>Expanded our team and hit a major milestone serving businesses internationally.</p>
                 </div>
                 <div className="single">
-                  <h4>2022</h4>
+                  <h4>2026</h4>
                   <h4>Global Delivery Across 3 Continents</h4>
                   <p>Scaled delivery across the UK, US, and UAE with a 5-star client reputation.</p>
                 </div>

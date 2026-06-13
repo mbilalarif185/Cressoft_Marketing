@@ -10,7 +10,7 @@ const PrivacyPolicyPage = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Privacy Policy — Quantel Solutions"
+        title="Privacy Policy - Quantel Solutions"
         description="How Quantel Solutions collects, uses, and protects your personal data in line with the UK GDPR and the Data Protection Act 2018."
         pathname="/privacy-policy"
         breadcrumbs={[

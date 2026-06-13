@@ -116,11 +116,18 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
                       </Link>
                     </div>
                     <button
+                      type="button"
                       className="open-mobile-menu d-flex d-xl-none"
-                      aria-label="toggle mobile menu"
+                      aria-label={openNav ? "close mobile menu" : "open mobile menu"}
+                      aria-expanded={openNav}
                       onClick={handleNav}
                     >
-                      <i className="fa-light fa-bars-staggered"></i>
+                      <i
+                        className={
+                          openNav ? "fa-light fa-xmark" : "fa-light fa-bars"
+                        }
+                        aria-hidden="true"
+                      ></i>
                     </button>
                   </div>
                 </nav>

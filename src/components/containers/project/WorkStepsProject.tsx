@@ -14,7 +14,7 @@ type Step = {
   caption: string;
   /** Preview image displayed in the always-visible panel below the cards. */
   image: StaticImageData;
-  /** Alt text — left empty for decorative previews (preferred). */
+  /** Alt text - left empty for decorative previews (preferred). */
   imageAlt?: string;
   /** Extra column class for the staircase offset (`work-two`, `work-three`…). */
   offsetClass?: string;
@@ -37,14 +37,14 @@ const STEPS: Step[] = [
   {
     percent: "75",
     title: "Hi-Fidelity Design",
-    caption: "Pixel-perfect interfaces aligned with your brand — built on a scalable, reusable design system.",
+    caption: "Pixel-perfect interfaces aligned with your brand - built on a scalable, reusable design system.",
     image: stepDesign,
     offsetClass: "work-three",
   },
   {
     percent: "100",
     title: "Development Phase",
-    caption: "Built for speed, GDPR compliance, and global payment ecosystems — Stripe, PayPal, Apple Pay, and more.",
+    caption: "Built for speed, GDPR compliance, and global payment ecosystems - Stripe, PayPal, Apple Pay, and more.",
     image: stepDevelopment,
     offsetClass: "work-four",
   },
@@ -59,7 +59,7 @@ const WorkStepsProject = () => {
 
   const activePreview = STEPS[activeStep] ?? STEPS[0];
 
-  // schema.org/HowTo — these are ordered process steps, perfect for the
+  // schema.org/HowTo - these are ordered process steps, perfect for the
   // HowTo rich-result type on Google search.
   const jsonLd = useMemo(
     () => ({
@@ -104,7 +104,7 @@ const WorkStepsProject = () => {
                   <div className="col-12 col-lg-7 col-xxl-5 offset-xxl-2">
                     <div className="text-center text-lg-start">
                       <p>
-                        Every market is unique — whether you&apos;re targeting
+                        Every market is unique - whether you&apos;re targeting
                         enterprise buyers in London, high-growth startups in the
                         US, or procurement teams in the UAE. Our process is built
                         to understand your audience first, then design solutions
@@ -122,7 +122,7 @@ const WorkStepsProject = () => {
               return (
                 <li
                   key={step.percent}
-                  className={`col-12 col-sm-6 col-xl-3 work-steps__item ${
+                  className={`col-12 col-xl-3 work-steps__item ${
                     step.offsetClass ?? ""
                   }`}
                 >
@@ -139,9 +139,8 @@ const WorkStepsProject = () => {
                     aria-controls={previewId}
                     aria-label={`Show preview for step ${index + 1}: ${step.title}`}
                   >
-                    <span aria-hidden="true">
-                      {step.percent}
-                      <br />%
+                    <span className="work-steps__percent" aria-hidden="true">
+                      {step.percent}%
                     </span>
                     <h3 className="work-steps__title">
                       {step.title}
@@ -156,7 +155,7 @@ const WorkStepsProject = () => {
             })}
           </ol>
 
-          {/* Always-visible preview panel — updates as the user hovers / taps a step.
+          {/* Always-visible preview panel - updates as the user hovers / taps a step.
               Keeping the image in one consistent location makes the interaction
               obvious and avoids the off-screen clipping issues of the old
               cursor-following thumbnails. */}

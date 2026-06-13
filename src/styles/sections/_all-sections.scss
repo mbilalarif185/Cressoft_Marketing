@@ -83,7 +83,8 @@
   .skill-bar {
     height: 8px;
     border-radius: 100px;
-    background-color: #363636;
+    // Unfilled rail: soft neutral so the remainder reads as a track, not a nub.
+    background-color: var(--line);
     position: relative;
   }
 
@@ -92,7 +93,8 @@
     top: 0px;
     left: 0px;
     bottom: 0px;
-    background-color: #cecece;
+    // Progress fill in the logo azure.
+    background-color: var(--primary-color);
     border-radius: inherit;
   }
 
@@ -162,6 +164,9 @@
 
   .portfolio__text-slider {
     margin-bottom: 80px;
+    // Swiper defaults to overflow:hidden — that clips large stroked display
+    // type at the cap height. Let the marquee breathe vertically.
+    overflow: visible;
 
     .swiper-wrapper {
       display: flex;
@@ -173,6 +178,8 @@
       align-items: center;
       justify-content: center;
       width: auto;
+      height: auto;
+      overflow: visible;
     }
   }
   .portfolio__text-slider-single {
@@ -183,7 +190,11 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      margin-bottom: 0px;
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 1.15;
+      // Stroke outlines extend past the glyph box — pad so caps aren't clipped.
+      padding-block: 0.12em;
       i {
         color: var(--primary-color);
       }
@@ -218,9 +229,11 @@
     font-family: sans-serif;
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke: 2px var(--ink);
+    paint-order: stroke fill;
     i {
       -webkit-text-fill-color: transparent;
       -webkit-text-stroke: 2px var(--primary-color);
+      paint-order: stroke fill;
     }
 
     a {
@@ -376,19 +389,27 @@
 
 // 5.04 poftfolio two styles
 .portfolio-two {
+  .portfolio__text-slider-w {
+    overflow: visible;
+    padding-block: 6px;
+  }
+
   .portfolio__text-slider {
     margin-bottom: 80px;
+    overflow: visible;
   }
   .portfolio__text-slider-single {
     h2,
     p.h1 {
-      margin-top: -20px;
+      margin-top: 0;
       font-weight: 900;
       text-transform: uppercase;
       display: flex;
       align-items: center;
       gap: 30px;
       margin-bottom: 0px;
+      line-height: 1.15;
+      padding-block: 0.12em;
       i {
         color: var(--primary-color);
       }
@@ -1728,6 +1749,13 @@
       font-size: 18px;
     }
 
+    .wa-icon {
+      width: 18px;
+      height: 18px;
+      color: #25d366;
+      flex-shrink: 0;
+    }
+
     &:hover,
     &:focus-visible {
       border-color: rgba(255, 255, 255, 0.4);
@@ -1980,149 +2008,137 @@
     padding-inline-start: 0;
     margin-bottom: 0;
   }
+  // Process timeline — laid out as a horizontal row of numbered nodes sitting
+  // on a connecting rail, with the step title beneath each node. Replaces the
+  // old "staircase" (230px top padding + stacked offsets) that scattered the
+  // percent circles across a tall, mostly-empty section.
+  .work-steps__list {
+    margin-top: 64px;
+    position: relative;
+    align-items: flex-start;
+  }
+
+  // Connecting rail behind the nodes — drawn between the centres of the first
+  // and last columns so it reads as one continuous process line (desktop).
+  @media (min-width: 1200px) {
+    .work-steps__list::before {
+      content: "";
+      position: absolute;
+      top: 34px; // node vertical centre (68px node)
+      left: 12.5%;
+      right: 12.5%;
+      height: 2px;
+      background: var(--line-strong);
+      z-index: 0;
+    }
+  }
+
   .work-steps__item {
     list-style: none;
+    margin-top: 0; // override the legacy staircase offsets
+  }
+
+  @media (max-width: 1199px) {
+    .work-steps__item {
+      margin-bottom: 44px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   .work-steps__single {
-    padding-top: 230px;
     position: relative;
-    // Each card is now an interactive <button> — strip the default UA styling
-    // so it visually matches the previous <div>-based design.
-    display: block;
+    z-index: 1;
+    // Interactive <button> reset.
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     width: 100%;
+    padding: 0 14px;
     background: transparent;
     border: 0;
-    padding-inline: 0;
-    text-align: inherit;
+    text-align: center;
     color: inherit;
     font: inherit;
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
+    transition: var(--transition);
 
     &:focus {
       outline: none;
     }
     &:focus-visible {
       outline: 2px solid var(--primary-color);
-      outline-offset: 4px;
-      border-radius: 8px;
+      outline-offset: 8px;
+      border-radius: 18px;
     }
 
-    h5,
-    h3,
-    .work-steps__title {
-      // Dark chip on the light page — keep light text on it.
-      --theme-color: #f4efe6;
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 0;
+    // Numbered percent node — sits on the rail.
+    .work-steps__percent {
       position: relative;
-      z-index: 2;
-      padding: 16px 30px;
-      border: 1px dashed rgba(255, 255, 255, 0.18);
-      background-color: var(--surface-dark);
-      border-radius: 100px;
-      overflow: hidden;
-      text-transform: capitalize;
-      transition: var(--transition);
-      // Title now hosts a small "preview available" hint icon at the end so
-      // the interaction is discoverable at a glance.
-      display: flex;
+      z-index: 1;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-
-      &::before {
-        content: "";
-        position: absolute;
-        inset: 0px;
-        width: 0%;
-        border-radius: 100px;
-        background: linear-gradient(
-          90deg,
-          var(--primary-color) 0%,
-          transparent 60.08%
-        );
-        z-index: -1;
-        transition: var(--transition);
-      }
-    }
-
-    .work-steps__hint {
-      font-size: 14px;
-      opacity: 0.55;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    span {
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      @include box(60px);
-      background-color: #1f1f1f;
-      text-align: center;
-      color: #8d8d8d;
-      line-height: 1.4;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background-color: var(--surface-raised);
+      border: 2px solid var(--line-strong);
+      // Beat the global dark `--theme-color` inherited through the <button>.
+      color: var(--ink) !important;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 6px 18px rgba(22, 24, 31, 0.06);
       transition: var(--transition);
-      &::after {
-        content: "";
-        position: absolute;
-        top: calc(100% + 30px);
-        left: 50%;
-        transform: translateX(-50%);
-        height: 0px;
-        width: 1px;
-        background-color: #414141;
-        transition: var(--transition);
-      }
     }
-  }
 
-  .work-steps__single {
-
-    &:hover {
-      span {
-        background-color: var(--primary-color);
-        color: var(--white);
-        &::after {
-          height: 108px;
-        }
-      }
-      h5,
-      h3,
-      .work-steps__title {
-        border: 1px solid transparent;
-        &::before {
-          width: 100%;
-        }
-      }
-      .work-steps__hint {
-        opacity: 1;
-        transform: scale(1.1);
-      }
-    }
-  }
-
-  .work-steps__single-active {
-    span {
-      background-color: var(--primary-color);
-      color: var(--white);
-      &::after {
-        height: 108px;
-      }
-    }
-    h5,
-    h3,
     .work-steps__title {
-      border: 1px solid transparent;
-      &::before {
-        width: 100%;
-      }
+      --theme-color: inherit;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 0;
+      line-height: 1.3;
+      text-transform: capitalize;
+      color: var(--ink);
+      transition: var(--transition);
+      // Title carries a small "preview available" hint icon.
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .work-steps__hint {
+      font-size: 13px;
+      color: var(--primary-color);
+      opacity: 0;
+      transform: translateY(-2px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+  }
+
+  .work-steps__single:hover,
+  .work-steps__single-active {
+    .work-steps__percent {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: var(--white) !important;
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 12px 26px rgba(10, 142, 240, 0.35);
+    }
+    .work-steps__title {
+      color: var(--primary-color);
     }
     .work-steps__hint {
-      opacity: 1;
+      opacity: 0.85;
+      transform: translateY(0);
     }
   }
 
@@ -2194,14 +2210,11 @@
     opacity: 0.75;
   }
 
-  .work-two {
-    margin-top: 100px;
-  }
-  .work-three {
-    margin-top: 200px;
-  }
+  // Legacy staircase offsets — flattened into the horizontal timeline.
+  .work-two,
+  .work-three,
   .work-four {
-    margin-top: 300px;
+    margin-top: 0;
   }
 }
 
@@ -4497,6 +4510,14 @@
 
   .thumb {
     margin-bottom: 30px;
+    // Inline contact icons inherit the logo azure via `currentColor`.
+    color: var(--primary-color);
+
+    svg {
+      width: 52px;
+      height: 52px;
+      display: inline-block;
+    }
   }
 
   h4 {

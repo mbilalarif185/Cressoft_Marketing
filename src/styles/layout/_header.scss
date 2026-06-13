@@ -201,8 +201,28 @@
   }
 
   .open-mobile-menu {
-    font-size: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    line-height: 1;
     color: var(--ink);
+    transition: var(--transition);
+
+    i {
+      display: block;
+      font-size: 24px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: var(--primary-color);
+    }
   }
 }
 
@@ -302,7 +322,27 @@
     }
 
     .close-offcanvas-menu {
-      font-size: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      font-size: 22px;
+      cursor: pointer;
+      transition: var(--transition);
+
+      &:hover,
+      &:focus-visible {
+        color: var(--white);
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
     }
 
     .offcanvas-menu__wrapper {
@@ -440,14 +480,42 @@
       button {
         width: 100%;
       }
+
+      .btn--secondary {
+        color: var(--white);
+        border-color: rgba(255, 255, 255, 0.35);
+        text-align: center;
+        justify-content: center;
+
+        &::before {
+          background-color: var(--primary-color);
+        }
+
+        &:hover,
+        &:focus-visible {
+          color: var(--white);
+          border-color: var(--primary-color);
+        }
+      }
     }
 
     .offcanvas-menu__social {
       transition: var(--transition);
       padding: 0px 20px;
-      a {
+
+      &.social a {
+        color: var(--white);
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.22);
         font-size: 20px;
         @include box(50px);
+
+        &:hover,
+        &:focus-visible {
+          color: var(--white);
+          background-color: var(--primary-color);
+          border-color: var(--primary-color);
+        }
       }
     }
   }

@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   CONTACT_ADDRESS,
@@ -14,10 +13,50 @@ import {
   CONTACT_WHATSAPP_MESSAGE_SHORT,
   contactWhatsAppHref,
 } from "@/constants/contact";
-import phone from "public/images/phone.webp";
-import mail from "public/images/mail.webp";
-import location from "public/images/location.webp";
-import time from "public/images/time.webp";
+
+/**
+ * Contact-card icons, inlined as SVGs so they take the brand colour via
+ * `currentColor` (set on `.contact-m .thumb` → `var(--primary-color)`, the
+ * logo azure). Previously these were baked-orange `.webp` rasters that could
+ * not be recoloured. Thin 1.6px rounded strokes match the original line look.
+ */
+const iconProps = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.6,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+  focusable: false,
+};
+
+const PhoneIcon = () => (
+  <svg {...iconProps}>
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg {...iconProps}>
+    <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
+    <path d="m3 6 9 6.5L21 6" />
+  </svg>
+);
+
+const LocationIcon = () => (
+  <svg {...iconProps}>
+    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
+    <circle cx="12" cy="10" r="2.8" />
+  </svg>
+);
+
+const TimeIcon = () => (
+  <svg {...iconProps}>
+    <circle cx="12" cy="12" r="9.5" />
+    <path d="M12 7v5l3.5 2" />
+  </svg>
+);
 
 const ContactMain = () => {
   return (
@@ -27,7 +66,7 @@ const ContactMain = () => {
           <div className="col-12 col-sm-6 col-xl-3">
             <div className="contact-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Image src={phone} alt="Image" />
+                <PhoneIcon />
               </div>
               <div className="content">
                 <h4>Phone & Whatsapp</h4>
@@ -53,7 +92,7 @@ const ContactMain = () => {
           <div className="col-12 col-sm-6 col-xl-3">
             <div className="contact-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Image src={mail} alt="Image" />
+                <MailIcon />
               </div>
               <div className="content">
                 <h4>Mail Address</h4>
@@ -69,7 +108,7 @@ const ContactMain = () => {
           <div className="col-12 col-sm-6 col-xl-3">
             <div className="contact-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Image src={location} alt="Image" />
+                <LocationIcon />
               </div>
               <div className="content">
                 <h4>Our Location</h4>
@@ -88,7 +127,7 @@ const ContactMain = () => {
           <div className="col-12 col-sm-6 col-xl-3">
             <div className="contact-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Image src={time} alt="Image" />
+                <TimeIcon />
               </div>
               <div className="content">
                 <h4>Office Hour</h4>

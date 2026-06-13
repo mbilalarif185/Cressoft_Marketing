@@ -9,7 +9,7 @@ import WorkStepsProject from "@/components/containers/project/WorkStepsProject";
 
 import { SITE_URL } from "@/lib/seo";
 
-// Bottom-of-page Swiper section — deferred to keep the page-level chunk small.
+// Bottom-of-page Swiper section - deferred to keep the page-level chunk small.
 const OurAchievement = dynamic(
   () => import("@/components/containers/OurAchievement")
 );
@@ -18,8 +18,8 @@ const OurStory = () => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Our Story — Quantel Solutions"
-        description="The story behind Quantel Solutions — how a London-based team grew into a global technology partner for startups, scaleups, and enterprises across the UK, US, and UAE."
+        title="Our Story - Quantel Solutions"
+        description="The story behind Quantel Solutions - how a London-based team grew into a global technology partner for startups, scaleups, and enterprises across the UK, US, and UAE."
         pathname="/our-story"
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },
@@ -29,7 +29,7 @@ const OurStory = () => {
       <CmnBanner
         title="Our Story"
         navigation="Our Story"
-        description="How we started, what drives us today, and the principles that shape every engagement—from first workshop to final handover."
+        description="How we started, what drives us today, and the principles that shape every engagement - from first workshop to final handover."
       />
       <HomeTwoAward />
       <OurMission />

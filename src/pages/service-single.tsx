@@ -12,8 +12,8 @@ const ServiceDetails = () => {
   return (
     <Layout header={2} footer={5}>
       <Seo
-        title="Service Details — Quantel Solutions"
-        description="Detailed view of a Quantel Solutions service — scope, deliverables, and process for startups, scaleups, and enterprises."
+        title="Service Details - Quantel Solutions"
+        description="Detailed view of a Quantel Solutions service - scope, deliverables, and process for startups, scaleups, and enterprises."
         pathname="/service-single"
         keywords={[
           "SaaS development service",
