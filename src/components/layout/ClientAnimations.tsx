@@ -197,7 +197,7 @@ const ClientAnimations: React.FC = () => {
           // "technology" break across lines ("technolo / gy"). The stagger
           // tween still targets `.char`, so the reveal animation is unchanged.
           const splits = titles.map(
-            (t) => new SplitType(t, { types: "words, chars" })
+            (t) => new SplitType(t, { types: "words,chars" })
           );
           const titleCtx = gsap.context(() => {
             titles.forEach((title) => {
