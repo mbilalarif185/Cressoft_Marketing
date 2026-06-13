@@ -4,13 +4,15 @@
 
 // footer one
 .footer {
-  // On-theme footer: navy base with the same blue→purple radial brand glow as
-  // the hero, replacing the off-theme smoky-silk texture so the footer reads
-  // as the bottom of the navy/gradient system (and drops a ~50–80 KB image).
-  background-color: var(--navy);
+  // Deliberate dark "island" anchoring a light page — a classic premium
+  // pattern. Deep ink base with a coral→ember/teal brand glow. Text is forced
+  // to ink globally, so the footer re-lights its own foreground tokens here.
+  --theme-color: #f4efe6;
+  --secondary-color: #9aa1ad;
+  background-color: var(--surface-dark);
   background-image:
-    radial-gradient(60% 90% at 12% 0%, rgba(79, 142, 247, 0.14) 0%, rgba(10, 15, 30, 0) 60%),
-    radial-gradient(55% 80% at 92% 8%, rgba(162, 89, 255, 0.12) 0%, rgba(10, 15, 30, 0) 60%);
+    radial-gradient(60% 90% at 12% 0%, rgba(30, 134, 214, 0.16) 0%, rgba(17, 18, 25, 0) 60%),
+    radial-gradient(55% 80% at 92% 8%, rgba(23, 169, 206, 0.14) 0%, rgba(17, 18, 25, 0) 60%);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
@@ -78,6 +80,30 @@
 
   .footer__single-form {
     margin-top: 30px;
+  }
+
+  // "Book a call" CTA on the dark footer — the global .btn--secondary is ink
+  // on light, which is invisible here. Promote it to the vibrant blue gradient
+  // so it reads as the footer's primary action.
+  .footer__cta {
+    margin-top: 32px;
+    .btn {
+      border: 0;
+      color: var(--white);
+      background-image: var(--brand-gradient);
+      box-shadow: var(--shadow-brand);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+      &::before {
+        display: none;
+      }
+      &:hover {
+        color: var(--white);
+        border: 0;
+        transform: translateY(-2px);
+        filter: saturate(108%);
+        box-shadow: 0 22px 50px rgba(10, 142, 240, 0.4);
+      }
+    }
   }
 
   .footer__copyright {

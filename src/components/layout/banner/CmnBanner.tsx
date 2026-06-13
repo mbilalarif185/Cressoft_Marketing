@@ -19,10 +19,7 @@ const CmnBanner = ({
 }: BannerProps) => {
   return (
     <>
-      <section
-        className="cmn-banner bg-img"
-        style={{ backgroundImage: "url('/images/banner/cmn-banner-bg.webp')" }}
-      >
+      <section className="cmn-banner">
         <div className="container">
           <div className="row gaper align-items-center">
             <div

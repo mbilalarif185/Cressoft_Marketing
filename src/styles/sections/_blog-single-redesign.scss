@@ -3,7 +3,7 @@
 
 @mixin blog-focus-ring {
   &:focus-visible {
-    outline: 2px solid rgba(103, 84, 233, 0.85);
+    outline: 2px solid rgba(10, 142, 240, 0.85);
     outline-offset: 3px;
   }
 }
@@ -29,17 +29,17 @@
   background:
     radial-gradient(
       ellipse 120% 70% at 50% -25%,
-      rgba(103, 84, 233, 0.38) 0%,
+      rgba(10, 142, 240, 0.38) 0%,
       transparent 58%
     ),
     radial-gradient(
       ellipse 55% 45% at 100% 15%,
-      rgba(212, 175, 55, 0.09) 0%,
+      rgba(31, 196, 245, 0.09) 0%,
       transparent 55%
     ),
     radial-gradient(
       ellipse 50% 40% at 0% 85%,
-      rgba(103, 84, 233, 0.14) 0%,
+      rgba(10, 142, 240, 0.14) 0%,
       transparent 55%
     ),
     linear-gradient(165deg, #0e0e14 0%, #0a0a0f 38%, #06060a 100%);
@@ -264,7 +264,7 @@
   border-radius: 20px;
   overflow: hidden;
   box-shadow:
-    0 4px 1px rgba(103, 84, 233, 0.06),
+    0 4px 1px rgba(10, 142, 240, 0.06),
     0 32px 100px rgba(0, 0, 0, 0.55);
 }
 
@@ -366,7 +366,7 @@
   .bd-prose__a {
     color: #c4b5ff;
     text-decoration: underline;
-    text-decoration-color: rgba(103, 84, 233, 0.45);
+    text-decoration-color: rgba(10, 142, 240, 0.45);
     text-underline-offset: 3px;
     font-weight: 500;
     border-radius: 2px;
@@ -374,7 +374,7 @@
 
     &:hover {
       color: #e8e0ff;
-      text-decoration-color: rgba(103, 84, 233, 0.75);
+      text-decoration-color: rgba(10, 142, 240, 0.75);
     }
   }
 
@@ -486,9 +486,9 @@
   @include blog-focus-ring;
 
   &:hover {
-    border-color: rgba(103, 84, 233, 0.55);
+    border-color: rgba(10, 142, 240, 0.55);
     color: #fff;
-    background: rgba(103, 84, 233, 0.12);
+    background: rgba(10, 142, 240, 0.12);
   }
 }
 
@@ -516,9 +516,9 @@
   @include blog-focus-ring;
 
   &:hover {
-    border-color: rgba(103, 84, 233, 0.55);
+    border-color: rgba(10, 142, 240, 0.55);
     color: var(--primary-color);
-    background: rgba(103, 84, 233, 0.1);
+    background: rgba(10, 142, 240, 0.1);
   }
 
   &.is-copied {
@@ -567,7 +567,7 @@
   @include blog-focus-ring;
 
   &:hover {
-    border-color: rgba(103, 84, 233, 0.45);
+    border-color: rgba(10, 142, 240, 0.45);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     transform: translateY(-2px);
   }
@@ -752,7 +752,7 @@
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 20px;
-  border-left: 3px solid rgba(103, 84, 233, 0.45);
+  border-left: 3px solid rgba(10, 142, 240, 0.45);
 }
 
 .blog-sidebar__widget-title {
@@ -784,8 +784,8 @@
 
     &:focus {
       outline: none;
-      border-color: rgba(103, 84, 233, 0.65);
-      box-shadow: 0 0 0 3px rgba(103, 84, 233, 0.2);
+      border-color: rgba(10, 142, 240, 0.65);
+      box-shadow: 0 0 0 3px rgba(10, 142, 240, 0.2);
     }
   }
 
@@ -884,14 +884,14 @@
     display: inline-block;
     padding: 8px 16px;
     border-radius: 999px;
-    background: rgba(103, 84, 233, 0.12);
-    border: 1px solid rgba(103, 84, 233, 0.35);
+    background: rgba(10, 142, 240, 0.12);
+    border: 1px solid rgba(10, 142, 240, 0.35);
     color: var(--primary-color);
     font-weight: 600;
     font-size: 14px;
 
     &:hover {
-      background: rgba(103, 84, 233, 0.22);
+      background: rgba(10, 142, 240, 0.22);
     }
   }
 }

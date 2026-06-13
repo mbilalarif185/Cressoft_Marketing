@@ -10,13 +10,13 @@
   right: 0px;
   width: 100%;
   z-index: 999;
-  // On-theme header: translucent navy with a blur so the brand-gradient hero
-  // reads through it, plus a faint brand-blue hairline — matches the navy
-  // base instead of the off-theme pure black.
-  background-color: rgba(10, 15, 30, 0.8);
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-  border-bottom: 1px solid rgba(79, 142, 247, 0.1);
+  // Daylight glass bar: translucent ivory with blur so the energetic hero
+  // washes through it, plus a warm hairline. Ink links resolve via the
+  // global `--theme-color` flip; coral takes over on hover.
+  background-color: rgba(250, 246, 239, 0.72);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border-bottom: 1px solid rgba(31, 24, 12, 0.06);
   transition: background-color 0.3s ease, box-shadow 0.3s ease,
     border-color 0.3s ease;
   .navbar {
@@ -202,7 +202,7 @@
 
   .open-mobile-menu {
     font-size: 30px;
-    color: var(--white);
+    color: var(--ink);
   }
 }
 
@@ -216,14 +216,14 @@
 }
 
 .navbar-active {
-  // Scrolled state: denser navy + brand-tinted divider + soft lift, still
-  // unmistakably part of the navy theme.
-  background-color: rgba(10, 15, 30, 0.92);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  // Scrolled state: near-opaque ivory + a soft warm lift so the bar separates
+  // cleanly from the content scrolling beneath it.
+  background-color: rgba(250, 246, 239, 0.94);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   animation: stickyNavbar 0.9s ease-in-out;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid rgba(79, 142, 247, 0.22);
+  box-shadow: 0 10px 34px rgba(31, 24, 12, 0.1);
+  border-bottom: 1px solid rgba(31, 24, 12, 0.08);
 }
 
 // secondary navbar

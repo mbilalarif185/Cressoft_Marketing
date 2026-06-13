@@ -211,7 +211,7 @@ export default function App({ Component, pageProps }: AppProps) {
           href="/images/digital-marketing-agency.webp"
           key="apple-touch"
         />
-        <meta name="theme-color" content="#0a0f1e" key="theme-color" />
+        <meta name="theme-color" content="#faf6ef" key="theme-color" />
         <meta name="format-detection" content="telephone=no" key="format-detection" />
 
         {/* Defaults — every page is expected to override <title> and <meta description> via <Seo>. */}

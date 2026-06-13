@@ -247,7 +247,7 @@ i:not([class*="fa-"]) {
     gap: 12px;
     padding: 12px 20px;
     line-height: 1;
-    border: 1px solid #414141;
+    border: 1px solid var(--line-strong);
     color: var(--primary-color);
     border-radius: 30px;
     margin-bottom: 32px;
@@ -274,7 +274,7 @@ i:not([class*="fa-"]) {
     gap: 12px;
     padding: 12px 20px;
     line-height: 1;
-    border: 1px solid #414141;
+    border: 1px solid var(--line-strong);
     color: var(--primary-color);
     border-radius: 30px;
     margin-bottom: 32px;

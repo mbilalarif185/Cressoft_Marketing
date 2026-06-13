@@ -13,36 +13,92 @@
   // Display face for headings — distinctive geometric grotesque (Sora).
   --display: var(--font-display, "Sora"), var(--inter);
 
-  // theme default — dark navy base for the Quantel enterprise-SaaS aesthetic.
+  // ---------------------------------------------------------------------
+  // "Daylight Studio" — light, warm, energetic theme with the Quantel
+  // logo's blue at its core.
+  //
+  // The site was originally dark-first (`--theme-bg` navy, `--theme-color`
+  // white). Because `_reset.scss` forces every heading and paragraph to
+  // `color: var(--theme-color) !important`, and CSS custom properties resolve
+  // at the use-site, flipping these two tokens here inverts text + canvas
+  // site-wide. Intentionally-dark "islands" (footer, hero accents, CTA panels)
+  // re-declare `--theme-color`/`--white` locally back to light.
+  // ---------------------------------------------------------------------
+
+  // Canvas + foreground (the global flip)
   --theme-font: var(--inter);
-  --theme-bg: #0a0f1e;
-  --theme-color: #ffffff;
+  --theme-bg: #faf6ef; // warm ivory canvas — softer + more premium than #fff
+  --theme-color: #16181f; // near-black ink with a hint of warmth
 
-  // colors
+  // Surfaces — a warm-neutral ramp for depth on a light page.
+  --surface: #faf6ef; // page canvas
+  --surface-raised: #ffffff; // cards / popovers lifted off the canvas
+  --surface-sunken: #f2ebdf; // warm sand bands that recede from the canvas
+  --surface-dark: #111219; // deliberate dark islands (footer, dark CTAs)
+
+  // Text ramp
+  --ink: #16181f; // primary text
+  --ink-soft: #565d6b; // secondary / supporting copy
+  --ink-faint: #8a8f9c; // captions, disabled, hairline labels
+
+  // Hairlines / dividers tuned for a warm light background
+  --line: #e8e0d2;
+  --line-strong: #d8cebb;
+
+  // base anchors (kept literal — used for on-accent text + dark islands)
   --white: #ffffff;
-  --black: #000000;
+  --black: #111219;
 
-  // Quantel brand palette
-  --navy: #0a0f1e; // dark hero / footer base
-  --navy-soft: #0f1730; // raised navy surface
-  --brand-blue: #4f8ef7; // primary bright-blue accent
-  --brand-purple: #a259ff; // secondary purple accent
-  --brand-gradient: linear-gradient(120deg, #4f8ef7 0%, #a259ff 100%);
+  // ---------------------------------------------------------------------
+  // Brand palette — matched to the Quantel logo's cyan → azure → navy
+  // gradient. Energetic and unmistakably on-brand; the cyan carries the
+  // highlight, the azure does the heavy lifting (CTAs, accents), and the
+  // navy adds depth.
+  // ---------------------------------------------------------------------
+  --brand-cyan: #1fc4f5; // vivid cyan highlight / gradient start (logo top)
+  --brand-blue: #0a8ef0; // vibrant electric azure — fills + large accents
+  --brand-blue-deep: #0a6cc4; // AA-safe blue for small text on light
+  --brand-navy: #16355c; // logo wordmark navy — depth
 
-  --primary-color: #4f8ef7;
-  --secondary-color: #757575;
-  --tertiary-color: #0e0e0e;
-  --quaternary-color: #040404;
-  --quinary-color: #c1c1c1;
-  --senary-color: #191919;
-  --septenary-color: #101010;
-  --octonary-color: #1a1a1a;
-  --nonary-color: #d9d9d9;
+  // Legacy aliases — the accent pivoted from coral to the logo blue; these
+  // names are still referenced across partials, so they resolve to the blue
+  // ramp. Prefer the `--brand-blue*` names for new code.
+  --brand-coral: var(--brand-blue);
+  --brand-coral-deep: var(--brand-blue-deep);
+  --brand-ember: var(--brand-cyan);
+  --brand-teal: #17a9ce; // cyan-teal secondary (harmonises with the logo)
+  --brand-teal-deep: #0f7f99;
+
+  // Energetic, slightly-diagonal brand gradient for CTAs, pills, headings.
+  --brand-gradient: linear-gradient(118deg, #1fc4f5 0%, #0a7ce8 100%);
+  --brand-gradient-soft: linear-gradient(
+    118deg,
+    rgba(54, 181, 230, 0.12) 0%,
+    rgba(30, 115, 200, 0.12) 100%
+  );
+
+  // legacy token bridge — many partials/components read these names directly.
+  // Re-pointed at the new palette so the whole site shifts coherently.
+  --primary-color: var(--brand-blue);
+  --secondary-color: #5c6470; // muted text (readable on ivory)
+  --tertiary-color: #f2ebdf; // was near-black; now a warm sunken surface
+  --quaternary-color: #ffffff;
+  --quinary-color: #6b7280;
+  --senary-color: #f2ebdf;
+  --septenary-color: #faf6ef;
+  --octonary-color: #f7f1e7;
+  --nonary-color: #565d6b;
+
+  // Navy token repurposed as the dark-island base so legacy
+  // `background-color: var(--navy)` surfaces stay intentionally dark.
+  --navy: #111219;
+  --navy-soft: #1b1d27;
 
   // transitions
   --transition: all 0.3s ease-in-out;
 
-  // box shadow
-  --shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-  --shadow-secondary: 0 0 31px rgba(0, 0, 0, 0.1);
+  // box shadow — warm, soft, layered for a light surface
+  --shadow: 0 10px 30px rgba(31, 24, 12, 0.08);
+  --shadow-secondary: 0 24px 60px rgba(31, 24, 12, 0.12);
+  --shadow-brand: 0 16px 40px rgba(30, 134, 214, 0.28);
 }

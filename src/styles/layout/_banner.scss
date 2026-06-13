@@ -5,10 +5,13 @@
 //  banner one
 .banner {
   padding: 300px 0px 130px;
-  background-color: var(--navy);
+  background-color: var(--surface);
+  // Energetic gradient mesh on warm ivory — coral, ember and teal blooms that
+  // give the hero atmosphere and depth without a heavy image.
   background-image:
-    radial-gradient(60% 50% at 18% 22%, rgba(79, 142, 247, 0.18) 0%, rgba(10, 15, 30, 0) 60%),
-    radial-gradient(55% 50% at 88% 12%, rgba(162, 89, 255, 0.16) 0%, rgba(10, 15, 30, 0) 60%);
+    radial-gradient(48% 46% at 14% 18%, rgba(30, 134, 214, 0.16) 0%, rgba(250, 246, 239, 0) 62%),
+    radial-gradient(46% 44% at 90% 8%, rgba(54, 181, 230, 0.18) 0%, rgba(250, 246, 239, 0) 60%),
+    radial-gradient(52% 50% at 78% 88%, rgba(23, 169, 206, 0.12) 0%, rgba(250, 246, 239, 0) 64%);
   position: relative;
   z-index: 1;
   overflow: hidden;
@@ -25,9 +28,9 @@
     margin-bottom: 28px;
     padding: 9px 18px;
     border-radius: 999px;
-    border: 1px solid rgba(79, 142, 247, 0.35);
-    background: rgba(79, 142, 247, 0.08);
-    color: var(--white);
+    border: 1px solid rgba(30, 134, 214, 0.28);
+    background: rgba(30, 134, 214, 0.07);
+    color: var(--brand-coral-deep);
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -35,14 +38,14 @@
     line-height: 1;
 
     i {
-      color: var(--brand-blue);
+      color: var(--brand-coral);
       font-size: 14px;
     }
   }
 
   .text-stroke {
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1.4px var(--brand-purple);
+    -webkit-text-stroke: 1.6px var(--brand-coral);
   }
 
   // Primary + secondary CTAs under the subheadline.
@@ -119,6 +122,11 @@
     max-width: 494px;
     height: auto;
     border-radius: 50%;
+    // Feather the edges so the hero artwork dissolves into the ivory canvas
+    // instead of reading as a hard dark disc on the light background.
+    -webkit-mask-image: radial-gradient(circle at center, #000 52%, transparent 74%);
+    mask-image: radial-gradient(circle at center, #000 52%, transparent 74%);
+    opacity: 0.95;
   }
 
   .star {
@@ -647,7 +655,13 @@
 //  breadcurmb styles
 .cmn-banner {
   padding: 210px 0px 130px;
-  background-color: var(--black);
+  background-color: var(--surface-sunken);
+  background-image:
+    radial-gradient(40% 60% at 8% 0%, rgba(30, 134, 214, 0.12) 0%, rgba(242, 235, 223, 0) 60%),
+    radial-gradient(40% 70% at 96% 10%, rgba(23, 169, 206, 0.1) 0%, rgba(242, 235, 223, 0) 60%);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 
   .title {
     text-transform: uppercase;
@@ -660,14 +674,14 @@
 .breadcrumb {
   margin: 0px;
   padding: 0px;
-  border: 1px dashed #414141;
+  border: 1px dashed var(--line-strong);
   display: inline-flex;
   padding: 10px 20px;
   border-radius: 100px;
   margin-top: 20px;
   .breadcrumb-item {
     margin-top: 0px;
-    color: var(--white);
+    color: var(--ink-soft);
     padding: 0px 0px 0px 24px;
     position: relative;
     padding-right: 16px;

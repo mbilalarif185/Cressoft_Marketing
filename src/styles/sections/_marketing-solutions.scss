@@ -38,12 +38,9 @@
     height: 100%;
     padding: 36px 32px 32px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.03) 0%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow);
     overflow: hidden;
     transition: var(--transition);
 
@@ -53,7 +50,7 @@
       inset: 0;
       background: radial-gradient(
         circle at top right,
-        rgba(106, 90, 250, 0.18),
+        rgba(30, 134, 214, 0.18),
         transparent 65%
       );
       opacity: 0;
@@ -63,7 +60,8 @@
 
     &:hover {
       transform: translateY(-4px);
-      border-color: rgba(106, 90, 250, 0.45);
+      border-color: rgba(30, 134, 214, 0.45);
+      box-shadow: var(--shadow-secondary);
 
       &::before {
         opacity: 1;
@@ -95,8 +93,8 @@
     width: 56px;
     height: 56px;
     border-radius: 16px;
-    background: rgba(106, 90, 250, 0.14);
-    border: 1px solid rgba(106, 90, 250, 0.28);
+    background: rgba(30, 134, 214, 0.14);
+    border: 1px solid rgba(30, 134, 214, 0.28);
     color: var(--primary-color);
     font-size: 22px;
     margin-bottom: 22px;
@@ -146,7 +144,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--white);
+    color: var(--ink);
     font-weight: 600;
     transition: var(--transition);
 
@@ -173,9 +171,9 @@
     gap: 12px;
     padding: 14px 28px;
     border-radius: 999px;
-    background: rgba(106, 90, 250, 0.08);
-    border: 1px solid rgba(106, 90, 250, 0.4);
-    color: var(--white);
+    background: rgba(30, 134, 214, 0.08);
+    border: 1px solid rgba(30, 134, 214, 0.4);
+    color: var(--brand-coral-deep);
     font-weight: 600;
     font-size: 14px;
     letter-spacing: 0.04em;
@@ -195,7 +193,7 @@
       background: var(--primary-color);
       border-color: var(--primary-color);
       color: var(--white);
-      box-shadow: 0 12px 28px rgba(106, 90, 250, 0.45);
+      box-shadow: 0 12px 28px rgba(30, 134, 214, 0.45);
       i {
         color: var(--white);
         transform: translateY(2px);
@@ -251,12 +249,13 @@
     height: 100%;
     padding: 36px 28px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--line);
     background: linear-gradient(
       160deg,
-      rgba(106, 90, 250, 0.1) 0%,
-      rgba(255, 255, 255, 0.02) 60%
+      rgba(30, 134, 214, 0.07) 0%,
+      var(--surface-raised) 60%
     );
+    box-shadow: var(--shadow);
     transition: var(--transition);
     overflow: hidden;
 
@@ -268,13 +267,13 @@
       width: 140px;
       height: 140px;
       border-radius: 50%;
-      background: rgba(106, 90, 250, 0.18);
+      background: rgba(30, 134, 214, 0.18);
       filter: blur(50px);
     }
 
     &:hover {
       transform: translateY(-4px);
-      border-color: rgba(106, 90, 250, 0.4);
+      border-color: rgba(30, 134, 214, 0.4);
     }
   }
 
@@ -284,7 +283,7 @@
     font-weight: 700;
     line-height: 1;
     margin-bottom: 14px;
-    background: linear-gradient(135deg, #ffffff 0%, var(--primary-color) 100%);
+    background: linear-gradient(135deg, var(--brand-coral) 0%, var(--brand-ember) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -354,16 +353,14 @@
     width: 100%;
     padding: 36px 28px 32px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.03) 0%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow);
     transition: var(--transition);
 
     &:hover {
-      border-color: rgba(106, 90, 250, 0.4);
+      border-color: rgba(30, 134, 214, 0.4);
+      box-shadow: var(--shadow-secondary);
       transform: translateY(-4px);
     }
   }
@@ -384,8 +381,8 @@
     width: 52px;
     height: 52px;
     border-radius: 14px;
-    background: rgba(106, 90, 250, 0.14);
-    border: 1px solid rgba(106, 90, 250, 0.28);
+    background: rgba(30, 134, 214, 0.14);
+    border: 1px solid rgba(30, 134, 214, 0.28);
     color: var(--primary-color);
     font-size: 20px;
     margin-bottom: 20px;
@@ -413,7 +410,7 @@
     height: 2px;
     background-image: linear-gradient(
       to right,
-      rgba(106, 90, 250, 0.5) 50%,
+      rgba(30, 134, 214, 0.5) 50%,
       transparent 50%
     );
     background-size: 8px 2px;
@@ -451,7 +448,7 @@
       transition: transform 0.25s ease;
     }
     &:hover {
-      color: var(--white);
+      color: var(--ink);
       i {
         transform: translate(2px, -2px);
       }
@@ -474,14 +471,15 @@
     height: 100%;
     padding: 28px 26px;
     border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow);
     transition: var(--transition);
 
     &:hover {
       transform: translateY(-3px);
-      border-color: rgba(106, 90, 250, 0.4);
-      background: rgba(106, 90, 250, 0.06);
+      border-color: rgba(30, 134, 214, 0.4);
+      background: rgba(30, 134, 214, 0.06);
     }
   }
 
@@ -492,8 +490,8 @@
     width: 48px;
     height: 48px;
     border-radius: 14px;
-    background: rgba(106, 90, 250, 0.14);
-    border: 1px solid rgba(106, 90, 250, 0.28);
+    background: rgba(30, 134, 214, 0.14);
+    border: 1px solid rgba(30, 134, 214, 0.28);
     color: var(--primary-color);
     font-size: 18px;
     margin-bottom: 18px;
@@ -536,16 +534,19 @@
   .marketing-faq__item {
     list-style: none;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.02);
-    transition: border-color 0.25s ease, background 0.25s ease;
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow);
+    transition: border-color 0.25s ease, background 0.25s ease,
+      box-shadow 0.25s ease;
 
     &--open {
-      border-color: rgba(106, 90, 250, 0.5);
-      background: rgba(106, 90, 250, 0.05);
+      border-color: rgba(30, 134, 214, 0.45);
+      background: rgba(30, 134, 214, 0.04);
 
       .marketing-faq__chevron {
-        color: var(--primary-color);
+        background: var(--primary-color);
+        color: var(--white);
       }
     }
   }
@@ -555,7 +556,7 @@
     background: transparent;
     border: 0;
     padding: 22px 26px;
-    color: var(--white);
+    color: var(--ink);
     font-size: 17px;
     font-weight: 600;
     text-align: inherit;
@@ -589,8 +590,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--white);
+    background: var(--surface-sunken);
+    color: var(--ink-soft);
     font-size: 12px;
     transition: background 0.25s ease, color 0.25s ease;
   }
@@ -622,18 +623,21 @@
     border-radius: 32px;
     background: linear-gradient(
       140deg,
-      rgba(106, 90, 250, 0.55) 0%,
-      rgba(106, 90, 250, 0.05) 30%,
+      rgba(30, 134, 214, 0.55) 0%,
+      rgba(30, 134, 214, 0.05) 30%,
       rgba(255, 255, 255, 0.06) 60%,
-      rgba(106, 90, 250, 0.5) 100%
+      rgba(30, 134, 214, 0.5) 100%
     );
     box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45),
-      0 0 60px rgba(106, 90, 250, 0.15);
+      0 0 60px rgba(30, 134, 214, 0.15);
     isolation: isolate;
   }
 
-  // Inner panel sits on top of the gradient border
+  // Inner panel sits on top of the gradient border. It stays a dark island on
+  // the light page, so re-light its foreground tokens.
   .marketing-cta__layout {
+    --theme-color: #f4efe6;
+    --secondary-color: #9aa1ad;
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
@@ -643,15 +647,15 @@
     border-radius: 30.5px;
     background: radial-gradient(
         circle at top left,
-        rgba(106, 90, 250, 0.18),
+        rgba(30, 134, 214, 0.18),
         transparent 50%
       ),
       radial-gradient(
         circle at bottom right,
-        rgba(64, 50, 180, 0.22),
+        rgba(23, 169, 206, 0.22),
         transparent 55%
       ),
-      linear-gradient(180deg, #0c0c14 0%, #14121e 100%);
+      linear-gradient(180deg, #14141d 0%, #1c1c28 100%);
     overflow: hidden;
   }
 
@@ -661,7 +665,7 @@
     inset: -40px;
     background: radial-gradient(
       ellipse at center,
-      rgba(106, 90, 250, 0.18) 0%,
+      rgba(30, 134, 214, 0.18) 0%,
       transparent 65%
     );
     filter: blur(40px);
@@ -681,8 +685,8 @@
     gap: 10px;
     padding: 8px 16px;
     border-radius: 999px;
-    background: rgba(106, 90, 250, 0.12);
-    border: 1px solid rgba(106, 90, 250, 0.4);
+    background: rgba(30, 134, 214, 0.12);
+    border: 1px solid rgba(30, 134, 214, 0.4);
     color: var(--white);
     font-size: 11px;
     font-weight: 700;
@@ -727,7 +731,7 @@
     background: linear-gradient(
       120deg,
       var(--primary-color) 0%,
-      #c084fc 50%,
+      var(--brand-ember) 50%,
       var(--primary-color) 100%
     );
     background-size: 200% auto;
@@ -767,7 +771,7 @@
     gap: 10px;
     padding: 16px 28px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #8a7bff 0%, var(--primary-color) 100%);
+    background: var(--brand-gradient);
     border: 1px solid transparent;
     color: var(--white);
     font-weight: 700;
@@ -775,7 +779,7 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     overflow: hidden;
-    box-shadow: 0 14px 32px rgba(106, 90, 250, 0.5);
+    box-shadow: 0 14px 32px rgba(30, 134, 214, 0.5);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
     span {
@@ -805,7 +809,7 @@
     &:hover,
     &:focus-visible {
       transform: translateY(-2px);
-      box-shadow: 0 20px 40px rgba(106, 90, 250, 0.6);
+      box-shadow: 0 20px 40px rgba(30, 134, 214, 0.6);
       color: var(--white);
       i {
         transform: translateX(4px);
@@ -943,10 +947,10 @@
     border-radius: 14px;
     background: linear-gradient(
       135deg,
-      rgba(106, 90, 250, 0.35),
-      rgba(106, 90, 250, 0.1)
+      rgba(30, 134, 214, 0.35),
+      rgba(30, 134, 214, 0.1)
     );
-    border: 1px solid rgba(106, 90, 250, 0.4);
+    border: 1px solid rgba(30, 134, 214, 0.4);
     color: var(--white);
     font-size: 18px;
   }
@@ -972,19 +976,19 @@
     transition: var(--transition);
 
     &:hover {
-      border-color: rgba(106, 90, 250, 0.4);
-      background: rgba(106, 90, 250, 0.05);
+      border-color: rgba(30, 134, 214, 0.4);
+      background: rgba(30, 134, 214, 0.05);
     }
 
     &--featured {
-      border-color: rgba(106, 90, 250, 0.55);
+      border-color: rgba(30, 134, 214, 0.55);
       background: linear-gradient(
         135deg,
-        rgba(106, 90, 250, 0.18),
-        rgba(106, 90, 250, 0.04)
+        rgba(30, 134, 214, 0.18),
+        rgba(30, 134, 214, 0.04)
       );
-      box-shadow: 0 0 0 1px rgba(106, 90, 250, 0.35),
-        0 8px 20px rgba(106, 90, 250, 0.18);
+      box-shadow: 0 0 0 1px rgba(30, 134, 214, 0.35),
+        0 8px 20px rgba(30, 134, 214, 0.18);
     }
   }
 

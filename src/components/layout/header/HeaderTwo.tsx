@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import logoDarkBg from "public/images/logo/quantel_solutions_dark.png";
 import logoLightBg from "public/images/logo/quantel_solutions_light.png";
 import { LOGO_INTRINSIC } from "@/lib/image-dimensions";
 import Offcanvas from "./Offcanvas";
@@ -46,9 +44,10 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
     scrolled ? " navbar-active" : " "
   } ${defaultClasses}`;
 
-  const router = useRouter();
-  const logoSrc =
-    router.pathname === "/index-two-light" ? logoLightBg : logoDarkBg;
+  // The header sits on the light "Daylight Studio" canvas site-wide, so it
+  // always uses the light-background (dark-ink) logo. The footer/offcanvas are
+  // dark islands and keep the dark-background (white) mark.
+  const logoSrc = logoLightBg;
 
   return (
     <>

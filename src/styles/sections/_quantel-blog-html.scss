@@ -18,13 +18,13 @@
   a {
     color: #c4b5ff;
     text-decoration: underline;
-    text-decoration-color: rgba(103, 84, 233, 0.45);
+    text-decoration-color: rgba(10, 142, 240, 0.45);
     text-underline-offset: 3px;
     font-weight: 500;
 
     &:hover {
       color: #e8e0ff;
-      text-decoration-color: rgba(103, 84, 233, 0.75);
+      text-decoration-color: rgba(10, 142, 240, 0.75);
     }
   }
 
@@ -78,7 +78,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: rgba(103, 84, 233, 0.65);
+    background: rgba(10, 142, 240, 0.65);
   }
 
   // Panel shell — same family as `.blog-article__related .bd-related__card`
@@ -91,7 +91,7 @@
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
     &:hover {
-      border-color: rgba(103, 84, 233, 0.22);
+      border-color: rgba(10, 142, 240, 0.22);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
     }
   }
@@ -213,7 +213,7 @@
     transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 
     &:hover {
-      border-color: rgba(103, 84, 233, 0.45);
+      border-color: rgba(10, 142, 240, 0.45);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
       transform: translateY(-2px);
     }
@@ -274,7 +274,7 @@
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
     &:hover {
-      border-color: rgba(103, 84, 233, 0.45);
+      border-color: rgba(10, 142, 240, 0.45);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
     }
   }
@@ -369,7 +369,7 @@
   background: linear-gradient(165deg, #151518 0%, #101012 100%);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow:
-    0 4px 1px rgba(103, 84, 233, 0.06),
+    0 4px 1px rgba(10, 142, 240, 0.06),
     0 32px 100px rgba(0, 0, 0, 0.55);
 }
 
