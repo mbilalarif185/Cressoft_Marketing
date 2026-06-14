@@ -803,6 +803,10 @@
 // `swiper-wrapper`/`swiper-slide` overrides into other carousels.
 .testimonial__text-slider {
   margin-bottom: 80px;
+  // Swiper defaults to overflow:hidden — that clips large stroked display
+  // type at the cap height. Let the marquee breathe vertically.
+  overflow: visible;
+  padding-block: 6px;
 
   // Variant: marquee placed above the testimonial content. Swap the
   // bottom spacing for top spacing so the band sits cleanly above the
@@ -810,6 +814,10 @@
   &.testimonial__text-slider--top {
     margin-bottom: 60px;
     margin-top: 0;
+  }
+
+  .swiper {
+    overflow: visible;
   }
 
   .swiper-wrapper {
@@ -824,6 +832,8 @@
     align-items: center;
     justify-content: center;
     width: auto;
+    height: auto;
+    overflow: visible;
   }
   .testimonial__text-slider-single {
     h2,
@@ -833,7 +843,11 @@
       display: flex;
       align-items: center;
       gap: 30px;
+      margin-top: 0;
       margin-bottom: 0px;
+      line-height: 1.15;
+      // Stroke outlines extend past the glyph box — pad so caps aren't clipped.
+      padding-block: 0.12em;
       font-family: sans-serif;
       -webkit-text-fill-color: transparent;
       -webkit-text-stroke: 2px var(--ink);
@@ -921,7 +935,12 @@
   background-position: left bottom;
   position: relative;
   z-index: 1;
-  overflow: hidden;
+  overflow-x: clip;
+
+  .testimonial__text-slider {
+    position: relative;
+    z-index: 2;
+  }
 
   .testimonial-two__thumb {
     img {
@@ -1355,13 +1374,9 @@
 
 .liner {
   position: relative;
+
   &::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 60%;
-    border-top: 1px solid var(--line-strong);
+    content: none;
   }
 }
 
@@ -2269,8 +2284,6 @@
 .project__text-slider {
   margin-bottom: 80px;
   padding: 40px 0px !important;
-  border-top: 1px solid #414141;
-  border-bottom: 1px solid #414141;
   .swiper-wrapper {
     -webkit-transition-timing-function: linear !important;
     transition-timing-function: linear !important;

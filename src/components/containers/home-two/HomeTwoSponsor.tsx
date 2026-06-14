@@ -66,7 +66,7 @@ const SPONSOR_AUTOPLAY = {
 
 const HomeTwoSponsor = () => {
   return (
-    <div className="sponsor section liner">
+    <div className="sponsor section">
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-12 col-lg-8">

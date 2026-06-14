@@ -10,7 +10,7 @@ import {
 import { QUANTEL_SOCIAL } from "@/constants/socialLinks";
 import banneronethumb from "public/images/home/banner.webp";
 import star from "public/images/star.webp";
-import { HERO_BANNER, STAR_ICON } from "@/lib/image-dimensions";
+import { STAR_ICON } from "@/lib/image-dimensions";
 
 const HomeOneBanner = () => {
   // GSAP loads after `load` + idle - avoids competing with LCP image/font.
@@ -95,6 +95,18 @@ const HomeOneBanner = () => {
   return (
     <>
       <section className="banner">
+        <div className="banner__media g-ban-one" aria-hidden="true">
+          <Image
+            src={banneronethumb}
+            alt=""
+            className="banner-one-thumb"
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+          />
+        </div>
+        <div className="banner__overlay" aria-hidden="true" />
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -147,16 +159,6 @@ const HomeOneBanner = () => {
             </div>
           </div>
         </div>
-        <Image
-          src={banneronethumb}
-          alt="Quantel Solutions global technology and SaaS partner hero illustration"
-          className="banner-one-thumb d-none d-sm-block g-ban-one"
-          width={HERO_BANNER.width}
-          height={HERO_BANNER.height}
-          priority
-          fetchPriority="high"
-          sizes="(max-width: 576px) 0px, (max-width: 992px) 70vw, min(60vw, 720px)"
-        />
         <Image
           src={star}
           alt=""

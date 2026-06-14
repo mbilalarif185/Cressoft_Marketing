@@ -20,13 +20,6 @@ const NextPageNull = () => {
   return (
     <section className="section next-page pb-0" aria-hidden="true">
       <div className="next__text-slider-w" />
-      <div className="lines d-none d-lg-flex">
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-      </div>
     </section>
   );
 };
