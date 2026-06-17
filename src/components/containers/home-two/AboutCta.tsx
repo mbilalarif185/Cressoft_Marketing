@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import star from "public/images/testimonial/star.webp";
 import Link from "next/link";
 
 const AboutCta = () => {
@@ -49,8 +47,6 @@ const AboutCta = () => {
                   </div> */}
                 </div>
               </div>
-              <Image src={star} alt="Image" className="star" />
-              <Image src={star} alt="Image" className="star-two" />
             </div>
           </div>
         </div>

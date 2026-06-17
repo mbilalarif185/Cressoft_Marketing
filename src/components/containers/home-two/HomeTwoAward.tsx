@@ -71,28 +71,6 @@ const HomeTwoAward = () => {
         </div>
       </div>
       <Image
-        src="/images/star.webp"
-        alt=""
-        width={120}
-        height={120}
-        sizes="80px"
-        loading="lazy"
-        decoding="async"
-        className="star"
-        aria-hidden
-      />
-      <Image
-        src="/images/star.webp"
-        alt=""
-        width={120}
-        height={120}
-        sizes="80px"
-        loading="lazy"
-        decoding="async"
-        className="star-two"
-        aria-hidden
-      />
-      <Image
         src="/images/agency/dot-large.webp"
         alt=""
         width={80}

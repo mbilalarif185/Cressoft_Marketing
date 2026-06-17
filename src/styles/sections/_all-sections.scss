@@ -4512,7 +4512,7 @@
 // 5.41 contact
 .contact-m {
   .contact-m__single {
-    padding: 40px 65px;
+    padding: 36px 28px;
     background-color: var(--surface-raised);
     border: 1px solid var(--line);
     box-shadow: var(--shadow);
@@ -4522,7 +4522,7 @@
   }
 
   .thumb {
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     // Inline contact icons inherit the logo azure via `currentColor`.
     color: var(--primary-color);
 
@@ -4534,7 +4534,7 @@
   }
 
   h4 {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
     text-transform: capitalize;
   }
 
@@ -4549,6 +4549,42 @@
       &:hover {
         color: var(--primary-color);
       }
+    }
+  }
+
+  // Stacked label / value rows. Used by the multi-channel cards (Phone &
+  // WhatsApp, Mail) where one card carries two distinct contact actions.
+  // The eyebrow names the action; the value is the tappable target and is
+  // kept on a single line (`nowrap` + tabular figures) so a phone number
+  // or email never splits mid-string inside the narrow card column.
+  .contact-m__line {
+    & + .contact-m__line {
+      margin-top: 14px;
+    }
+  }
+
+  .contact-m__label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .contact-m__value {
+    display: inline-block;
+    max-width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+
+    &:hover {
+      color: var(--primary-color);
     }
   }
 

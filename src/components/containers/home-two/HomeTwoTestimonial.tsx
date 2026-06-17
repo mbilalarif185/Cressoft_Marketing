@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
-import star from "public/images/testimonial/star.webp";
 import thumb from "public/images/test-.webp";
 
 type HomeTwoTestimonialProps = {
@@ -202,7 +201,6 @@ const HomeTwoTestimonial = ({
           </div>
         </div>
       </div>
-      <Image src={star} alt="" className="star" aria-hidden="true" sizes="48px" />
     </section>
   );
 };

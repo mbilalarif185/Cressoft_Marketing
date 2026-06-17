@@ -69,23 +69,27 @@ const ContactMain = () => {
                 <PhoneIcon />
               </div>
               <div className="content">
-                <h4>Phone & Whatsapp</h4>
-                <p>
-                  <Link href={CONTACT_PHONE_TEL_HREF}>
-                    Mobile : {CONTACT_PHONE_DISPLAY}
-                  </Link>
-                </p>
-                <p>
+                <h4>Phone &amp; WhatsApp</h4>
+                <div className="contact-m__line">
+                  <span className="contact-m__label">Call</span>
                   <Link
-                    href={contactWhatsAppHref(
-                      CONTACT_WHATSAPP_MESSAGE_SHORT
-                    )}
+                    href={CONTACT_PHONE_TEL_HREF}
+                    className="contact-m__value"
+                  >
+                    {CONTACT_PHONE_DISPLAY}
+                  </Link>
+                </div>
+                <div className="contact-m__line">
+                  <span className="contact-m__label">WhatsApp</span>
+                  <Link
+                    href={contactWhatsAppHref(CONTACT_WHATSAPP_MESSAGE_SHORT)}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="contact-m__value"
                   >
-                  Whatsapp : {CONTACT_PHONE_DISPLAY}
+                    {CONTACT_PHONE_DISPLAY}
                   </Link>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -96,12 +100,24 @@ const ContactMain = () => {
               </div>
               <div className="content">
                 <h4>Mail Address</h4>
-                <p>
-                  <Link href={CONTACT_MAILTO_HREF}>{CONTACT_EMAIL}</Link>
-                </p>
-                <p>
-                  <Link href={second_MAILTO_HREF}>{second_EMAIL}</Link>
-                </p>
+                <div className="contact-m__line">
+                  <span className="contact-m__label">Support</span>
+                  <Link
+                    href={CONTACT_MAILTO_HREF}
+                    className="contact-m__value"
+                  >
+                    {CONTACT_EMAIL}
+                  </Link>
+                </div>
+                <div className="contact-m__line">
+                  <span className="contact-m__label">Sales</span>
+                  <Link
+                    href={second_MAILTO_HREF}
+                    className="contact-m__value"
+                  >
+                    {second_EMAIL}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -131,7 +147,7 @@ const ContactMain = () => {
               </div>
               <div className="content">
                 <h4>Office Hour</h4>
-                <p>Monday - Saturday<br></br> 10 am - 07pm</p>
+                <p>Monday - Friday<br></br> 9 am - 5:30 pm</p>
               </div>
             </div>
           </div>

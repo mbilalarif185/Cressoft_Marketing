@@ -7,7 +7,6 @@ import {
 } from "@/constants/contact";
 import thumbone from "public/images/agency/pic1.webp";
 import thumbtwo from "public/images/agency/pic2.webp";
-import star from "public/images/star.webp";
 import dotlarge from "public/images/agency/dot-large.webp";
 
 const Agency = () => {
@@ -206,17 +205,6 @@ const Agency = () => {
           </div>
         </div>
       </div>
-      <Image
-        src={star}
-        alt=""
-        width={64}
-        height={64}
-        sizes="40px"
-        loading="lazy"
-        decoding="async"
-        className="star"
-        aria-hidden
-      />
       <Image
         src={dotlarge}
         alt=""

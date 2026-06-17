@@ -8,9 +8,7 @@ import {
   CONTACT_PHONE_TEL_HREF,
 } from "@/constants/contact";
 import { QUANTEL_SOCIAL } from "@/constants/socialLinks";
-import banneronethumb from "public/images/home/banner.webp";
-import star from "public/images/star.webp";
-import { STAR_ICON } from "@/lib/image-dimensions";
+import banneronethumb from "public/images/quantel-solutions.webp";
 
 const HomeOneBanner = () => {
   // GSAP loads after `load` + idle - avoids competing with LCP image/font.
@@ -159,17 +157,6 @@ const HomeOneBanner = () => {
             </div>
           </div>
         </div>
-        <Image
-          src={star}
-          alt=""
-          aria-hidden="true"
-          className="star"
-          width={STAR_ICON.width}
-          height={STAR_ICON.height}
-          loading="lazy"
-          decoding="async"
-          sizes="48px"
-        />
         <div className="banner-left-text banner-social-text d-none d-md-flex">
           <Link href={CONTACT_MAILTO_HREF}>mail : {CONTACT_EMAIL}</Link>
           <Link href={CONTACT_PHONE_TEL_HREF}>Call : {CONTACT_PHONE_DISPLAY}</Link>

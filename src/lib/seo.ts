@@ -179,7 +179,7 @@ export function localBusinessSchema() {
           "Friday",
         ],
         opens: "09:00",
-        closes: "18:00",
+        closes: "17:30",
       },
     ],
     sameAs: SAME_AS,
