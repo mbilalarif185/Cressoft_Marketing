@@ -21,7 +21,12 @@ import { useEffect, useState } from "react";
 // Replace with your own muted aerial London/UK loop (MP4/WebM). Keep it short
 // (8–15s) and well-compressed — it sits under an 85% white wash so heavy detail
 // is wasted bandwidth. POSTER shows instantly while the video buffers.
-const VIDEO_SRC = "/london.mp4"; // swap for your own aerial loop
+// faststart build: the `moov` atom is at the front of the file, so the browser
+// can begin playback after the first bytes instead of downloading the whole
+// clip first (the original /london.mp4 had moov at the end → ~10s blank wait
+// before the video appeared in production). Regenerate with
+// `node scripts/faststart-video.js` after replacing the source video.
+const VIDEO_SRC = "/london-faststart.mp4"; // swap for your own aerial loop
 const POSTER_SRC = "/images/home/banner.webp"; // existing asset as a fallback
 
 /* -------------------------------- Content data ----------------------------- */
