@@ -5,6 +5,8 @@ type Service = {
   num: string;
   icon: string;
   title: string;
+  /** Slug of the dedicated /services/<slug> page this card links to. */
+  slug: string;
   description: string;
   bullets: string[];
 };
@@ -126,6 +128,7 @@ const SERVICES: Service[] = [
     num: "01",
     icon: "fa-solid fa-cubes-stacked",
     title: "SaaS Product Development",
+    slug: "saas-development",
     description:
       "From idea to production-ready platform. We architect and build multi-tenant SaaS products - subscriptions, billing, role-based access, and scalable cloud infrastructure - engineered to grow from your first customer to your thousandth.",
     bullets: [
@@ -138,6 +141,7 @@ const SERVICES: Service[] = [
     num: "02",
     icon: "fa-solid fa-layer-group",
     title: "White-Label Solutions",
+    slug: "white-label-solutions",
     description:
       "Launch faster with proven, ready-to-brand platforms. We deliver white-label CRM, ERP, LMS, and e-commerce products you can ship under your own name - fully customised to your workflows and go-to-market in weeks, not years.",
     bullets: [
@@ -150,6 +154,7 @@ const SERVICES: Service[] = [
     num: "03",
     icon: "fa-solid fa-microchip-ai",
     title: "AI & Automation",
+    slug: "ai-automation",
     description:
       "Stop losing time to manual busywork. We deploy practical AI - LLM-powered copilots, chatbots, predictive analytics, and workflow automation - that keeps your business running around the clock and your team focused on growth.",
     bullets: [
@@ -162,6 +167,7 @@ const SERVICES: Service[] = [
     num: "04",
     icon: "fa-solid fa-code",
     title: "Web Development",
+    slug: "web-development",
     description:
       "Your website and web apps should work as hard as your team. We build fast, beautiful, SEO-ready platforms on modern frameworks - engineered for performance, accessibility, and conversion across every market you serve.",
     bullets: [
@@ -174,6 +180,7 @@ const SERVICES: Service[] = [
     num: "05",
     icon: "fa-solid fa-magnifying-glass-chart",
     title: "Search Engine Optimisation",
+    slug: "seo",
     description:
       "Most businesses are invisible to their best buyers on Google - we fix that. Through technical SEO, intent-driven content, and authoritative link building, we earn you page-one rankings that compound in value every single month.",
     bullets: [
@@ -186,6 +193,7 @@ const SERVICES: Service[] = [
     num: "06",
     icon: "fa-solid fa-share-nodes",
     title: "Social Media Marketing",
+    slug: "social-media-marketing",
     description:
       "Your audience is scrolling right now - your brand should be there, building trust and converting followers into customers. We handle strategy, content, paid campaigns, and community so you can focus on running your business.",
     bullets: [
@@ -198,6 +206,7 @@ const SERVICES: Service[] = [
     num: "07",
     icon: "fa-solid fa-mobile-screen",
     title: "Mobile App Development",
+    slug: "mobile-app-development",
     description:
       "A great mobile experience turns one-time buyers into loyal customers. We design and build cross-platform iOS and Android apps that are fast to market, intuitive to use, and built to scale as your business grows.",
     bullets: [
@@ -210,6 +219,7 @@ const SERVICES: Service[] = [
     num: "08",
     icon: "fa-solid fa-puzzle-piece",
     title: "Custom Software Solutions",
+    slug: "custom-software",
     description:
       "Off-the-shelf tools weren't built for your business - yours was. We design and develop bespoke software around the exact workflows, rules, and processes that make your operation run, replacing spreadsheets and workarounds for good.",
     bullets: [
@@ -222,6 +232,7 @@ const SERVICES: Service[] = [
     num: "09",
     icon: "fa-solid fa-bag-shopping",
     title: "Ecommerce Solutions",
+    slug: "ecommerce-solutions",
     description:
       "An online store that looks good but doesn't sell is just an expensive brochure. We build and optimise Shopify, WooCommerce, and custom storefronts engineered for global buyers - from product discovery to a frictionless checkout.",
     bullets: [
@@ -234,6 +245,7 @@ const SERVICES: Service[] = [
     num: "10",
     icon: "fa-solid fa-network-wired",
     title: "ERP Solutions",
+    slug: "erp-solutions",
     description:
       "Disconnected systems quietly cost you time and money. We implement and integrate ERP solutions that connect finance, operations, inventory, and people into a single source of truth - so decisions get faster and errors disappear.",
     bullets: [
@@ -246,6 +258,7 @@ const SERVICES: Service[] = [
     num: "11",
     icon: "fa-solid fa-palette",
     title: "UI / UX Design",
+    slug: "ui-ux-design",
     description:
       "Users who find your product confusing will leave - and never tell you why. Our research-led design process maps real user behaviour to create interfaces that feel effortless, build trust instantly, and drive the actions your business needs.",
     bullets: [
@@ -261,7 +274,6 @@ const MarketingServices = () => {
   const [showAll, setShowAll] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const wasExpandedRef = useRef(false);
-  const visible = showAll ? SERVICES : SERVICES.slice(0, PREVIEW_COUNT);
 
   useLayoutEffect(() => {
     if (wasExpandedRef.current && !showAll) {
@@ -303,10 +315,21 @@ const MarketingServices = () => {
           className="row gaper marketing-services__grid"
           aria-label="Marketing services"
         >
-          {visible.map((service) => (
+          {/*
+            All cards stay in the SSR DOM (so every hub → service-page link is
+            crawlable); the ones past the preview count are visually collapsed
+            via CSS until "View all" is toggled, and hidden from AT meanwhile.
+          */}
+          {SERVICES.map((service, index) => {
+            const collapsed = !showAll && index >= PREVIEW_COUNT;
+            return (
             <li
               key={service.num}
-              className="col-12 col-md-6 col-xl-4 marketing-services__col"
+              className={
+                "col-12 col-md-6 col-xl-4 marketing-services__col" +
+                (collapsed ? " marketing-services__col--collapsed" : "")
+              }
+              aria-hidden={collapsed ? true : undefined}
             >
               <article className="marketing-services__card">
                 <span className="marketing-services__index" aria-hidden="true">
@@ -332,11 +355,11 @@ const MarketingServices = () => {
                   ))}
                 </ul>
                 <Link
-                  href="/contact"
+                  href={`/services/${service.slug}`}
                   className="marketing-services__cta"
-                  aria-label={`Talk to us about ${service.title}`}
+                  aria-label={`Read more about ${service.title}`}
                 >
-                  Talk to us
+                  Read more
                   <i
                     className="fa-sharp fa-solid fa-arrow-up-right"
                     aria-hidden="true"
@@ -344,7 +367,8 @@ const MarketingServices = () => {
                 </Link>
               </article>
             </li>
-          ))}
+            );
+          })}
         </ul>
 
         {SERVICES.length > PREVIEW_COUNT && (

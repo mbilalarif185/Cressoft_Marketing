@@ -11,19 +11,19 @@ import { SITE_URL } from "@/lib/seo";
 // module-level constant avoids re-creating the array on every render and
 // makes the structured-data block trivially cheap.
 const SERVICES = [
-  { num: "01", title: "SaaS Development" },
-  { num: "02", title: "White-Label Platforms" },
-  { num: "03", title: "AI Solutions" },
-  { num: "04", title: "Web Development" },
-  { num: "05", title: "Search Engine Optimization" },
-  { num: "06", title: "Social Media Marketing" },
-  { num: "07", title: "Mobile App Development" },
-  { num: "08", title: "Ecommerce Solutions" },
-  { num: "09", title: "ERP Solutions" },
-  { num: "10", title: "UI / UX Design" },
+  { num: "01", title: "SaaS Development", slug: "saas-development" },
+  { num: "02", title: "White-Label Platforms", slug: "white-label-solutions" },
+  { num: "03", title: "AI Solutions", slug: "ai-automation" },
+  { num: "04", title: "Web Development", slug: "web-development" },
+  { num: "05", title: "Search Engine Optimization", slug: "seo" },
+  { num: "06", title: "Social Media Marketing", slug: "social-media-marketing" },
+  { num: "07", title: "Mobile App Development", slug: "mobile-app-development" },
+  { num: "08", title: "Ecommerce Solutions", slug: "ecommerce-solutions" },
+  { num: "09", title: "ERP Solutions", slug: "erp-solutions" },
+  { num: "10", title: "UI / UX Design", slug: "ui-ux-design" },
 ] as const;
 
-const SERVICE_HREF = "/marketing-solutions";
+const serviceHref = (slug: string) => `/services/${slug}`;
 
 const AUTOPLAY_OPTS = {
   delay: 1,
@@ -34,11 +34,12 @@ const AUTOPLAY_OPTS = {
 type SlideProps = {
   num: string;
   title: string;
+  slug: string;
 };
 
 // Memoised slide so that re-renders of the parent (e.g. on Swiper internal
 // updates) don't reconcile every node again.
-const OfferSlide = memo(function OfferSlide({ num, title }: SlideProps) {
+const OfferSlide = memo(function OfferSlide({ num, title, slug }: SlideProps) {
   return (
     <div className="offer-two__slider-single offer__cta">
       <div className="offer__cta-single">
@@ -54,7 +55,7 @@ const OfferSlide = memo(function OfferSlide({ num, title }: SlideProps) {
           to avoid duplicating heading nodes for crawlers.
         */}
         <h2>
-          <Link href={SERVICE_HREF} prefetch={false} aria-label={`Learn more about our ${title} services`}>
+          <Link href={serviceHref(slug)} prefetch={false} aria-label={`Learn more about our ${title} services`}>
             {title}
           </Link>
         </h2>
@@ -69,7 +70,7 @@ const HomeTwoOffer = () => {
     () =>
       SERVICES.map((s) => (
         <SwiperSlide key={s.num}>
-          <OfferSlide num={s.num} title={s.title} />
+          <OfferSlide num={s.num} title={s.title} slug={s.slug} />
         </SwiperSlide>
       )),
     []
@@ -91,7 +92,7 @@ const HomeTwoOffer = () => {
         item: {
           "@type": "Service",
           name: s.title,
-          url: `${SITE_URL}${SERVICE_HREF}`,
+          url: `${SITE_URL}${serviceHref(s.slug)}`,
           provider: {
             "@type": "Organization",
             name: "Quantel Solutions",

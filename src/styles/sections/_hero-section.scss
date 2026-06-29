@@ -1,0 +1,516 @@
+// =====================================================
+// Home hero  —  <HeroSection />  (src/components/HeroSection.jsx)
+//
+// A bright, white, premium-agency hero: an aerial-London loop sits under an
+// 85% white wash (motion, not darkness), a live "projects delivering" ticker
+// floats on the right, a stats row spans both columns, and a partner marquee
+// closes the band.
+//
+// NOTE ON TEXT COLOR: `_reset.scss` forces every h1–h6 + p to
+// `color: var(--theme-color) !important`. CSS custom properties resolve at the
+// use-site, so the only clean way to recolor a heading/paragraph here is to
+// re-declare `--theme-color` locally on it (see `.qs-hero__title` /
+// `.qs-hero__sub`). Non-heading elements (div/span/strong/li) are unaffected
+// and take normal `color`.
+//
+// Brand tokens used: --brand-blue (#0a8ef0) accents, #111 ink, #555 muted,
+// #16a34a green for checks + the live dot.
+// =====================================================
+
+.qs-hero {
+  // Local ink so the reset's `!important` heading color resolves to our dark
+  // ink instead of the site's warm near-black.
+  --qs-ink: #111111;
+  --qs-muted: #555555;
+  --qs-line: #e5e7eb;
+  --qs-green: #16a34a;
+  --qs-accent: var(--brand-blue, #0a8ef0);
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  line-height: normal; // reset sets body line-height:0 — restore here
+
+  // ---- Background video + 85% white wash (decorative) ----------------
+  &__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  &__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  &__wash {
+    position: absolute;
+    inset: 0;
+    // Readability wash — lighter so the London footage shows through clearly.
+    // Slightly denser on the left (behind the headline + body copy) and more
+    // transparent toward the right so text stays crisp while motion reads.
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.62) 45%,
+      rgba(255, 255, 255, 0.5) 100%
+    );
+  }
+  // Faint brand tint top-right ties the white band to the Quantel palette.
+  &__tint {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      60% 60% at 92% 8%,
+      rgba(10, 142, 240, 0.1),
+      transparent 60%
+    );
+  }
+
+  // ---- Layout shell --------------------------------------------------
+  &__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1240px;
+    margin-inline: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // Extra top padding clears the fixed site header so the eyebrow pill
+    // doesn't tuck under it.
+    padding: clamp(150px, 20vh, 220px) clamp(20px, 5vw, 40px)
+      clamp(64px, 9vh, 96px);
+  }
+  &__grid {
+    display: grid;
+    grid-template-columns: 58fr 42fr; // 58% content / 42% widget per brief
+    gap: clamp(32px, 4vw, 64px);
+    align-items: center;
+  }
+
+  // ---- LEFT: pitch ---------------------------------------------------
+  &__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border: 1px solid var(--qs-line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+    color: var(--qs-muted);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+
+    .qs-hero__eyebrow-sep {
+      color: #cbd2da;
+    }
+  }
+
+  &__title {
+    --theme-color: var(--qs-ink); // beats reset !important
+    font-family: var(--display);
+    margin: 24px 0 0;
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-size: clamp(2rem, 4.4vw, 3.5rem);
+    text-wrap: balance;
+
+    .qs-hero__title-accent {
+      color: var(--qs-accent);
+    }
+  }
+
+  &__sub {
+    --theme-color: var(--qs-muted); // beats reset !important
+    margin: 24px 0 0;
+    max-width: 34em;
+    font-size: clamp(1rem, 1.2vw, 1.0625rem);
+    line-height: 1.65;
+  }
+
+  // ---- CTAs ----------------------------------------------------------
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  &__cta-primary,
+  &__cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px 28px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+  &__cta-primary {
+    background: #111111; // dark/black per brief
+    color: #ffffff;
+    border: 1px solid #111111;
+    box-shadow: 0 10px 24px rgba(17, 17, 17, 0.18);
+
+    .qs-hero__arrow {
+      transition: transform 0.25s ease;
+    }
+    &:hover,
+    &:focus-visible {
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(17, 17, 17, 0.26);
+      .qs-hero__arrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+  &__cta-secondary {
+    background: #ffffff;
+    color: var(--qs-ink);
+    border: 1px solid rgba(17, 17, 17, 0.25);
+    &:hover,
+    &:focus-visible {
+      color: var(--qs-ink);
+      border-color: rgba(17, 17, 17, 0.6);
+    }
+  }
+  &__cta-primary:focus-visible,
+  &__cta-secondary:focus-visible {
+    outline: 2px solid var(--qs-accent);
+    outline-offset: 3px;
+  }
+
+  // ---- Trust bullets -------------------------------------------------
+  &__trust {
+    margin: 36px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 32px;
+    list-style: none;
+    padding: 0;
+  }
+  &__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333333;
+  }
+  &__check {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    color: var(--qs-green);
+  }
+
+  // ---- RIGHT: live social-proof widget -------------------------------
+  &__aside {
+    display: block;
+  }
+  &__widget {
+    border: 1px solid var(--qs-line);
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 20px;
+    box-shadow: 0 24px 60px rgba(17, 17, 17, 0.1);
+  }
+  &__widget-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f3f5;
+  }
+  &__widget-title {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--qs-ink);
+  }
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--qs-muted);
+  }
+  &__dot {
+    position: relative;
+    display: inline-flex;
+    width: 10px;
+    height: 10px;
+
+    &::before {
+      // pulsing ring
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--qs-green);
+      opacity: 0.75;
+      animation: qsPing 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    &::after {
+      // solid core
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--qs-green);
+    }
+  }
+
+  // ---- Cycling message ----------------------------------------------
+  &__feed {
+    min-height: 96px;
+    padding-top: 16px;
+  }
+  &__msg {
+    display: flex;
+    gap: 12px;
+    animation: qsFade 0.5s ease both;
+  }
+  &__avatar {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(10, 142, 240, 0.1);
+    color: var(--qs-accent);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  &__msg-body {
+    min-width: 0;
+  }
+  &__msg-top {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  &__msg-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--qs-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__msg-ago {
+    flex: none;
+    font-size: 12px;
+    color: #999999;
+  }
+  &__msg-text {
+    --theme-color: var(--qs-muted); // <p> — beat reset !important
+    margin: 4px 0 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  // progress dots mirror the active message
+  &__dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 16px;
+  }
+  &__dot-prog {
+    height: 6px;
+    width: 6px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    transition: width 0.3s ease, background 0.3s ease;
+    &.is-active {
+      width: 24px;
+      background: var(--qs-accent);
+    }
+  }
+
+  &__widget-foot {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #f1f3f5;
+  }
+  &__counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(22, 163, 74, 0.1); // light green pill
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  // ---- Stats row (spans both columns) --------------------------------
+  &__stats {
+    margin-top: clamp(40px, 6vw, 64px);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  &__stat {
+    border: 1px solid var(--qs-line);
+    border-top: 2px solid var(--qs-accent); // thin brand accent on top
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(17, 17, 17, 0.05);
+  }
+  &__stat-value {
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    font-weight: 700;
+    color: var(--qs-ink);
+  }
+  &__stat-label {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--qs-muted);
+  }
+}
+
+// =====================================================
+// Partner / certification marquee bar (below the hero)
+// =====================================================
+.qs-partners {
+  width: 100%;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 28px 0;
+
+  &__inner {
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 5vw, 40px);
+  }
+  &__label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #999999;
+  }
+  // Edge fades hint at continuous scroll.
+  &__mask {
+    margin-top: 20px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+  &__track {
+    display: flex;
+    width: max-content;
+    gap: 12px;
+    animation: qsMarquee 28s linear infinite;
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+  &__badge {
+    white-space: nowrap;
+    border-radius: 999px;
+    background: #f3f4f6;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #555555;
+  }
+}
+
+// =====================================================
+// Keyframes
+// =====================================================
+@keyframes qsFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qsPing {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes qsMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// =====================================================
+// Responsive — single column on tablet/mobile, widget hidden on mobile
+// =====================================================
+@media (max-width: 991.98px) {
+  .qs-hero {
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    &__stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .qs-hero {
+    &__aside {
+      display: none; // widget hidden on mobile per brief
+    }
+    &__trust {
+      grid-template-columns: 1fr;
+    }
+    &__actions {
+      .qs-hero__cta-primary,
+      .qs-hero__cta-secondary {
+        flex: 1 1 100%;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qs-hero__msg,
+  .qs-hero__dot::before,
+  .qs-partners__track {
+    animation: none !important;
+  }
+}

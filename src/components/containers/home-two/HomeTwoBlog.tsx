@@ -1,19 +1,11 @@
 import React, { memo, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
 import type { BlogPostMeta } from "@/types/blog";
 
-function formatBlogDate(iso: string) {
+function formatDate(iso: string, opts: Intl.DateTimeFormatOptions) {
   try {
-    return new Date(iso).toLocaleDateString("en-MY", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    return new Date(iso).toLocaleDateString("en-GB", opts);
   } catch {
     return iso;
   }
@@ -24,128 +16,111 @@ type HomeTwoBlogProps = {
 };
 
 /**
- * Homepage blog slider — drives content from `content/blog` (see `@/lib/blog`).
- * Repeats entries when there are fewer than 6 so the Swiper loop stays smooth.
+ * Homepage blog — "Field notes" editorial layout (content from `content/blog`).
+ *
+ * Replaces the old Swiper carousel, which hid post titles behind a dark overlay
+ * and showed contextless covers on the side slides. This is a static editorial
+ * split: a featured lead article on the left, and the remaining posts as a
+ * "ledger" list on the right — every title, category, read time and date
+ * visible at a glance. Styling lives in `src/styles/sections/_blog-home.scss`.
  */
 const HomeTwoBlog = ({ posts }: HomeTwoBlogProps) => {
-  const slides = useMemo(() => {
-    if (posts.length === 0) return [];
-    if (posts.length >= 6) return posts.slice(0, 9);
-    return Array.from({ length: Math.max(6, posts.length) }, (_, i) =>
-      posts[i % posts.length]
-    );
+  const { lead, rest } = useMemo(() => {
+    if (posts.length === 0) return { lead: null, rest: [] as BlogPostMeta[] };
+    // Prefer an explicitly featured post; fall back to the newest.
+    const lead = posts.find((p) => p.featured) ?? posts[0];
+    const rest = posts.filter((p) => p.slug !== lead.slug).slice(0, 4);
+    return { lead, rest };
   }, [posts]);
 
-  if (slides.length === 0) {
-    return null;
-  }
+  if (!lead) return null;
 
   return (
-    <section className="section blog blog-two">
+    <section className="section home-blog">
       <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <div className="section__header--secondary">
-              <div className="row gaper align-items-center">
-                <div className="col-12 col-lg-8">
-                  <div className="section__header text-center text-lg-start mb-0">
-                    <span className="sub-title">
-                      News &amp; blog
-                      <i className="fa-solid fa-arrow-right"></i>
-                    </span>
-                    <h2 className="title title-anim">
-                      What&apos;s new on the blog
-                    </h2>
-                  </div>
-                </div>
-                <div className="col-12 col-lg-4">
-                  <div className="slide-group justify-content-center justify-content-lg-end">
-                    <button
-                      aria-label="previous item"
-                      className="slide-btn prev-blog"
-                      type="button"
-                    >
-                      <i className="fa-light fa-angle-left"></i>
-                    </button>
-                    <button
-                      aria-label="next item"
-                      className="slide-btn next-blog"
-                      type="button"
-                    >
-                      <i className="fa-light fa-angle-right"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* ---- Section header ---- */}
+        <div className="home-blog__head">
+          <div>
+            <span className="home-blog__eyebrow">Field notes</span>
+            <h2 className="home-blog__title">How we think about building software</h2>
           </div>
+          <Link href="/blog" className="home-blog__viewall">
+            Browse all articles
+            <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </Link>
         </div>
-      </div>
-      <div className="blog-two__slider-w">
-        <Swiper
-          slidesPerView={1}
-          spaceBetween={30}
-          slidesPerGroup={1}
-          speed={800}
-          loop={true}
-          roundLengths={false}
-          centeredSlides={true}
-          centeredSlidesBounds={false}
-          modules={[Autoplay, Navigation]}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          navigation={{
-            nextEl: ".next-blog",
-            prevEl: ".prev-blog",
-          }}
-          breakpoints={{
-            992: {
-              slidesPerView: 3,
-            },
-            768: {
-              slidesPerView: 2,
-            },
-          }}
-          className="blog-two__slider"
-        >
-          {slides.map((post, idx) => (
-            <SwiperSlide key={`${post.slug}-${idx}`}>
-              <div className="blog-two__slider-single topy-tilt">
-                <div className="blog__single-thumb">
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="blog-two__thumb-link"
-                  >
-                    <Image
-                      src={post.cover}
-                      alt=""
-                      fill
-                      className="blog-two__thumb-img"
-                      sizes="(max-width: 420px) 100vw, 400px"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </Link>
-                </div>
-                <div className="blog__single-content">
-                  <h4>
+
+        <div className="home-blog__grid">
+          {/* ---- Lead article ---- */}
+          <article className="home-blog__lead">
+            <Link
+              href={`/blog/${lead.slug}`}
+              className="home-blog__lead-media"
+              aria-label={lead.title}
+            >
+              <Image
+                src={lead.cover}
+                alt=""
+                fill
+                className="home-blog__lead-img"
+                sizes="(max-width: 992px) 100vw, 620px"
+                priority={false}
+              />
+            </Link>
+            <div className="home-blog__lead-body">
+              <span className="home-blog__kicker">
+                <span className="home-blog__cat">{lead.category}</span>
+                <span className="home-blog__sep" aria-hidden="true">·</span>
+                {lead.readingMinutes} min read
+                <span className="home-blog__sep" aria-hidden="true">·</span>
+                {formatDate(lead.date, { day: "numeric", month: "long", year: "numeric" })}
+              </span>
+              <h3 className="home-blog__lead-title">
+                <Link href={`/blog/${lead.slug}`}>{lead.title}</Link>
+              </h3>
+              <p className="home-blog__lead-dek">{lead.description}</p>
+              <Link href={`/blog/${lead.slug}`} className="home-blog__readmore">
+                Read the full piece
+                <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </Link>
+            </div>
+          </article>
+
+          {/* ---- Ledger list ---- */}
+          <div className="home-blog__list">
+            {rest.map((post) => (
+              <article key={post.slug} className="home-blog__item">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="home-blog__item-thumb"
+                  aria-label={post.title}
+                  tabIndex={-1}
+                >
+                  <Image
+                    src={post.cover}
+                    alt=""
+                    fill
+                    className="home-blog__item-img"
+                    sizes="120px"
+                  />
+                </Link>
+                <div className="home-blog__item-body">
+                  <span className="home-blog__kicker">
+                    <span className="home-blog__cat">{post.category}</span>
+                    <span className="home-blog__sep" aria-hidden="true">·</span>
+                    {post.readingMinutes} min read
+                  </span>
+                  <h4 className="home-blog__item-title">
                     <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                   </h4>
-                  <div className="blog__single-meta">
-                    <Link href="/blog" className="sub-title">
-                      {post.category}
-                      <i className="fa-solid fa-arrow-right"></i>
-                    </Link>
-                    <p>{formatBlogDate(post.date)}</p>
-                  </div>
+                  <time className="home-blog__date" dateTime={post.date}>
+                    {formatDate(post.date, { day: "numeric", month: "short", year: "numeric" })}
+                  </time>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

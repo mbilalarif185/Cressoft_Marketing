@@ -1,0 +1,85 @@
+---
+title: "Build vs Buy: How to Decide Before You Write a Line of SaaS Code"
+description: "A practical framework for founders and CTOs deciding whether to build a SaaS MVP from scratch, assemble it from off-the-shelf parts, or do both."
+date: "2025-09-30"
+author: "Quantel Team"
+category: "SaaS"
+tags:
+  - "SaaS"
+  - "Startups"
+  - "Product Engineering"
+  - "Technology"
+cover: "/images/blog/build-vs-buy.png"
+featured: true
+---
+
+Every SaaS product starts with the same fork in the road: build it yourself, or buy your way to a working version. Get the call right and you ship in weeks for a fraction of the cost. Get it wrong and you either burn six months reinventing authentication, or you paint yourself into a corner with a tool you can't extend when the first enterprise customer asks for SSO.
+
+Most teams treat this as a single, all-or-nothing decision. It isn't. The teams that move fastest break their product into parts and make the build-vs-buy call separately for each one. This post is the framework we use with founders and CTOs across the UK, US, and UAE when they're scoping a new SaaS MVP.
+
+## The mistake: deciding for the whole product at once
+
+"Should we build or buy?" is the wrong question because a SaaS product isn't one thing. It's authentication, billing, a database, a permissions model, a notifications system, an admin panel, integrations, and — somewhere in the middle of all that — the actual feature your customers are paying for.
+
+The only part that genuinely needs to be custom is the last one: your core differentiator. Everything else is plumbing that thousands of companies have already solved. If you're hand-rolling a password reset flow in 2026, you're spending your most expensive resource — engineering time — on a problem that a £20-a-month service solved a decade ago.
+
+So the real exercise is to list every component your MVP needs and sort each into one of three buckets: **build**, **buy**, or **assemble**.
+
+## Build only your core differentiator
+
+Your differentiator is the reason a customer picks you over the incumbent. For a logistics SaaS, it might be the route-optimisation engine. For a fintech tool, the reconciliation logic. For a vertical CRM, the workflow that maps to one industry's exact process.
+
+This is the one place where custom code earns its cost. It's where your domain knowledge lives, where you'll iterate fastest on customer feedback, and where a generic tool will never fit well enough. Build it, own it, and put your best engineers on it.
+
+The trap is convincing yourself that *more* of the product is differentiating than really is. Your billing isn't special. Your login isn't special. Be honest about where the actual value sits — it's usually a surprisingly small slice of the surface area.
+
+## Buy the commodities — without apology
+
+Authentication, payments, transactional email, error monitoring, and analytics are commodities. Mature, well-documented services exist for every one of them, and they handle the edge cases you don't even know about yet: regional payment methods, GDPR-compliant data handling, fraud detection, deliverability.
+
+A few examples of where buying almost always wins:
+
+- **Auth and identity.** SSO, MFA, social login, and session management are a security minefield. A dedicated provider ships these as configuration, not code — and keeps them patched.
+- **Payments and subscriptions.** Proration, dunning, tax, and invoicing are deceptively complex, especially once you sell across the UK, US, and the Gulf, each with their own tax rules. A billing platform absorbs that complexity.
+- **Email and notifications.** Deliverability is a full-time discipline. Don't make it yours.
+
+The objection we hear is "but the subscription fees add up." They do — and they're still cheaper than the salaried months it takes to build, secure, and maintain the equivalent. Buying converts a large, uncertain capital cost into a small, predictable operating one. For an early-stage product, that's exactly the trade you want.
+
+## Assemble the middle layer
+
+Between your differentiator and the commodities sits a middle layer: the admin dashboard, internal tooling, the data model, the API surface. Here, the smart move is usually to *assemble* — start from a framework, a component library, or a low-code internal-tools platform, then customise.
+
+This is where modern SaaS engineering has changed most. You no longer choose between "fully custom" and "rigid template." You can stand up a typed, production-grade foundation in days and spend your real effort on the parts that matter. Assembling well is a skill in itself: picking components that won't trap you, and knowing which seams to keep loose so you can swap pieces later.
+
+## The questions that actually decide it
+
+For any given component, four questions settle the call:
+
+1. **Is it a differentiator?** If yes, build. If no, lean hard toward buy or assemble.
+2. **What's the true cost of building?** Not just the first version — the maintenance, the security patches, the on-call burden for the next three years.
+3. **How locked in does buying make us?** A payment provider you can migrate off is low risk. A platform that owns your data model and has no export is high risk. Favour tools with clean exits.
+4. **Does it touch regulated or sensitive data?** Anything handling payments, health, or personal data under GDPR is a place where a battle-tested vendor's compliance is worth paying for.
+
+## What this looks like in practice
+
+A realistic MVP split for an early-stage B2B SaaS:
+
+- **Build:** the core workflow engine that is the product's reason to exist.
+- **Buy:** authentication, billing, transactional email, error tracking, product analytics.
+- **Assemble:** the customer-facing app shell, the internal admin panel, the reporting layer.
+
+Done this way, an MVP that would have taken six months of pure custom build ships a working v1 in six to twelve weeks. The engineering you *do* spend goes almost entirely into the differentiator — which is the only part customers will ever notice or pay for.
+
+## When buying becomes a liability
+
+Buy-everything has a failure mode too. If your entire product is a thin wrapper around someone else's API, you have no moat and no leverage — the vendor can raise prices or change terms and you have nothing of your own. The discipline is to buy the commodities and *build the moat*. If you've bought the part that's supposed to be your differentiator, you don't have a product; you have a reseller agreement.
+
+## Where to take this next
+
+Build vs buy isn't a one-time decision — it's a habit of asking, for every new capability, "is this the thing only we can do, or is it plumbing?" The teams that ship fast and scale cleanly are ruthless about reserving custom engineering for the former.
+
+If you're scoping a SaaS MVP and want a second opinion on what to build, what to buy, and what to assemble, that's exactly the kind of work we do every day. You can [explore how we approach SaaS development](/marketing-solutions), see [the products we've delivered](/success-stories), or read our take on [how white-label platforms let teams launch even faster](/blog/white-label-platforms-launch-faster).
+
+When you're ready for a straight conversation about your architecture — no jargon, no pitch deck — [get in touch](/contact) and we'll map it out with you.
+
+*Quantel Solutions is a technology company headquartered in London, building SaaS products, platforms, and growth systems for startups and enterprises across the UK, US, and UAE. [Explore our services](/marketing-solutions) or [see our work](/success-stories).*

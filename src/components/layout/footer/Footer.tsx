@@ -105,16 +105,21 @@ const Footer = () => {
               <div className="footer__single-content">
                 <ul>
                   <li>
-                    <Link href="/marketing-solutions">SaaS Development</Link>
+                    <Link href="/services/saas-development">SaaS Development</Link>
                   </li>
                   <li>
-                    <Link href="/marketing-solutions">White-Label Platforms</Link>
+                    <Link href="/services/white-label-solutions">
+                      White-Label Platforms
+                    </Link>
                   </li>
                   <li>
-                    <Link href="/marketing-solutions">AI &amp; Automation</Link>
+                    <Link href="/services/ai-automation">AI &amp; Automation</Link>
                   </li>
                   <li>
-                    <Link href="/marketing-solutions">Web &amp; App Development</Link>
+                    <Link href="/services/web-development">Web Development</Link>
+                  </li>
+                  <li>
+                    <Link href="/marketing-solutions">All services</Link>
                   </li>
                 </ul>
               </div>

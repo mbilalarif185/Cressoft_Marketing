@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
 import { getAllPostMeta } from "@/lib/blog";
 import { SITE_URL } from "@/lib/seo";
+import { SERVICE_SLUGS } from "@/data/services";
 
 type SitemapEntry = {
   loc: string;
@@ -24,7 +25,14 @@ type SitemapEntry = {
 const STATIC_ROUTES: SitemapEntry[] = [
   { loc: "/", changefreq: "weekly", priority: 1.0 },
   { loc: "/about-us", changefreq: "monthly", priority: 0.9 },
+  // Services hub — links out to each dedicated, indexable service page below.
   { loc: "/marketing-solutions", changefreq: "monthly", priority: 0.95 },
+  // Individual service pages — each is its own indexable URL.
+  ...SERVICE_SLUGS.map((slug) => ({
+    loc: `/services/${slug}`,
+    changefreq: "monthly" as const,
+    priority: 0.9,
+  })),
   { loc: "/success-stories", changefreq: "monthly", priority: 0.8 },
   { loc: "/portfolio", changefreq: "monthly", priority: 0.7 },
   { loc: "/our-story", changefreq: "monthly", priority: 0.6 },

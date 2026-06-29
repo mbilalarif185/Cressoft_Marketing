@@ -1,0 +1,312 @@
+// =====================================================
+// Individual service pages  (/services/<slug>)
+// Mirrors the marketing-solutions visual language (cards,
+// radii, shadows, brand tints) using the same design
+// tokens, so these pages look native to the site.
+// All selectors are namespaced under `.service-detail__*`.
+// =====================================================
+
+// 1) Overview ----------------------------------------------------
+.service-detail__overview {
+  position: relative;
+  z-index: 1;
+
+  .service-detail__overview-text {
+    margin: 0 0 18px;
+    font-size: 16px;
+    line-height: 1.75;
+    opacity: 0.82;
+  }
+
+  // Decorative brand panel beside the copy (carries the service icon).
+  .service-detail__visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    min-height: 320px;
+    padding: 48px 32px;
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    background: linear-gradient(
+      160deg,
+      rgba(30, 134, 214, 0.08) 0%,
+      var(--surface-raised) 60%
+    );
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .service-detail__visual-glow {
+    position: absolute;
+    inset-inline-end: -60px;
+    top: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(30, 134, 214, 0.22);
+    filter: blur(60px);
+    z-index: -1;
+  }
+
+  .service-detail__visual-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 110px;
+    height: 110px;
+    border-radius: 28px;
+    background: var(--brand-gradient);
+    color: var(--white);
+    font-size: 44px;
+    box-shadow: var(--shadow-brand);
+  }
+
+  .service-detail__visual-name {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: -0.01em;
+  }
+}
+
+// 2) Features / benefits grid ------------------------------------
+.service-detail__features {
+  position: relative;
+  z-index: 1;
+  background-color: var(--surface-sunken);
+
+  .service-detail__grid {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-bottom: 0;
+  }
+
+  .service-detail__col {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .service-detail__card {
+    position: relative;
+    height: 100%;
+    padding: 34px 30px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at top right,
+        rgba(30, 134, 214, 0.18),
+        transparent 65%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      border-color: rgba(30, 134, 214, 0.45);
+      box-shadow: var(--shadow-secondary);
+
+      &::before {
+        opacity: 1;
+      }
+      .service-detail__card-icon {
+        background: var(--primary-color);
+        color: var(--white);
+      }
+    }
+  }
+
+  .service-detail__card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    background: rgba(30, 134, 214, 0.14);
+    border: 1px solid rgba(30, 134, 214, 0.28);
+    color: var(--primary-color);
+    font-size: 22px;
+    margin-bottom: 22px;
+    transition: var(--transition);
+  }
+
+  .service-detail__card-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .service-detail__card-desc {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    opacity: 0.78;
+  }
+}
+
+// 3) Process timeline --------------------------------------------
+.service-detail__process {
+  position: relative;
+  z-index: 1;
+
+  .sub-title.justify-content-center {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .service-detail__steps {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  .service-detail__step {
+    list-style: none;
+    position: relative;
+    display: flex;
+  }
+
+  .service-detail__step-card {
+    position: relative;
+    width: 100%;
+    padding: 34px 26px 30px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+
+    &:hover {
+      border-color: rgba(30, 134, 214, 0.4);
+      box-shadow: var(--shadow-secondary);
+      transform: translateY(-4px);
+    }
+  }
+
+  .service-detail__step-number {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--primary-color);
+    margin-bottom: 18px;
+  }
+
+  .service-detail__step-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(30, 134, 214, 0.14);
+    border: 1px solid rgba(30, 134, 214, 0.28);
+    color: var(--primary-color);
+    font-size: 19px;
+    margin-bottom: 18px;
+  }
+
+  .service-detail__step-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .service-detail__step-desc {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.78;
+  }
+
+  .service-detail__step-connector {
+    position: absolute;
+    top: 64px;
+    inset-inline-end: -24px;
+    width: 24px;
+    height: 2px;
+    background-image: linear-gradient(
+      to right,
+      rgba(30, 134, 214, 0.5) 50%,
+      transparent 50%
+    );
+    background-size: 8px 2px;
+    background-repeat: repeat-x;
+    pointer-events: none;
+  }
+}
+
+// =====================================================
+// Responsive
+// =====================================================
+@media only screen and (max-width: 1199.98px) {
+  .service-detail__process {
+    .service-detail__steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .service-detail__step-connector {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 991.98px) {
+  .service-detail__overview {
+    .service-detail__visual {
+      margin-top: 32px;
+      min-height: 260px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767.98px) {
+  .service-detail__process {
+    .service-detail__steps {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .service-detail__features {
+    .service-detail__card {
+      padding: 28px 22px;
+    }
+    .service-detail__card-title {
+      font-size: 19px;
+    }
+  }
+  .service-detail__process {
+    .service-detail__step-card {
+      padding: 28px 22px;
+    }
+  }
+  .service-detail__overview,
+  .service-detail__features,
+  .service-detail__process {
+    .sub-title {
+      font-size: 12px;
+    }
+  }
+}

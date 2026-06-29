@@ -4,7 +4,6 @@ import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import type { BlogPost, BlogPostMeta } from "@/types/blog";
-import QuantelBlogHtml from "@/components/blog/QuantelBlogHtml";
 import { QUANTEL_SOCIAL } from "@/constants/socialLinks";
 
 type BlogDetailsMainProps = {
@@ -86,7 +85,6 @@ const mdxComponents = {
       <Link href={href ?? "#"} className="bd-prose__a" {...(rest as any)} />
     );
   },
-  QuantelBlogHtml,
   img: ({
     src,
     alt,

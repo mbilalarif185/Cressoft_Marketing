@@ -201,14 +201,21 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="dns-prefetch" href="https://wa.me" key="dns-wa" />
         <link
           rel="icon"
-          type="image/webp"
-          href="/images/digital-marketing-agency.webp"
+          type="image/svg+xml"
+          href="/favicon.svg"
+          key="icon-svg"
+        />
+        <link rel="icon" href="/favicon.ico" sizes="any" key="icon-ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
           key="icon-png"
         />
-        <link rel="shortcut icon" href="/favicon.ico" key="icon-ico" />
         <link
           rel="apple-touch-icon"
-          href="/images/digital-marketing-agency.webp"
+          href="/apple-touch-icon.png"
           key="apple-touch"
         />
         <meta name="theme-color" content="#faf6ef" key="theme-color" />

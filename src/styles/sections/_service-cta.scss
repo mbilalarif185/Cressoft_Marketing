@@ -1,0 +1,560 @@
+// =====================================================
+// Service-page CTAs  (/services/<slug>)
+//
+// Every service closes on a finished, distinct CTA. The one consistent, REAL
+// grounding element is the service icon, rendered as a gradient badge — no
+// placeholder/mockup chrome. Distinctness comes from genuine art direction
+// (background, composition, accent) per service. The body vocabulary
+// (`.scta__*`) is shared + tone-driven.
+//
+// `_reset.scss` forces every heading + paragraph to
+// `color: var(--theme-color) !important`, so each tone re-declares
+// `--theme-color` locally to keep copy legible on dark / light / on-brand.
+// =====================================================
+
+.scta {
+  &.section {
+    padding-bottom: clamp(48px, 7vw, 90px);
+  }
+
+  // --- Tone tokens -----------------------------------------------------
+  &.scta--dark {
+    --theme-color: #f4efe6;
+    --sc-ink: #f4efe6;
+    --sc-muted: #aab0bd;
+    --sc-line: rgba(255, 255, 255, 0.16);
+    --sc-surface-soft: rgba(255, 255, 255, 0.04);
+    --sc-accent: var(--brand-cyan);
+  }
+  &.scta--light {
+    --theme-color: var(--ink);
+    --sc-ink: var(--ink);
+    --sc-muted: var(--ink-soft);
+    --sc-line: var(--line-strong);
+    --sc-surface-soft: rgba(16, 24, 32, 0.03);
+    --sc-accent: var(--brand-blue);
+  }
+  // White copy + white solid primary on the brand-gradient band.
+  &.scta--onbrand {
+    --theme-color: #ffffff;
+    --sc-ink: #ffffff;
+    --sc-muted: rgba(255, 255, 255, 0.86);
+    --sc-line: rgba(255, 255, 255, 0.4);
+    --sc-surface-soft: rgba(255, 255, 255, 0.12);
+    --sc-accent: #ffffff;
+  }
+
+  // --- Icon badge (the shared grounding element) -----------------------
+  .scta__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    background: var(--brand-gradient);
+    color: var(--white);
+    font-size: 26px;
+    box-shadow: var(--shadow-brand);
+  }
+  .scta__badge--xl {
+    width: 116px;
+    height: 116px;
+    border-radius: 32px;
+    font-size: 50px;
+    margin-bottom: 0;
+  }
+
+  // --- Shared body -----------------------------------------------------
+  .scta__body--center {
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+  .scta__body--start {
+    text-align: start;
+  }
+
+  .scta__heading {
+    font-family: var(--display);
+    color: var(--sc-ink);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-size: clamp(26px, 3.6vw, 42px);
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+
+  .scta__subcopy {
+    color: var(--sc-ink);
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.65;
+    opacity: 0.82;
+    margin: 0;
+    max-width: 540px;
+  }
+  .scta__body--center .scta__subcopy {
+    margin-inline: auto;
+  }
+
+  .scta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    margin-top: 28px;
+  }
+  .scta__body--center .scta__actions {
+    justify-content: center;
+  }
+
+  .scta__primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    background: var(--brand-gradient);
+    border: 1px solid transparent;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    overflow: hidden;
+    box-shadow: 0 16px 34px rgba(30, 134, 214, 0.45);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    span,
+    i {
+      position: relative;
+      z-index: 1;
+    }
+    i {
+      font-size: 13px;
+      transition: transform 0.25s ease;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.28) 50%,
+        transparent 70%
+      );
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      color: var(--white);
+      box-shadow: 0 22px 44px rgba(30, 134, 214, 0.6);
+      i {
+        transform: translateX(4px);
+      }
+      &::before {
+        transform: translateX(100%);
+      }
+    }
+    &:focus-visible {
+      outline: 2px solid var(--sc-accent);
+      outline-offset: 3px;
+    }
+  }
+
+  .scta__secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    border: 1px solid var(--sc-line);
+    background: var(--sc-surface-soft);
+    color: var(--sc-ink);
+    font-weight: 600;
+    font-size: 14px;
+    transition: var(--transition);
+
+    .wa-icon {
+      width: 18px;
+      height: 18px;
+      color: #25d366;
+      flex-shrink: 0;
+    }
+    &:hover,
+    &:focus-visible {
+      border-color: var(--sc-accent);
+      color: var(--sc-ink);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--sc-accent);
+      outline-offset: 3px;
+    }
+  }
+
+  .scta__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 14px 6px;
+    color: var(--sc-ink);
+    font-weight: 700;
+    font-size: 14px;
+    transition: color 0.2s ease;
+    i {
+      color: var(--sc-accent);
+      font-size: 14px;
+    }
+    &:hover {
+      color: var(--sc-accent);
+    }
+  }
+
+  .scta__chips {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 26px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--sc-muted);
+      font-size: 13px;
+      line-height: 1;
+      i {
+        color: var(--sc-accent);
+        font-size: 13px;
+      }
+    }
+  }
+  .scta__body--center .scta__chips {
+    justify-content: center;
+  }
+
+  // On-brand band: solid white primary, translucent secondary.
+  &.scta--onbrand .scta__primary {
+    background: var(--white);
+    color: var(--brand-blue-deep);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+    &:hover,
+    &:focus-visible {
+      color: var(--brand-blue-deep);
+      box-shadow: 0 22px 44px rgba(0, 0, 0, 0.24);
+    }
+  }
+  &.scta--onbrand .scta__badge {
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: none;
+  }
+}
+
+/* Shared surfaces ------------------------------------------------------- */
+%scta-island-dark {
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #14141d 0%, #1b1c27 100%);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45);
+}
+%scta-card-light {
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-secondary);
+}
+
+/* 1) SaaS — concentric rings (split, dark) ----------------------------- */
+.sctaf--rings {
+  .sctaf-rings {
+    @extend %scta-island-dark;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(32px, 4vw, 56px);
+    align-items: center;
+    padding: clamp(40px, 5vw, 80px);
+    overflow: hidden;
+  }
+  .sctaf-rings__visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+  }
+  .sctaf-rings__ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(30, 134, 214, 0.28);
+    &:nth-child(1) { width: 240px; height: 240px; animation: sctaSpinPulse 6s ease-in-out infinite; }
+    &:nth-child(2) { width: 170px; height: 170px; border-color: rgba(30, 134, 214, 0.4); }
+    &:nth-child(3) { width: 110px; height: 110px; border-color: rgba(31, 196, 245, 0.5); }
+  }
+  .sctaf-rings__core {
+    position: relative;
+    z-index: 1;
+    width: 86px;
+    height: 86px;
+    border-radius: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--brand-gradient);
+    color: var(--white);
+    font-size: 34px;
+    box-shadow: var(--shadow-brand);
+  }
+  @media (max-width: 991.98px) {
+    .sctaf-rings { grid-template-columns: 1fr; }
+    .sctaf-rings__visual { order: -1; min-height: 200px; }
+  }
+}
+
+/* 2) White-label — gradient top edge (light) --------------------------- */
+.sctaf--topedge {
+  .sctaf-topedge {
+    @extend %scta-card-light;
+    position: relative;
+    padding: clamp(44px, 5vw, 84px);
+    overflow: hidden;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--brand-gradient);
+    }
+  }
+}
+
+/* 3) AI — gradient-border island (dark) -------------------------------- */
+.sctaf--ring-border {
+  .sctaf-ringborder {
+    padding: 1.5px;
+    border-radius: 30px;
+    background: linear-gradient(
+      140deg,
+      rgba(30, 134, 214, 0.6) 0%,
+      rgba(23, 169, 206, 0.2) 38%,
+      rgba(255, 255, 255, 0.06) 66%,
+      rgba(30, 134, 214, 0.5) 100%
+    );
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45);
+  }
+  .sctaf-ringborder__inner {
+    border-radius: 28.5px;
+    padding: clamp(44px, 5vw, 84px);
+    background: linear-gradient(180deg, #14141d 0%, #1b1c27 100%);
+  }
+}
+
+/* 4) Web — brand-gradient band (on-brand) ------------------------------ */
+.sctaf--band {
+  .sctaf-band {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    padding: clamp(44px, 5vw, 84px);
+    background: var(--brand-gradient);
+    box-shadow: 0 30px 70px rgba(30, 134, 214, 0.45);
+  }
+  .sctaf-band__wm {
+    position: absolute;
+    inset-inline-end: -40px;
+    bottom: -56px;
+    font-size: clamp(200px, 28vw, 320px);
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.12);
+    transform: rotate(-12deg);
+    pointer-events: none;
+  }
+  .scta__body { position: relative; z-index: 1; }
+}
+
+/* 5) SEO — oversized offset icon (split, sand) ------------------------- */
+.sctaf--offset {
+  .sctaf-offset {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(28px, 4vw, 56px);
+    align-items: center;
+    padding: clamp(36px, 4vw, 64px);
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    background: var(--surface-sunken);
+  }
+  .sctaf-offset__visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      background: rgba(30, 134, 214, 0.16);
+      filter: blur(40px);
+      z-index: -1;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .sctaf-offset { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .sctaf-offset .scta__body--start { text-align: center; }
+    .sctaf-offset .scta__actions,
+    .sctaf-offset .scta__chips { justify-content: center; }
+  }
+}
+
+/* 6) Social — gradient corner glow (light) ----------------------------- */
+.sctaf--wedge {
+  .sctaf-wedge {
+    @extend %scta-card-light;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(44px, 5vw, 84px);
+  }
+  .sctaf-wedge__glow {
+    position: absolute;
+    top: -90px;
+    inset-inline-end: -90px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    opacity: 0.16;
+    filter: blur(30px);
+    pointer-events: none;
+  }
+  .scta__body { position: relative; z-index: 1; }
+}
+
+/* 7) Mobile — gradient accent bar (dark) ------------------------------- */
+.sctaf--bar {
+  .sctaf-bar {
+    @extend %scta-island-dark;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(44px, 5vw, 84px);
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      inset-inline-start: 0;
+      width: 6px;
+      background: var(--brand-gradient);
+    }
+  }
+}
+
+/* 8) Custom software — fine grid (dark) -------------------------------- */
+.sctaf--grid {
+  .sctaf-grid {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: clamp(44px, 5vw, 84px);
+    border: 1px solid rgba(127, 209, 255, 0.2);
+    background-color: #0c1322;
+    background-image:
+      linear-gradient(rgba(127, 209, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(127, 209, 255, 0.07) 1px, transparent 1px);
+    background-size: 30px 30px;
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* 9) Ecommerce — icon badge split (light) ------------------------------ */
+.sctaf--split {
+  .sctaf-split {
+    @extend %scta-card-light;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: clamp(28px, 4vw, 56px);
+    align-items: center;
+    padding: clamp(40px, 5vw, 76px);
+  }
+  .sctaf-split__visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      background: rgba(30, 134, 214, 0.14);
+      filter: blur(38px);
+      z-index: -1;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .sctaf-split { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .sctaf-split .scta__body--start { text-align: center; }
+    .sctaf-split .scta__actions,
+    .sctaf-split .scta__chips { justify-content: center; }
+    .sctaf-split__visual { order: -1; }
+  }
+}
+
+/* 10) ERP — radial-glow island (dark) ---------------------------------- */
+.sctaf--island {
+  .sctaf-island {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    padding: clamp(44px, 5vw, 84px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      radial-gradient(120% 120% at 50% 0%, rgba(30, 134, 214, 0.22), transparent 52%),
+      linear-gradient(180deg, #14141d 0%, #1b1c27 100%);
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* 11) UI/UX — minimal card with hairline divider (light) --------------- */
+.sctaf--minimal {
+  .sctaf-minimal {
+    @extend %scta-card-light;
+    padding: clamp(44px, 5vw, 84px);
+  }
+  .scta__chips {
+    margin-top: 28px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+    width: 100%;
+  }
+}
+
+/* Keyframes + small screens + reduced motion --------------------------- */
+@keyframes sctaSpinPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.7; }
+}
+
+@media (max-width: 575.98px) {
+  .scta {
+    .scta__actions { width: 100%; }
+    .scta__primary,
+    .scta__secondary { flex: 1 1 100%; justify-content: center; }
+    .scta__phone { width: 100%; justify-content: center; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scta .scta__primary::before { transition: none; }
+  .sctaf--rings .sctaf-rings__ring { animation: none; }
+}

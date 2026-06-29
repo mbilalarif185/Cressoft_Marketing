@@ -1,0 +1,17 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Quantel Solutions">
+  <defs>
+    <linearGradient id="qg" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1fc4f5"/>
+      <stop offset="0.55" stop-color="#0a8ef0"/>
+      <stop offset="1" stop-color="#16355c"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#qg)"/>
+  <!-- Q ring -->
+  <circle cx="29" cy="33" r="14.5" fill="none" stroke="#fff" stroke-width="6.5"/>
+  <!-- Q tail -->
+  <path d="M36 41 L47 52" stroke="#fff" stroke-width="6.5" stroke-linecap="round"/>
+  <!-- rising node: stalk + dot breaking through the top-right -->
+  <path d="M41 24 L46 18" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="49" cy="14.5" r="5.5" fill="#fff"/>
+</svg>

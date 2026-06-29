@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import type { GetStaticProps } from "next";
 import Layout from "@/components/layout/Layout";
 import Seo from "@/components/seo/Seo";
-import HomeTwoBanner from "@/components/layout/banner/HomeOneBanner";
+import HeroSection from "@/components/HeroSection";
 import { getAllPostMeta } from "@/lib/blog";
 import type { BlogPostMeta } from "@/types/blog";
 
@@ -93,7 +93,7 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
           ],
         }}
       />
-      <HomeTwoBanner />
+      <HeroSection />
 
       <HomeTwoAward />
       <HomeTwoOffer />

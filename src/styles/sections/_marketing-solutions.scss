@@ -34,6 +34,13 @@
     margin-bottom: 24px;
   }
 
+  // Cards beyond the preview count stay in the DOM (so every "Learn more"
+  // link to a /services/<slug> page is crawlable) but are collapsed until the
+  // visitor expands the grid.
+  .marketing-services__col--collapsed {
+    display: none;
+  }
+
   .marketing-services__card {
     position: relative;
     height: 100%;
