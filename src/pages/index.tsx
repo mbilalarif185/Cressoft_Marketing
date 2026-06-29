@@ -58,7 +58,7 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
     <Layout header={2} footer={1}>
       <Seo
         title="Global Technology & SaaS Partner | Quantel Solutions"
-        description="Quantel Solutions is a global technology company delivering SaaS products, white-label platforms, AI solutions, web development, and digital marketing to businesses across the UK, US, and UAE."
+        description="Quantel Solutions — global technology partner in London. SaaS, AI, web & white-label software for the UK, USA & UAE. 500+ projects. Book a free call."
         pathname="/"
         keywords={[
           "SaaS development UK",

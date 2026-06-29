@@ -98,7 +98,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-cubes-stacked",
     metaTitle: "SaaS Product Development Company",
     metaDescription:
-      "Custom SaaS product development - multi-tenant architecture, subscription billing, secure auth, and cloud infrastructure built to scale from your first customer to your thousandth.",
+      "Expert SaaS development company in the UK. We build secure, scalable multi-tenant SaaS platforms for startups & enterprises. Free consultation available.",
     keywords: [
       "SaaS development company",
       "custom SaaS development",
@@ -199,7 +199,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-layer-group",
     metaTitle: "White-Label Software Solutions",
     metaDescription:
-      "Ready-to-brand white-label CRM, ERP, LMS, and e-commerce platforms you can launch under your own name - fully customised to your workflows and live in weeks, not years.",
+      "White label software solutions UK. Rebrandable SaaS, CRM, ERP & e-commerce products ready to launch under your brand in weeks. Talk to us today.",
     keywords: [
       "white label software",
       "white label CRM",
@@ -300,7 +300,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-microchip-ai",
     metaTitle: "AI & Automation Solutions",
     metaDescription:
-      "Practical AI and automation - LLM-powered copilots, chatbots, predictive analytics, and workflow automation that cut operational cost and free your team to focus on growth.",
+      "AI automation company UK. We build AI chatbots, LLM integrations & workflow automation for businesses across the UK, USA & UAE. Book a free call.",
     keywords: [
       "AI solutions",
       "AI automation services",
@@ -405,7 +405,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-code",
     metaTitle: "Web Development Services",
     metaDescription:
-      "Fast, beautiful, SEO-ready websites and web apps built on modern frameworks - engineered for performance, accessibility, and conversion across every market you serve.",
+      "Web development agency in London. Fast, SEO-ready custom websites & web apps built for performance across the UK, USA & UAE. Get a free quote today.",
     keywords: [
       "web development services",
       "web app development",
@@ -506,7 +506,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-magnifying-glass-chart",
     metaTitle: "SEO Services - Search Engine Optimisation",
     metaDescription:
-      "Earn page-one rankings that compound. Technical SEO, intent-driven content, and authoritative link building that make your business visible to its best buyers on Google.",
+      "SEO services UK. Technical SEO, intent-driven content & authoritative link building that earn page-one rankings for your buyers. Get a free audit.",
     keywords: [
       "SEO services",
       "search engine optimisation agency",
@@ -607,7 +607,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-share-nodes",
     metaTitle: "Social Media Marketing Agency",
     metaDescription:
-      "Strategy, content, paid campaigns, and community management across Meta, LinkedIn, and TikTok - building trust and converting followers into customers while you run your business.",
+      "Social media marketing agency UK. Strategy, content & paid campaigns on Meta, LinkedIn & TikTok that convert followers into customers. Book a call.",
     keywords: [
       "social media marketing agency",
       "paid social campaigns",
@@ -708,7 +708,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-mobile-screen",
     metaTitle: "Mobile App Development Company",
     metaDescription:
-      "Cross-platform iOS and Android apps - fast to market, intuitive to use, and built to scale. React Native and Flutter development with App Store and Play Store launch.",
+      "Mobile app development in London. Cross-platform iOS & Android apps built by expert developers for UK, USA & UAE clients. Get a free quote today.",
     keywords: [
       "mobile app development company",
       "iOS app development",
@@ -809,7 +809,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-puzzle-piece",
     metaTitle: "Custom Software Development",
     metaDescription:
-      "Bespoke software built around the exact workflows your business runs on - internal tools, portals, integrations, and legacy modernisation that replace spreadsheets for good.",
+      "Custom software development UK. Bespoke internal tools, portals & system integrations built around the exact workflows you run. Get a free consult.",
     keywords: [
       "custom software development",
       "bespoke software",
@@ -910,7 +910,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-bag-shopping",
     metaTitle: "Ecommerce Development & Optimisation",
     metaDescription:
-      "Shopify, WooCommerce, and custom storefronts engineered for global buyers - from product discovery to a frictionless checkout, with conversion-rate optimisation built in.",
+      "Ecommerce development company UK. Custom Shopify & WooCommerce stores engineered to convert across the UK, USA & UAE. Get a free quote today.",
     keywords: [
       "ecommerce development",
       "Shopify development agency",
@@ -1011,7 +1011,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-network-wired",
     metaTitle: "ERP Solutions & Implementation",
     metaDescription:
-      "ERP implementation and integration that connects finance, operations, inventory, and people into a single source of truth - so decisions get faster and costly errors disappear.",
+      "ERP solutions & implementation UK. Connect finance, operations, inventory & people into one real-time source of truth. Book a free consultation.",
     keywords: [
       "ERP solutions",
       "ERP implementation",
@@ -1112,7 +1112,7 @@ export const SERVICES: Service[] = [
     icon: "fa-solid fa-palette",
     metaTitle: "UI / UX Design Services",
     metaDescription:
-      "Research-led product design - user research, wireframes, prototypes, and design systems that create interfaces which feel effortless and drive the actions your business needs.",
+      "UI/UX design services UK. Research-led product design, prototypes & design systems that make every screen effortless. Book a free design review.",
     keywords: [
       "UI UX design services",
       "product design agency",

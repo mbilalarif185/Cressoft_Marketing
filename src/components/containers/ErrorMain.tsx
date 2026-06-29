@@ -12,7 +12,7 @@ const ErrorMain = () => {
             <div className="error__content text-center fade-top">
               <span className="secondary-text">ERROR</span>
               <div className="thumb">
-                <Image src={thumb} alt="Image" />
+                <Image src={thumb} alt="404 error illustration — page not found on Quantel Solutions" />
               </div>
               <h2>page not found</h2>
               <div className="section__content-cta">

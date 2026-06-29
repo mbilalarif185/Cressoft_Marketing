@@ -14,22 +14,26 @@ const PortfolioMain = () => {
   return (
     <section className="section portfolio-m fade-wrapper">
       <div className="container">
+        {/* SEO/a11y: supplies the H2 level between the page H1 ("Portfolio
+            Gallery" from CmnBanner) and the H3 project titles, so the heading
+            outline doesn't skip from H1 to H3. */}
+        <h2 className="visually-hidden">Quantel Solutions portfolio projects</h2>
         <div className="row gaper">
           <div className="col-12 col-lg-6">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={eleven} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={eleven} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>
@@ -37,18 +41,18 @@ const PortfolioMain = () => {
           <div className="col-12 col-lg-6">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={twelve} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={twelve} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>
@@ -56,18 +60,18 @@ const PortfolioMain = () => {
           <div className="col-12 col-lg-6 col-xxl-3">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={fifteen} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={fifteen} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>
@@ -75,18 +79,18 @@ const PortfolioMain = () => {
           <div className="col-12 col-lg-6 col-xxl-3">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={sixteen} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={sixteen} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>
@@ -94,18 +98,18 @@ const PortfolioMain = () => {
           <div className="col-12 col-lg-6 col-xxl-3">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={seventeen} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={seventeen} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>
@@ -113,18 +117,18 @@ const PortfolioMain = () => {
           <div className="col-12 col-lg-6 col-xxl-3">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={eighteen} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={eighteen} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>
@@ -132,18 +136,18 @@ const PortfolioMain = () => {
           <div className="col-12 col-lg-6">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={thirteen} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={thirteen} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>
@@ -151,18 +155,18 @@ const PortfolioMain = () => {
           <div className="col-12 col-lg-6">
             <div className="portfolio-m__single topy-tilt fade-top">
               <div className="thumb">
-                <Link href="service-single">
-                  <Image src={fourteen} alt="Image" />
+                <Link href="/success-stories">
+                  <Image src={fourteen} alt="LMS web application project delivered by Quantel Solutions" />
                 </Link>
               </div>
               <div className="content">
                 <div className="tr">
-                  <Link href="service-single">
+                  <Link href="/success-stories">
                     <i className="icon-arrow-top-right"></i>
                   </Link>
                 </div>
                 <h3 className="light-title-lg">
-                  <Link href="service-single">LMS web application</Link>
+                  <Link href="/success-stories">LMS web application</Link>
                 </h3>
               </div>
             </div>

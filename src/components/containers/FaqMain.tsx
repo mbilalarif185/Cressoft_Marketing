@@ -14,7 +14,7 @@ const FaqMain = () => {
         <div className="row gaper">
           <div className="col-12 col-lg-6">
             <div className="faq__thumb fade-left">
-              <Image src={thumb} alt="Image" />
+              <Image src={thumb} alt="Quantel Solutions FAQ — answers about our technology and SaaS services" />
             </div>
           </div>
           <div className="col-12 col-lg-6">

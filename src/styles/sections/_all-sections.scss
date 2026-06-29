@@ -4557,9 +4557,14 @@
     }
   }
 
-  h4 {
+  // Card titles. Promoted from <h4> to <h3> so the Contact page heading
+  // outline is H1 → H2 → H3 (no skipped levels); the explicit font-size pins
+  // them to the former h4 type scale so the promotion changes no visuals.
+  .contact-m__card-title {
     margin-bottom: 22px;
     text-transform: capitalize;
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+    line-height: 1.4;
   }
 
   p {

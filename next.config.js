@@ -93,6 +93,7 @@ const nextConfig = {
       {
         source: '/:path*',
         headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
@@ -142,6 +143,11 @@ const nextConfig = {
       { source: '/index', destination: '/', permanent: true },
       { source: '/home', destination: '/', permanent: true },
       { source: '/contact-us', destination: '/contact', permanent: true },
+      // Removed stale theme demo pages (Lorem Ipsum content). 301 their
+      // previously-indexed URLs to the closest real pages so inbound links and
+      // search-engine equity are preserved instead of hitting a 404.
+      { source: '/service-single', destination: '/marketing-solutions', permanent: true },
+      { source: '/project-single', destination: '/success-stories', permanent: true },
     ]
   },
 }

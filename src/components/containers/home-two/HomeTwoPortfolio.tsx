@@ -152,7 +152,7 @@ const PortfolioGridCard = React.memo(function PortfolioGridCard({
         <Link
           href={item.href}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="nofollow noopener noreferrer"
           aria-label={`View project - ${item.alt} (opens in new tab)`}
         >
           <Image

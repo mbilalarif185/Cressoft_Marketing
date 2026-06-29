@@ -122,7 +122,12 @@ const ProjectMain = () => {
           <SwiperSlide key={`${project.title}-${index}`}>
             <article className="project-sl__single">
               <div className="thumb">
-                <Link href={project.href} aria-label={project.title}>
+                <Link
+                  href={project.href}
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                  aria-label={project.title}
+                >
                   <Image
                     src={project.image}
                     alt={project.alt}
@@ -133,7 +138,13 @@ const ProjectMain = () => {
               </div>
               <div className="content">
                 <h3>
-                  <Link href={project.href}>{project.title}</Link>
+                  <Link
+                    href={project.href}
+                    target="_blank"
+                    rel="nofollow noopener noreferrer"
+                  >
+                    {project.title}
+                  </Link>
                 </h3>
               </div>
             </article>

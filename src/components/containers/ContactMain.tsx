@@ -62,6 +62,10 @@ const ContactMain = () => {
   return (
     <section className="section contact-m fade-wrapper">
       <div className="container">
+        {/* SEO/a11y: provides the H2 level between the page H1 ("Contact Us"
+            from CmnBanner) and the H3 card titles below, so the heading
+            outline no longer skips from H1 straight to a lower level. */}
+        <h2 className="visually-hidden">How to reach Quantel Solutions</h2>
         <div className="row gaper">
           <div className="col-12 col-sm-6 col-xl-3">
             <div className="contact-m__single topy-tilt fade-top">
@@ -69,7 +73,7 @@ const ContactMain = () => {
                 <PhoneIcon />
               </div>
               <div className="content">
-                <h4>Phone &amp; WhatsApp</h4>
+                <h3 className="contact-m__card-title">Phone &amp; WhatsApp</h3>
                 <div className="contact-m__line">
                   <span className="contact-m__label">Call</span>
                   <Link
@@ -99,7 +103,7 @@ const ContactMain = () => {
                 <MailIcon />
               </div>
               <div className="content">
-                <h4>Mail Address</h4>
+                <h3 className="contact-m__card-title">Mail Address</h3>
                 <div className="contact-m__line">
                   <span className="contact-m__label">Support</span>
                   <Link
@@ -127,7 +131,7 @@ const ContactMain = () => {
                 <LocationIcon />
               </div>
               <div className="content">
-                <h4>Our Location</h4>
+                <h3 className="contact-m__card-title">Our Location</h3>
                 <p>
                   <a
                     href={CONTACT_MAPS_PLACE_URL}
@@ -146,7 +150,7 @@ const ContactMain = () => {
                 <TimeIcon />
               </div>
               <div className="content">
-                <h4>Office Hour</h4>
+                <h3 className="contact-m__card-title">Office Hour</h3>
                 <p>Monday - Friday<br></br> 9 am - 5:30 pm</p>
               </div>
             </div>

@@ -46,12 +46,12 @@ const OurMission = () => {
           </div>
           <div className="col-12 col-lg-6">
             <div className="mission-s__single fade-top">
-              <Image src={one} alt="Image" />
+              <Image src={one} alt="Quantel Solutions team focused on quality software delivery" />
             </div>
           </div>
           <div className="col-12 col-lg-6">
             <div className="mission-s__single fade-top">
-              <Image src={two} alt="Image" />
+              <Image src={two} alt="Quantel Solutions creating customer value through technology" />
             </div>
           </div>
           <div className="col-12 col-lg-6">

@@ -27,7 +27,7 @@ const MarketingSolutions = () => {
     <Layout header={2} footer={1}>
       <Seo
         title="Technology & SaaS Solutions - SaaS, White-Label, AI & More | Quantel Solutions"
-        description="Explore Quantel Solutions' full range of capabilities for global teams - SaaS product development, white-label platforms, AI & automation, web and mobile apps, e-commerce, ERP, SEO, and UI/UX design."
+        description="Technology & SaaS solutions UK. SaaS, white-label, AI, web, mobile, e-commerce & ERP built for UK, USA & UAE teams. Book a free strategy call today."
         pathname="/marketing-solutions"
         keywords={[
           "SaaS development UK",

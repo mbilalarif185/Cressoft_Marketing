@@ -98,12 +98,14 @@ export default function HeroSection() {
                 <span className="qs-hero__eyebrow-sep">·</span> UAE
               </span>
 
-              {/* H1 */}
+              {/* H1 — kept under 60 chars with the primary keyword ("SaaS")
+                  in the first words for SEO, while preserving the hero's
+                  value-prop framing and the accent-span design. */}
               <h1 className="qs-hero__title">
-                We build your SaaS, AI &amp; web products
+                SaaS, AI &amp; web products
                 <span className="qs-hero__title-accent">
                   {" "}
-                  — and scale them globally.
+                  — built and scaled globally.
                 </span>
               </h1>
 
