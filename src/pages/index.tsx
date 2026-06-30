@@ -68,7 +68,7 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
           "digital marketing UK",
           "technology partner UAE",
         ]}
-        image={`${SITE_URL}/images/home/banner.webp`}
+        image={`${SITE_URL}/images/feature.png`}
         imageAlt="Quantel Solutions - Global Technology & SaaS Partner"
       />
       {/*
