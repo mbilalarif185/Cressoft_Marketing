@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import {
   buildPageSeo,
+  buildBreadcrumbs,
   PageSeoInput,
   SITE_NAME,
   SITE_LOCALE,
@@ -58,10 +59,14 @@ const Seo: React.FC<SeoProps> = ({
     type: webPageType,
   });
 
-  const crumbs =
+  // Use an explicit breadcrumb trail when a page provides one; otherwise
+  // auto-generate it from the route path. Only emit BreadcrumbList JSON-LD
+  // when there are at least two crumbs (i.e. not on the bare homepage).
+  const crumbTrail =
     breadcrumbs && breadcrumbs.length
-      ? breadcrumbSchema(breadcrumbs)
-      : null;
+      ? breadcrumbs
+      : buildBreadcrumbs(seo.pathname);
+  const crumbs = crumbTrail.length >= 2 ? breadcrumbSchema(crumbTrail) : null;
 
   const extra = Array.isArray(jsonLd)
     ? jsonLd

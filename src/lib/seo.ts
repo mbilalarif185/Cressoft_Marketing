@@ -11,7 +11,7 @@ import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
 } from "@/constants/contact";
-import { QUANTEL_SOCIAL } from "@/constants/socialLinks";
+import { SCHEMA_SAME_AS } from "@/constants/socialLinks";
 
 /** Canonical site origin - always https, no www, no trailing slash. */
 export const SITE_URL = (
@@ -90,11 +90,12 @@ export function absoluteUrl(pathname = "/"): string {
 /*                              JSON-LD builders                              */
 /* -------------------------------------------------------------------------- */
 
-const SOCIAL = QUANTEL_SOCIAL as Record<string, string | undefined>;
-const SAME_AS = [
-  SOCIAL.linkedin,
-  SOCIAL.instagram,
-].filter(Boolean) as string[];
+/**
+ * `sameAs` profiles for Organization + LocalBusiness. Sourced from the single
+ * central list in constants/socialLinks.ts (Instagram + Facebook only —
+ * LinkedIn is intentionally excluded for this pass).
+ */
+const SAME_AS = SCHEMA_SAME_AS;
 
 export function organizationSchema() {
   return {
@@ -191,6 +192,10 @@ export function localBusinessSchema() {
 }
 
 export function websiteSchema() {
+  // NOTE: no `potentialAction`/SearchAction. The blog "search" is client-side
+  // React state only (no `?q=` URL endpoint), so a sitelinks-searchbox action
+  // would point at a URL that performs no search. Add it back only if/when a
+  // real query-string search endpoint exists.
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -199,11 +204,6 @@ export function websiteSchema() {
     url: `${SITE_URL}/`,
     inLanguage: SITE_LANG,
     publisher: { "@id": `${SITE_URL}/#organization` },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/blog?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
@@ -240,6 +240,71 @@ export function breadcrumbSchema(
       item: item.url,
     })),
   };
+}
+
+/**
+ * Human-readable labels for known route segments. Anything not listed falls
+ * back to a title-cased version of the slug (see `humaniseSegment`).
+ */
+const BREADCRUMB_LABELS: Record<string, string> = {
+  "about-us": "About Us",
+  "our-story": "Our Story",
+  contact: "Contact",
+  faq: "FAQs",
+  blog: "Blog",
+  portfolio: "Portfolio",
+  "success-stories": "Success Stories",
+  "privacy-policy": "Privacy Policy",
+  "terms-and-conditions": "Terms & Conditions",
+  // The services index lives at /marketing-solutions, so the "services"
+  // path segment is labelled accordingly.
+  "marketing-solutions": "Services",
+  services: "Services",
+};
+
+/** Acronyms that should keep specific casing instead of plain Title Case. */
+const ACRONYMS: Record<string, string> = {
+  saas: "SaaS",
+  ai: "AI",
+  seo: "SEO",
+  erp: "ERP",
+  ui: "UI",
+  ux: "UX",
+  crm: "CRM",
+};
+
+function humaniseSegment(slug: string): string {
+  return slug
+    .split("-")
+    .map((word) => ACRONYMS[word] ?? word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+/**
+ * Auto-generate a breadcrumb trail from a Next.js route path. Always starts at
+ * "Home" and appends one crumb per path segment, building cumulative absolute
+ * URLs. Returns just `[Home]` for the root path (callers should skip emitting
+ * BreadcrumbList JSON-LD when there are fewer than two crumbs).
+ *
+ * Example: "/services/saas-development" =>
+ *   [ { Home, / }, { Services, /services }, { SaaS Development, /services/saas-development } ]
+ */
+export function buildBreadcrumbs(
+  pathname = "/"
+): { name: string; url: string }[] {
+  const clean = pathname.split("?")[0].split("#")[0];
+  const segments = clean.split("/").filter(Boolean);
+
+  const crumbs = [{ name: "Home", url: `${SITE_URL}/` }];
+  let acc = "";
+  for (const segment of segments) {
+    acc += `/${segment}`;
+    crumbs.push({
+      name: BREADCRUMB_LABELS[segment] ?? humaniseSegment(segment),
+      url: `${SITE_URL}${acc}`,
+    });
+  }
+  return crumbs;
 }
 
 /**

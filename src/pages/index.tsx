@@ -70,29 +70,14 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
         ]}
         image={`${SITE_URL}/images/home/banner.webp`}
         imageAlt="Quantel Solutions - Global Technology & SaaS Partner"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Quantel Solutions",
-          image: `${SITE_URL}/images/home/banner.webp`,
-          url: SITE_URL,
-          telephone: "+447879301606",
-          email: "support@quantel.uk",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "20 Fenchurch Street",
-            addressLocality: "London",
-            addressRegion: "England",
-            postalCode: "EC3M 3BY",
-            addressCountry: "GB",
-          },
-          foundingDate: "2021",
-          sameAs: [
-            "https://instagram.com/quantelsolutions",
-            "https://linkedin.com/company/quantel-solutions",
-          ],
-        }}
       />
+      {/*
+        Organization / LocalBusiness / WebSite JSON-LD are emitted site-wide
+        from _app.tsx (single, canonical, @id-referenced nodes), so the
+        homepage no longer ships a duplicate Organization block. The previous
+        inline copy also carried a LinkedIn `sameAs`, now removed per the
+        Instagram + Facebook-only policy.
+      */}
       <HeroSection />
 
       <HomeTwoAward />
