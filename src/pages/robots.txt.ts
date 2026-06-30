@@ -5,9 +5,10 @@ import { SITE_URL } from "@/lib/seo";
  * Dynamic /robots.txt — tells crawlers what they may index and, crucially,
  * advertises the sitemap so search engines can discover every indexable URL.
  *
- * Served via getServerSideProps (Pages Router) for parity with
- * sitemap.xml.ts and feed.xml.ts, so the canonical SITE_URL (env-overridable)
- * is always used. Cache headers for this path are set in next.config.js.
+ * Served via getServerSideProps (Pages Router) for parity with feed.xml.ts,
+ * so the canonical SITE_URL (env-overridable) is always used. The sitemap
+ * itself is a static file at public/sitemap.xml. Cache headers for this path
+ * are set in next.config.js.
  */
 const buildRobots = () =>
   [
