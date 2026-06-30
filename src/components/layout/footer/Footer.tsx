@@ -188,12 +188,12 @@ const Footer = () => {
                 <div className="col-12 col-lg-4">
                   <div className="social justify-content-center justify-content-lg-end">
                     <Link
-                      href={QUANTEL_SOCIAL.linkedin}
+                      href={QUANTEL_SOCIAL.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Quantel Solutions on LinkedIn"
+                      aria-label="Quantel Solutions on Facebook"
                     >
-                      <i className="fa-brands fa-linkedin-in"></i>
+                      <i className="fa-brands fa-facebook-f"></i>
                     </Link>
                     <Link
                       href={QUANTEL_SOCIAL.instagram}

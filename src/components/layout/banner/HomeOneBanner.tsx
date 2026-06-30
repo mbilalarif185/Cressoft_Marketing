@@ -163,11 +163,11 @@ const HomeOneBanner = () => {
         </div>
         <div className="banner-right-text banner-social-text d-none d-md-flex">
           <Link
-            href={QUANTEL_SOCIAL.linkedin}
+            href={QUANTEL_SOCIAL.facebook}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Linkedin
+            facebook
           </Link>
           <Link
             href={QUANTEL_SOCIAL.instagram}

@@ -129,12 +129,12 @@ const Offcanvas = ({ openNav, setOpenNav }: HeaderProps) => {
           </div>
           <div className="offcanvas-menu__social social nav-fade">
             <Link
-              href={QUANTEL_SOCIAL.linkedin}
+              href={QUANTEL_SOCIAL.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Quantel Solutions on LinkedIn"
+              aria-label="Quantel Solutions on Facebook"
             >
-              <i className="fa-brands fa-linkedin-in"></i>
+              <i className="fa-brands fa-facebook-f"></i>
             </Link>
             <Link
               href={QUANTEL_SOCIAL.instagram}

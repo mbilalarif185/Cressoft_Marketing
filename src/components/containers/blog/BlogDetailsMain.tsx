@@ -196,20 +196,20 @@ const BlogDetailsMain = ({
 
                 {/* Brand social profiles — mirrors `Footer` so blog readers
                     can follow Quantel Solutions directly. Uses only icons that
-                    exist in the slim icon subset (`linkedin-in`, `instagram`). */}
+                    exist in the slim icon subset (`facebook-f`, `instagram`). */}
                 <div className="blog-article__share">
                   <span className="blog-article__share-label">
                     Follow Quantel Solutions
                   </span>
                   <div className="blog-article__share-actions">
                     <a
-                      href={QUANTEL_SOCIAL.linkedin}
+                      href={QUANTEL_SOCIAL.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="blog-article__share-btn"
-                      aria-label="Quantel Solutions on LinkedIn"
+                      aria-label="Quantel Solutions on Facebook"
                     >
-                      <i className="fa-brands fa-linkedin-in"></i>
+                      <i className="fa-brands fa-facebook-f"></i>
                     </a>
                     <a
                       href={QUANTEL_SOCIAL.instagram}
