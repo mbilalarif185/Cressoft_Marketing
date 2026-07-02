@@ -124,5 +124,23 @@
   <lastmod>2026-06-30T17:40:39+00:00</lastmod>
   <priority>0.64</priority>
 </url>
+<url>
+  <loc>https://quantel.uk/uk</loc>
+  <lastmod>2026-07-02T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://quantel.uk/usa</loc>
+  <lastmod>2026-07-02T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://quantel.uk/uae</loc>
+  <lastmod>2026-07-02T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.80</priority>
+</url>
 
 </urlset>

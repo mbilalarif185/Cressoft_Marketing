@@ -152,11 +152,31 @@ const Seo: React.FC<SeoProps> = ({
       />
       <meta name="ICBM" content="51.5115, -0.0774" key="icbm" />
 
+      {/*
+       * hreflang return-links cluster. Now that the geo landing pages exist,
+       * every page advertises the full set of regional variants plus the
+       * x-default, so the links reciprocate across the whole site (fixes the
+       * missing hreflang return-link issue from the SEO audit). These are a
+       * fixed set — they do NOT point at `seo.url` — because they describe the
+       * geo cluster, not the current page.
+       */}
       <link
         rel="alternate"
-        hrefLang="en-GB"
-        href={seo.url}
+        hrefLang="en-gb"
+        href={`${SITE_URL}/uk`}
         key="hreflang-en-gb"
+      />
+      <link
+        rel="alternate"
+        hrefLang="en-us"
+        href={`${SITE_URL}/usa`}
+        key="hreflang-en-us"
+      />
+      <link
+        rel="alternate"
+        hrefLang="en-ae"
+        href={`${SITE_URL}/uae`}
+        key="hreflang-en-ae"
       />
       <link
         rel="alternate"

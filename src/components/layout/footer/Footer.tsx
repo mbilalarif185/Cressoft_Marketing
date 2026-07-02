@@ -133,16 +133,13 @@ const Footer = () => {
               <div className="footer__single-content">
                 <ul>
                   <li>
-                    <Link href="/contact">United Kingdom</Link>
+                    <Link href="/uk">United Kingdom</Link>
                   </li>
                   <li>
-                    <Link href="/contact">United States</Link>
+                    <Link href="/usa">United States</Link>
                   </li>
                   <li>
-                    <Link href="/contact">UAE &amp; MENA</Link>
-                  </li>
-                  <li>
-                    <Link href="/contact">Asia-Pacific</Link>
+                    <Link href="/uae">UAE &amp; Middle East</Link>
                   </li>
                 </ul>
               </div>

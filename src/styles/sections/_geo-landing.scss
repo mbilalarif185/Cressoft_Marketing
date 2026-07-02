@@ -1,0 +1,330 @@
+// =====================================================
+// Geo-targeted landing pages (/uk, /usa, /uae)
+// Only the hero and the closing CTA banner need bespoke styles — the
+// services, why-choose and stats sections reuse the existing
+// `.marketing-services`, `.marketing-why` and `.marketing-results` styles.
+// All selectors are namespaced (`.geo-*`) so they never bleed elsewhere.
+// =====================================================
+
+// 1) Hero --------------------------------------------------------
+.geo-hero {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+  // Clears the fixed header (matches `.cmn-banner` top padding rhythm).
+  padding: clamp(150px, 20vw, 210px) 0 clamp(64px, 9vw, 120px);
+  background-color: var(--surface-sunken);
+  background-image:
+    radial-gradient(40% 60% at 8% 0%, rgba(30, 134, 214, 0.12) 0%, rgba(242, 235, 223, 0) 60%),
+    radial-gradient(45% 70% at 96% 8%, rgba(23, 169, 206, 0.12) 0%, rgba(242, 235, 223, 0) 60%);
+
+  .geo-hero__aura {
+    position: absolute;
+    inset-inline-end: -10%;
+    top: -20%;
+    width: 60%;
+    height: 120%;
+    background: radial-gradient(
+      circle at center,
+      rgba(30, 134, 214, 0.16) 0%,
+      transparent 62%
+    );
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .geo-hero__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  // Flag eyebrow pill — mirrors the homepage `.banner__badge`.
+  .geo-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 26px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(30, 134, 214, 0.28);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--brand-coral-deep);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .geo-hero__title {
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 20px;
+    text-transform: capitalize;
+  }
+
+  .geo-hero__lead {
+    max-width: 620px;
+    margin: 0 0 8px;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  .geo-hero__cta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 34px;
+  }
+
+  // Trust bullets — two-up grid so they read as a compact proof block.
+  .geo-hero__trust {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 40px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 28px;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+
+      i {
+        flex: 0 0 auto;
+        color: var(--primary-color);
+        font-size: 16px;
+      }
+    }
+  }
+
+  // Beacon card — the regional signature. Echoes `.service-detail__visual`.
+  .geo-hero__beacon {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 56px 36px;
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    background: linear-gradient(
+      165deg,
+      var(--surface-raised) 0%,
+      rgba(30, 134, 214, 0.06) 100%
+    );
+    box-shadow: var(--shadow-secondary);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .geo-hero__beacon-glow {
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(30, 134, 214, 0.28) 0%,
+      transparent 70%
+    );
+    filter: blur(30px);
+    pointer-events: none;
+  }
+
+  .geo-hero__beacon-flag {
+    position: relative;
+    font-size: 88px;
+    line-height: 1;
+    filter: drop-shadow(0 12px 24px rgba(31, 24, 12, 0.18));
+  }
+
+  .geo-hero__beacon-label {
+    position: relative;
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .geo-hero__beacon-chips {
+    position: relative;
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 6px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: rgba(30, 134, 214, 0.08);
+      border: 1px solid rgba(30, 134, 214, 0.2);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink-soft);
+
+      i {
+        color: var(--primary-color);
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+// Give the on-page scroll target clearance below the fixed header when the
+// "View Our Services" anchor jumps down.
+.geo-services {
+  scroll-margin-top: 96px;
+}
+
+// 2) Closing CTA banner — dark island, matches the `.marketing-cta` panel feel.
+.geo-cta {
+  &.section {
+    padding-top: clamp(48px, 7vw, 90px);
+  }
+
+  .geo-cta__panel {
+    position: relative;
+    padding: 1.5px; // gradient-border thickness
+    border-radius: 32px;
+    background: linear-gradient(
+      140deg,
+      rgba(30, 134, 214, 0.55) 0%,
+      rgba(30, 134, 214, 0.05) 32%,
+      rgba(255, 255, 255, 0.06) 62%,
+      rgba(30, 134, 214, 0.5) 100%
+    );
+    box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45),
+      0 0 60px rgba(30, 134, 214, 0.15);
+    isolation: isolate;
+  }
+
+  .geo-cta__inner {
+    --theme-color: #f4efe6;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 22px;
+    padding: 72px 48px;
+    border-radius: 30.5px;
+    background: radial-gradient(
+        circle at top left,
+        rgba(30, 134, 214, 0.2),
+        transparent 52%
+      ),
+      radial-gradient(
+        circle at bottom right,
+        rgba(23, 169, 206, 0.22),
+        transparent 55%
+      ),
+      linear-gradient(180deg, #14141d 0%, #1c1c28 100%);
+    overflow: hidden;
+  }
+
+  .geo-cta__glow {
+    position: absolute;
+    inset: -40px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(30, 134, 214, 0.18) 0%,
+      transparent 65%
+    );
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .geo-cta__title {
+    position: relative;
+    max-width: 720px;
+    margin: 0;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.14;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+  }
+
+  .geo-cta__lead {
+    position: relative;
+    max-width: 560px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(244, 239, 230, 0.78);
+  }
+
+  .geo-cta__btn {
+    position: relative;
+    margin-top: 8px;
+  }
+}
+
+// =====================================================
+// Responsive
+// =====================================================
+@media only screen and (max-width: 991.98px) {
+  .geo-hero {
+    .geo-hero__beacon {
+      margin-top: 40px;
+      padding: 44px 28px;
+    }
+    .geo-hero__beacon-flag {
+      font-size: 72px;
+    }
+  }
+}
+
+@media only screen and (max-width: 575.98px) {
+  .geo-hero {
+    .geo-hero__lead {
+      font-size: 15px;
+    }
+    // Stack the CTAs full-width so the primary action stays dominant.
+    .geo-hero__cta {
+      width: 100%;
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    .geo-hero__trust {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+
+  .geo-cta {
+    .geo-cta__panel {
+      border-radius: 24px;
+    }
+    .geo-cta__inner {
+      padding: 44px 24px;
+      border-radius: 22.5px;
+    }
+  }
+}
