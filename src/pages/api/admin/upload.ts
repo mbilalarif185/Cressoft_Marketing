@@ -105,6 +105,10 @@ export default async function handler(
     return res.status(200).json({ ok: true, url: `/images/blog-uploads/${filename}` });
   } catch (err) {
     console.error("[admin/upload]", err);
-    return res.status(500).json({ ok: false, message: "Upload failed. Check server logs." });
+    // Relay the underlying reason (e.g. a Vercel Blob "private store" misconfig)
+    // so it's actionable in the UI instead of a generic failure.
+    const message =
+      err instanceof Error ? err.message : "Upload failed. Check server logs.";
+    return res.status(500).json({ ok: false, message });
   }
 }
