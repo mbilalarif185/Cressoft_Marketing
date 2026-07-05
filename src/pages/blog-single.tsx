@@ -5,7 +5,7 @@ import { getAllPostMeta } from "@/lib/blog";
 // Redirect to the most-recent post so the link is never broken, and
 // callers/crawlers learn the canonical path.
 export const getServerSideProps: GetServerSideProps = async () => {
-  const [latest] = getAllPostMeta();
+  const [latest] = await getAllPostMeta();
   return {
     redirect: {
       destination: latest ? `/blog/${latest.slug}` : "/blog",

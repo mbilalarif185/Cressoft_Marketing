@@ -98,7 +98,7 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => ({
   props: {
-    blogPosts: getAllPostMeta(),
+    blogPosts: await getAllPostMeta(),
   },
   revalidate: 3600,
 });

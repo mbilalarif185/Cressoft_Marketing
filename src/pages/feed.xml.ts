@@ -12,8 +12,8 @@ const escapeXml = (s: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
 
-const buildRss = () => {
-  const posts = getAllPostMeta();
+const buildRss = async () => {
+  const posts = await getAllPostMeta();
   const lastBuild = posts[0]?.date
     ? new Date(posts[0].date).toUTCString()
     : new Date().toUTCString();
@@ -49,7 +49,7 @@ const buildRss = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const xml = buildRss();
+  const xml = await buildRss();
   res.setHeader("Content-Type", "application/rss+xml; charset=utf-8");
   res.setHeader(
     "Cache-Control",

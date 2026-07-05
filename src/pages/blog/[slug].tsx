@@ -123,8 +123,11 @@ const BlogSinglePage = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: getAllSlugs().map((slug) => ({ params: { slug } })),
-    fallback: false,
+    paths: (await getAllSlugs()).map((slug) => ({ params: { slug } })),
+    // "blocking" so posts published via the admin CMS after build render on
+    // first request (then get cached via ISR). Existing MDX slugs are
+    // prebuilt as before; unknown slugs still 404 via getStaticProps.
+    fallback: "blocking",
   };
 };
 
@@ -132,7 +135,7 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
   params,
 }) => {
   const slug = String(params?.slug ?? "");
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) {
     return { notFound: true };
   }
@@ -147,7 +150,7 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
     },
   });
 
-  const allMeta = getAllPostMeta();
+  const allMeta = await getAllPostMeta();
   const idx = allMeta.findIndex((p) => p.slug === slug);
   const prev = idx > 0 ? allMeta[idx - 1] : null;
   const next = idx >= 0 && idx < allMeta.length - 1 ? allMeta[idx + 1] : null;
@@ -159,7 +162,7 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
     props: {
       post: meta,
       source,
-      related: getRelatedPosts(slug, 2),
+      related: await getRelatedPosts(slug, 2),
       recentPosts: allMeta.filter((p) => p.slug !== slug).slice(0, 4),
       prev,
       next,

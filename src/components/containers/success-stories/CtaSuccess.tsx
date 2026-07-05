@@ -40,7 +40,7 @@ const CtaSuccess = () => {
                    LET&apos;S BUILD TOGETHER
                   </span>
                   <h2 id="cta-success-title" className="cta-success__title title-anim">
-                    Join 200+ businesses across the UK, US, UAE,
+                    Join 500+ businesses across the UK, US, UAE,
                     and beyond.
                   </h2>
                   <p className="cta-success__lead">

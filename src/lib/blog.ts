@@ -3,6 +3,8 @@ import path from "node:path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 import type { BlogPost, BlogPostMeta } from "@/types/blog";
+import type { BlogPostRecord } from "@/lib/blog/types";
+import { loadAllRecords } from "@/lib/blog/storage";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
@@ -40,47 +42,96 @@ const readPostFile = (filename: string): BlogPost => {
   };
 };
 
-/** All posts, newest first. Server-only — relies on `fs`. */
-export function getAllPosts(): BlogPost[] {
+/**
+ * Map a PUBLISHED CMS record onto the file-based BlogPost shape so both
+ * sources render through the same components + MDX pipeline.
+ *
+ * Uses `loadAllRecords()` from the storage layer, which reads from the local
+ * `data/blog/posts.json` in disk mode and from Vercel Blob when
+ * `BLOB_READ_WRITE_TOKEN` is set (so posts published on serverless persist and
+ * appear here). This is why the public read API below is async.
+ */
+const recordToFilePost = (r: BlogPostRecord): BlogPost => {
+  const minutes =
+    typeof r.readingMinutes === "number" && r.readingMinutes > 0
+      ? r.readingMinutes
+      : Math.max(1, Math.ceil(readingTime(r.contentMarkdown).minutes));
+  return {
+    slug: r.slug,
+    title: r.title,
+    description: r.metaDescription || r.excerpt,
+    date: (r.publishedAt || "").slice(0, 10) || new Date().toISOString().slice(0, 10),
+    author: r.authorName,
+    category: r.category || "General",
+    tags: Array.isArray(r.tags) ? r.tags : [],
+    cover: r.featuredImage || "/images/news/poster.webp",
+    readingMinutes: minutes,
+    featured: false,
+    hideBlogBanner: false,
+    content: r.contentMarkdown,
+  };
+};
+
+const getCmsPublishedPosts = async (): Promise<BlogPost[]> => {
+  try {
+    const records = await loadAllRecords();
+    return records
+      .filter((p) => p && p.status === "published")
+      .map(recordToFilePost);
+  } catch {
+    return [];
+  }
+};
+
+/** All posts (MDX files + published CMS records), newest first. Server-only. */
+export async function getAllPosts(): Promise<BlogPost[]> {
   ensureDir();
   const files = fs
     .readdirSync(BLOG_DIR)
     .filter((f) => /\.mdx?$/i.test(f));
 
-  return files
-    .map(readPostFile)
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+  const filePosts = files.map(readPostFile);
+  const fileSlugs = new Set(filePosts.map((p) => p.slug));
+  // File-based posts win on a slug clash so an existing MDX article is never
+  // shadowed by the CMS.
+  const cmsPosts = (await getCmsPublishedPosts()).filter(
+    (p) => !fileSlugs.has(p.slug),
+  );
+
+  return [...filePosts, ...cmsPosts].sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
 /** Lightweight metadata only (no MDX body) — safe to ship to the client. */
-export function getAllPostMeta(): BlogPostMeta[] {
-  return getAllPosts().map((post) => {
+export async function getAllPostMeta(): Promise<BlogPostMeta[]> {
+  return (await getAllPosts()).map((post) => {
     // Strip the heavy `content` field before sending to the client.
     const { content: _content, ...meta } = post;
     return meta;
   });
 }
 
-export function getPostBySlug(slug: string): BlogPost | null {
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   ensureDir();
   const files = fs.readdirSync(BLOG_DIR).filter((f) => /\.mdx?$/i.test(f));
   const match = files.find((f) => slugFromFilename(f) === slug);
-  return match ? readPostFile(match) : null;
+  if (match) return readPostFile(match);
+  // Fall back to a published CMS post with this slug.
+  return (await getCmsPublishedPosts()).find((p) => p.slug === slug) ?? null;
 }
 
-export function getAllSlugs(): string[] {
-  return getAllPosts().map((p) => p.slug);
+export async function getAllSlugs(): Promise<string[]> {
+  return (await getAllPosts()).map((p) => p.slug);
 }
 
-export function getAllCategories(): string[] {
+export async function getAllCategories(): Promise<string[]> {
   const set = new Set<string>();
-  getAllPosts().forEach((p) => set.add(p.category));
+  (await getAllPosts()).forEach((p) => set.add(p.category));
   return Array.from(set).sort((a, b) => a.localeCompare(b));
 }
 
-export function getAllTags(): string[] {
+export async function getAllTags(): Promise<string[]> {
   const set = new Set<string>();
-  getAllPosts().forEach((p) => p.tags.forEach((t) => set.add(t)));
+  (await getAllPosts()).forEach((p) => p.tags.forEach((t) => set.add(t)));
   return Array.from(set).sort((a, b) => a.localeCompare(b));
 }
 
@@ -88,8 +139,11 @@ export function getAllTags(): string[] {
  * Related posts: same category first, then shared tags. Excludes the post
  * itself. Capped to `limit` items.
  */
-export function getRelatedPosts(slug: string, limit = 2): BlogPostMeta[] {
-  const all = getAllPostMeta();
+export async function getRelatedPosts(
+  slug: string,
+  limit = 2,
+): Promise<BlogPostMeta[]> {
+  const all = await getAllPostMeta();
   const current = all.find((p) => p.slug === slug);
   if (!current) return [];
 

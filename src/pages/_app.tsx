@@ -29,6 +29,12 @@ import "@/styles/main.scss";
 import "@/styles/icons.scss";
 import "@/styles/fa-font-compat.scss";
 
+// Blog-admin markdown editor CSS. The Pages Router only permits global
+// (non-module) CSS imports from _app; the editor itself is code-split and
+// loaded on demand (ssr:false) only on /admin/posts/* screens.
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+
 import {
   organizationSchema,
   localBusinessSchema,

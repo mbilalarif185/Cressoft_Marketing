@@ -18,6 +18,12 @@ const nextConfig = {
   compress: true,
   productionBrowserSourceMaps: false,
 
+  // The blog-admin markdown editor (@uiw/react-md-editor) imports CSS from
+  // within its own node_modules ESM files. The Pages Router blocks global CSS
+  // imports from node_modules unless the package is transpiled by Next, so we
+  // opt these two packages in. Only loaded on /admin/posts/* (ssr:false).
+  transpilePackages: ['@uiw/react-md-editor', '@uiw/react-markdown-preview'],
+
   compiler: {
     removeConsole: isProd,
   },
@@ -33,6 +39,9 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'quantel.uk' },
       { protocol: 'https', hostname: 'www.quantel.uk' },
+      // Vercel Blob-hosted blog images (featured / OG uploads). Blob public
+      // URLs look like https://<store-id>.public.blob.vercel-storage.com/...
+      { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
     ],
   },
 

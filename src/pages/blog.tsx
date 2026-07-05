@@ -63,9 +63,9 @@ const BlogPage = ({ posts, categories, tags }: BlogPageProps) => {
 export const getStaticProps: GetStaticProps<BlogPageProps> = async () => {
   return {
     props: {
-      posts: getAllPostMeta(),
-      categories: getAllCategories(),
-      tags: getAllTags(),
+      posts: await getAllPostMeta(),
+      categories: await getAllCategories(),
+      tags: await getAllTags(),
     },
     // ISR: regenerate at most once an hour so newly added MDX posts go live
     // without a full redeploy. Safe for public blog content.
