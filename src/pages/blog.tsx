@@ -67,9 +67,10 @@ export const getStaticProps: GetStaticProps<BlogPageProps> = async () => {
       categories: await getAllCategories(),
       tags: await getAllTags(),
     },
-    // ISR: regenerate at most once an hour so newly added MDX posts go live
-    // without a full redeploy. Safe for public blog content.
-    revalidate: 3600,
+    // ISR: short window so newly published CMS posts surface quickly even if
+    // the on-demand res.revalidate("/blog") after a publish doesn't propagate.
+    // (MDX file posts still only change on redeploy, so this is cheap.)
+    revalidate: 60,
   };
 };
 

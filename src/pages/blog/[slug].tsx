@@ -167,7 +167,9 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
       prev,
       next,
     },
-    revalidate: 3600,
+    // Short ISR window so a freshly published CMS article goes live quickly
+    // even if the on-demand revalidation after publish doesn't propagate.
+    revalidate: 60,
   };
 };
 
