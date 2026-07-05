@@ -5,7 +5,7 @@
 // omitted (matching the project's existing src/lib/blog.ts convention).
 import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
-import { get, head, put } from "@vercel/blob";
+import { head, put } from "@vercel/blob";
 
 import type { BlogPostRecord, BlogPostsFile } from "@/lib/blog/types";
 
@@ -62,16 +62,12 @@ function pickNewerPosts(
 }
 
 async function readBlobJson(): Promise<unknown | null> {
-  try {
-    const result = await get(BLOB_POSTS_PATH, { access: "public" });
-    if (result?.statusCode === 200 && result.stream) {
-      const text = await new Response(result.stream).text();
-      return JSON.parse(text) as unknown;
-    }
-  } catch {
-    // fall through to cache-busted URL fetch
-  }
-
+  // posts.json is MUTABLE, so it must always be read fresh. We deliberately do
+  // NOT use `get()` here — it can return a CDN-cached copy, which would
+  // resurrect a just-deleted/edited post on the next read. Instead: resolve the
+  // current blob URL via head() (throws if it doesn't exist yet → caught
+  // upstream), then fetch it with a cache-busting query + `no-store` so a stale
+  // edge copy can never win.
   const meta = await head(BLOB_POSTS_PATH);
   if (!meta?.url) return null;
   const res = await fetch(`${meta.url}?_=${Date.now()}`, { cache: "no-store" });
@@ -97,7 +93,9 @@ async function writeToBlob(file: BlogPostsFile): Promise<void> {
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: "application/json",
-    cacheControlMaxAge: 60,
+    // Mutable database file — do not let the CDN hold a stale copy, or a
+    // just-deleted post can reappear on the next read.
+    cacheControlMaxAge: 0,
   });
 }
 
