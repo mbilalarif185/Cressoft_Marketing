@@ -40,18 +40,25 @@ function pickNewerPosts(
   remote: BlogPostsFile | null,
   local: BlogPostsFile,
 ): BlogPostRecord[] {
-  if (!remote?.posts.length) return local.posts;
-  if (!local.posts.length) return remote.posts;
+  // No remote copy at all (Blob read failed) → trust disk.
+  if (!remote) return local.posts;
 
   const remoteTs = fileTimestamp(remote);
   const localTs = fileTimestamp(local);
 
-  if (remoteTs === 0 && localTs === 0) {
-    return remote.posts.length <= local.posts.length ? remote.posts : local.posts;
+  // If either copy carries a `savedAt`, the most recently saved one wins —
+  // EVEN IF it is empty. This is critical on serverless: deleting the last
+  // post writes an empty (but newer) Blob copy, and it must beat the stale
+  // committed disk copy instead of resurrecting the deleted post.
+  if (remoteTs !== 0 || localTs !== 0) {
+    return remoteTs >= localTs ? remote.posts : local.posts;
   }
-  if (remoteTs === 0) return local.posts;
-  if (localTs === 0) return remote.posts;
-  return remoteTs >= localTs ? remote.posts : local.posts;
+
+  // Neither copy is stamped (legacy / hand-seeded files): fall back to the
+  // non-empty one, preferring the smaller when both have posts.
+  if (!remote.posts.length) return local.posts;
+  if (!local.posts.length) return remote.posts;
+  return remote.posts.length <= local.posts.length ? remote.posts : local.posts;
 }
 
 async function readBlobJson(): Promise<unknown | null> {

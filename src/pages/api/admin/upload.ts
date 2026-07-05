@@ -87,8 +87,21 @@ export default async function handler(
     }
 
     const uploadDir = path.join(process.cwd(), "public", "images", "blog-uploads");
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(path.join(uploadDir, filename), buffer as unknown as Uint8Array);
+    try {
+      await mkdir(uploadDir, { recursive: true });
+      await writeFile(
+        path.join(uploadDir, filename),
+        buffer as unknown as Uint8Array,
+      );
+    } catch (err) {
+      console.error("[admin/upload disk]", err);
+      // Read-only filesystem (e.g. Vercel serverless) — Blob is required there.
+      return res.status(500).json({
+        ok: false,
+        message:
+          "Could not save the image to disk. On serverless hosts (Vercel) the filesystem is read-only — set BLOB_READ_WRITE_TOKEN to store uploads in Vercel Blob.",
+      });
+    }
     return res.status(200).json({ ok: true, url: `/images/blog-uploads/${filename}` });
   } catch (err) {
     console.error("[admin/upload]", err);

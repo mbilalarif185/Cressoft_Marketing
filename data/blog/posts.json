@@ -1,27 +1,5 @@
 {
   "version": 1,
-  "savedAt": "2026-07-05T17:04:50.715Z",
-  "posts": [
-    {
-      "id": "d16f5352-2f84-4095-afeb-b73c422011f1",
-      "slug": "checking",
-      "title": "checking",
-      "metaTitle": "dfg",
-      "metaDescription": "fdggfe",
-      "excerpt": "jwfbef3",
-      "authorName": "Quantel Editorial",
-      "authorRole": "Quantel Solutions",
-      "publishedAt": "2026-07-05",
-      "featuredImage": "/images/blog-uploads/1783271075734-dab5777b.webp",
-      "ogImage": "/images/blog-uploads/1783271075734-dab5777b.webp",
-      "imageFit": "contain",
-      "tags": [],
-      "category": "bfj",
-      "seoKeywords": [],
-      "contentMarkdown": "erfdfefdssxzcsdcedferdfced[d](url)",
-      "status": "published",
-      "createdAt": "2026-07-05T17:04:50.714Z",
-      "updatedAt": "2026-07-05T17:04:50.714Z"
-    }
-  ]
+  "savedAt": "2026-07-05T17:20:30.462Z",
+  "posts": []
 }
