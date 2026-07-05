@@ -8,9 +8,6 @@ export const CONTACT_PHONE_TEL_HREF = "tel:+447879301606";
 export const CONTACT_EMAIL = "support@quantel.uk";
 
 export const CONTACT_MAILTO_HREF = "mailto:support@quantel.uk";
-export const second_EMAIL = "sales@quantel.uk";
-
-export const second_MAILTO_HREF = "mailto:sales@quantel.uk";
 
 export const CONTACT_ADDRESS =
   "20 Fenchurch Street, London, EC3M 3BY, United Kingdom";

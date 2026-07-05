@@ -4,8 +4,6 @@ import {
   CONTACT_ADDRESS,
   CONTACT_EMAIL,
   CONTACT_MAILTO_HREF,
-  second_EMAIL,
-  second_MAILTO_HREF,
   CONTACT_MAPS_EMBED_URL,
   CONTACT_MAPS_PLACE_URL,
   CONTACT_PHONE_DISPLAY,
@@ -111,15 +109,6 @@ const ContactMain = () => {
                     className="contact-m__value"
                   >
                     {CONTACT_EMAIL}
-                  </Link>
-                </div>
-                <div className="contact-m__line">
-                  <span className="contact-m__label">Sales</span>
-                  <Link
-                    href={second_MAILTO_HREF}
-                    className="contact-m__value"
-                  >
-                    {second_EMAIL}
                   </Link>
                 </div>
               </div>
