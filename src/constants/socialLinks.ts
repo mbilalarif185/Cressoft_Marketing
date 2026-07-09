@@ -3,6 +3,7 @@ export const QUANTEL_SOCIAL = {
   instagram: "https://www.instagram.com/quantelsolutions/",
   facebook:
     "https://www.facebook.com/people/Quantel-Solutions/61591475250724/",
+  linkedin: "https://www.linkedin.com/company/quantel-solutions/",
 } as const;
 
 /**
@@ -13,4 +14,5 @@ export const QUANTEL_SOCIAL = {
 export const SCHEMA_SAME_AS: string[] = [
   QUANTEL_SOCIAL.instagram,
   QUANTEL_SOCIAL.facebook,
+  QUANTEL_SOCIAL.linkedin,
 ];

@@ -176,6 +176,13 @@ const HomeOneBanner = () => {
           >
             instagram
           </Link>
+          <Link
+            href={QUANTEL_SOCIAL.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            linkedin
+          </Link>
         </div>
        
       </section>

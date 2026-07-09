@@ -92,8 +92,7 @@ export function absoluteUrl(pathname = "/"): string {
 
 /**
  * `sameAs` profiles for Organization + LocalBusiness. Sourced from the single
- * central list in constants/socialLinks.ts (Instagram + Facebook only —
- * LinkedIn is intentionally excluded for this pass).
+ * central list in constants/socialLinks.ts (Instagram + Facebook + LinkedIn).
  */
 const SAME_AS = SCHEMA_SAME_AS;
 

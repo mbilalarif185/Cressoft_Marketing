@@ -142,5 +142,29 @@
   <changefreq>monthly</changefreq>
   <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://quantel.uk/usa/saas-development</loc>
+  <lastmod>2026-07-09T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://quantel.uk/usa/ai-automation</loc>
+  <lastmod>2026-07-09T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://quantel.uk/usa/white-labelling</loc>
+  <lastmod>2026-07-09T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.90</priority>
+</url>
+<url>
+  <loc>https://quantel.uk/usa/web-development</loc>
+  <lastmod>2026-07-09T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.90</priority>
+</url>
 
 </urlset>

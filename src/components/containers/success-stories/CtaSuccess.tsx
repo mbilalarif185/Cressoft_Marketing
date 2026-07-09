@@ -45,7 +45,8 @@ const CtaSuccess = () => {
                   </h2>
                   <p className="cta-success__lead">
                     We partner with a limited number of new clients each quarter.
-                    Let&apos;s see if we&apos;re a good fit - no pressure, no hard sell.
+                    If you&apos;re comparing IT service providers, let&apos;s see
+                    if we&apos;re a good fit - no pressure, no hard sell.
                   </p>
 
                   <div className="cta-success__actions">

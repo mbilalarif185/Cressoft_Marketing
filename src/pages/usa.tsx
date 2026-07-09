@@ -47,7 +47,19 @@ const UsaPage = () => {
         jsonLd={professionalServiceJsonLd}
       />
 
-      <GeoLanding region={region} />
+      {/*
+        The four flagship services link to their dedicated USA landing pages;
+        every other service keeps the global /services/<slug> link.
+      */}
+      <GeoLanding
+        region={region}
+        serviceLinks={{
+          "saas-development": "/usa/saas-development",
+          "ai-automation": "/usa/ai-automation",
+          "white-label-solutions": "/usa/white-labelling",
+          "web-development": "/usa/web-development",
+        }}
+      />
     </Layout>
   );
 };

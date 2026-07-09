@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Quantel Solutions — White Label Agency Pack</title>
+<!--
+  SOURCE for public/downloads/quantel-white-label-agency-pack.pdf
+
+  To regenerate the PDF after editing (PowerShell, repo root):
+
+    & "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" `
+      --headless --disable-gpu --no-pdf-header-footer `
+      --print-to-pdf="public\downloads\quantel-white-label-agency-pack.pdf" `
+      "marketing\agency-pack.html"
+
+  (Edge may live in "C:\Program Files\Microsoft\Edge\..." on some machines.)
+
+  Design matches the /usa/white-labelling "Clean Agency" page on the site's
+  "Daylight Studio" theme: white pages, warm near-black ink, brand deep-azure
+  accent, sharp corners, 1px warm borders, ghost numbers, uppercase labels.
+-->
+<style>
+  /* Site "Daylight Studio" tokens (see src/styles/abstracts/_variables.scss).
+     The accent var keeps its --green name but carries the brand deep azure. */
+  :root {
+    --ink: #16181f;
+    --muted: #565d6b;
+    --green: #0a6cc4;
+    --line: #e8e0d2;
+    --ghost: #f2ebdf;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #fff; }
+  body {
+    font-family: "Segoe UI", -apple-system, Arial, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.55;
+  }
+  @page { size: A4; margin: 0; }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 20mm 18mm;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .label {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+  h2 { font-size: 24pt; margin: 5mm 0 8mm; }
+  .muted { color: var(--muted); }
+
+  .ghost {
+    position: absolute;
+    top: 8mm;
+    right: 12mm;
+    font-size: 64pt;
+    font-weight: 800;
+    color: var(--ghost);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    z-index: 0;
+  }
+  .content { position: relative; z-index: 1; }
+
+  .footer {
+    margin-top: auto;
+    padding-top: 4mm;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-size: 8pt;
+    color: var(--muted);
+  }
+  .footer strong { color: var(--ink); }
+
+  /* ---------- Cover ---------- */
+  .cover { justify-content: center; }
+  .cover .brand {
+    position: absolute;
+    top: 20mm; left: 18mm; right: 18mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4mm;
+  }
+  .cover .brand .name { font-weight: 800; font-size: 13pt; }
+  .cover .brand .year { font-size: 9pt; color: var(--muted); }
+  .cover h1 { font-size: 44pt; margin: 6mm 0 8mm; }
+  .cover h1 em { font-style: normal; color: var(--green); }
+  .cover .sub { font-size: 12.5pt; color: var(--muted); max-width: 130mm; }
+  .cover .stats {
+    display: flex;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-top: 14mm;
+    max-width: 150mm;
+  }
+  .cover .stat { flex: 1; padding: 6mm 8mm 6mm 0; }
+  .cover .stat + .stat { border-left: 1px solid var(--line); padding-left: 8mm; }
+  .cover .stat strong { display: block; font-size: 16pt; font-weight: 800; color: var(--green); }
+  .cover .stat span { font-size: 9pt; color: var(--muted); }
+  .cover .url {
+    position: absolute;
+    bottom: 20mm; left: 18mm;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+
+  /* ---------- Steps ---------- */
+  .steps { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); }
+  .step { padding: 9mm 8mm; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .step:nth-child(2n) { border-right: none; }
+  .step:nth-child(3), .step:nth-child(4) { border-bottom: none; }
+  .step .n {
+    display: block;
+    font-size: 26pt;
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.2px var(--green);
+    margin-bottom: 5mm;
+  }
+  .step h3 { font-size: 13pt; margin-bottom: 2.5mm; }
+  .step p { font-size: 9.5pt; color: var(--muted); }
+
+  .note-strip {
+    margin-top: 8mm;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    padding: 5mm 7mm;
+    font-size: 9.5pt;
+    color: var(--muted);
+  }
+  .note-strip strong { color: var(--ink); }
+
+  /* ---------- Services ---------- */
+  .svc { display: grid; grid-template-columns: 22mm 1fr; padding: 5.2mm 0; border-top: 1px solid var(--line); }
+  .svc:last-of-type { border-bottom: 1px solid var(--line); }
+  .svc .n { font-weight: 800; font-size: 12pt; color: var(--green); }
+  .svc h3 { font-size: 12pt; margin-bottom: 1.5mm; }
+  .svc p { font-size: 9.5pt; color: var(--muted); }
+  .also { margin-top: 7mm; font-size: 9pt; color: var(--muted); }
+  .also strong { color: var(--ink); text-transform: uppercase; letter-spacing: 0.12em; font-size: 8pt; }
+
+  /* ---------- Reporting / onboarding ---------- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  .report-mock { border: 1px solid var(--line); }
+  .report-mock .bar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #111219; color: #fff; padding: 4mm 6mm;
+  }
+  .report-mock .bar .logo { font-weight: 800; font-size: 10pt; letter-spacing: 0.06em; }
+  .report-mock .bar .tag { font-size: 7pt; color: #9ed7f7; letter-spacing: 0.14em; text-transform: uppercase; }
+  .report-mock .body { padding: 6mm; }
+  .report-mock .kpis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; margin-bottom: 5mm; }
+  .report-mock .kpi { border: 1px solid var(--line); padding: 3.5mm; }
+  .report-mock .kpi b { display: block; font-size: 12pt; color: var(--green); }
+  .report-mock .kpi span { font-size: 7.5pt; color: var(--muted); }
+  .skeleton { height: 3mm; background: var(--ghost); margin-bottom: 2.5mm; }
+  .skeleton.w70 { width: 70%; } .skeleton.w90 { width: 90%; } .skeleton.w55 { width: 55%; }
+  .caption { font-size: 8.5pt; color: var(--muted); margin-top: 3mm; }
+
+  .checklist { list-style: none; }
+  .checklist li { padding: 3.2mm 0; border-bottom: 1px solid var(--ghost); font-size: 10pt; }
+  .checklist li::before { content: "✓"; color: var(--green); font-weight: 700; margin-right: 3mm; }
+  .checklist li b { display: inline; }
+  .checklist li span { display: block; margin-left: 6.5mm; font-size: 9pt; color: var(--muted); }
+
+  /* ---------- Back cover ---------- */
+  .back { justify-content: center; text-align: left; }
+  .back h2 { font-size: 32pt; max-width: 150mm; }
+  .back .cta-line { font-size: 12pt; color: var(--muted); max-width: 130mm; margin-bottom: 12mm; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; max-width: 150mm; border-top: 1px solid var(--line); }
+  .contact-cell { padding: 6mm 8mm 6mm 0; border-bottom: 1px solid var(--line); }
+  .contact-cell:nth-child(2n) { border-left: 1px solid var(--line); padding-left: 8mm; }
+  .contact-cell .k { font-size: 8pt; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); display: block; margin-bottom: 1.5mm; }
+  .contact-cell .v { font-weight: 700; font-size: 11pt; }
+</style>
+</head>
+<body>
+
+<!-- ============================ 1 · COVER ============================ -->
+<section class="page cover">
+  <div class="brand">
+    <span class="name">QUANTEL SOLUTIONS</span>
+    <span class="year">White Label Agency Pack · 2026</span>
+  </div>
+  <div class="content">
+    <span class="label">White Label Services USA</span>
+    <h1>Your brand.<br /><em>Our delivery team.</em></h1>
+    <p class="sub">
+      Fully rebrandable white label services for agencies across the United
+      States — SEO, web development, digital marketing, PPC, social media and
+      software, all delivered under your agency's name.
+    </p>
+    <div class="stats">
+      <div class="stat"><strong>500+</strong><span>projects delivered globally</span></div>
+      <div class="stat"><strong>98%</strong><span>client retention</span></div>
+      <div class="stat"><strong>100%</strong><span>white label — your brand</span></div>
+    </div>
+  </div>
+  <span class="url">quantel.uk/usa/white-labelling</span>
+</section>
+
+<!-- ============================ 2 · HOW IT WORKS ===================== -->
+<section class="page">
+  <span class="ghost">01</span>
+  <div class="content">
+    <span class="label">The Process</span>
+    <h2>How our white label agency works</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="n">1</span>
+        <h3>“You sell it”</h3>
+        <p>Offer our white label services to your clients under your own agency brand and pricing. Your proposal, your rates, your relationship.</p>
+      </div>
+      <div class="step">
+        <span class="n">2</span>
+        <h3>“We deliver it”</h3>
+        <p>Our team delivers the work — SEO, web, PPC, social — to professional standards, on your timelines, invisible to your client.</p>
+      </div>
+      <div class="step">
+        <span class="n">3</span>
+        <h3>“You report it”</h3>
+        <p>We provide white label reports branded as yours — your logo, your domain, your tone of voice. Clients only ever see your agency.</p>
+      </div>
+      <div class="step">
+        <span class="n">4</span>
+        <h3>“You profit”</h3>
+        <p>Keep the margin. Scale your agency's service menu and revenue without hiring a single new employee.</p>
+      </div>
+    </div>
+    <div class="note-strip">
+      <strong>Non-disclosure by default.</strong> Every engagement includes a
+      white label agreement: we never contact your clients, never brand our
+      work, and never list your clients in our own marketing.
+    </div>
+  </div>
+  <div class="footer"><span><strong>Quantel Solutions</strong> · White Label Agency Pack</span><span>02</span></div>
+</section>
+
+<!-- ============================ 3 · SERVICES ========================= -->
+<section class="page">
+  <span class="ghost">02</span>
+  <div class="content">
+    <span class="label">Our Services</span>
+    <h2>White label services we offer</h2>
+
+    <div class="svc"><span class="n">01 /</span><div>
+      <h3>White Label SEO Services</h3>
+      <p>Keyword research, on-page SEO, link building and monthly reporting under your agency brand — including local SEO, SEO audits and SEO reseller services.</p>
+    </div></div>
+    <div class="svc"><span class="n">02 /</span><div>
+      <h3>White Label Web Development Services</h3>
+      <p>Websites and web apps built under your brand — including web design and WordPress development — so you can sell development without hiring developers.</p>
+    </div></div>
+    <div class="svc"><span class="n">03 /</span><div>
+      <h3>White Label Digital Marketing Services</h3>
+      <p>PPC, social media, email and content — fully managed digital marketing delivered under your agency name.</p>
+    </div></div>
+    <div class="svc"><span class="n">04 /</span><div>
+      <h3>White Label PPC Services</h3>
+      <p>Google Ads and Meta Ads run and managed under your brand, with white label reporting your clients read as yours.</p>
+    </div></div>
+    <div class="svc"><span class="n">05 /</span><div>
+      <h3>White Label Social Media Services</h3>
+      <p>Content creation, scheduling and reporting delivered as your own service — backed by our copywriting and graphic design team.</p>
+    </div></div>
+    <div class="svc"><span class="n">06 /</span><div>
+      <h3>White Label Software as a Service</h3>
+      <p>CRM, ERP and SaaS platforms fully rebranded as your agency's own products — recurring revenue without a development team.</p>
+    </div></div>
+
+    <p class="also">
+      <strong>Also available —</strong> website design · email marketing ·
+      reputation management · content writing · ecommerce &amp; Shopify ·
+      Google Business Profile · graphic design
+    </p>
+  </div>
+  <div class="footer"><span><strong>Quantel Solutions</strong> · White Label Agency Pack</span><span>03</span></div>
+</section>
+
+<!-- ============================ 4 · REPORTING & ONBOARDING =========== -->
+<section class="page">
+  <span class="ghost">03</span>
+  <div class="content">
+    <span class="label">Reporting &amp; Onboarding</span>
+    <h2>What your clients see — and how we start</h2>
+
+    <div class="two-col">
+      <div>
+        <div class="report-mock">
+          <div class="bar">
+            <span class="logo">YOUR AGENCY</span>
+            <span class="tag">Monthly Report</span>
+          </div>
+          <div class="body">
+            <div class="kpis">
+              <div class="kpi"><b>▲</b><span>Organic traffic</span></div>
+              <div class="kpi"><b>▲</b><span>Keyword rankings</span></div>
+              <div class="kpi"><b>▲</b><span>Leads generated</span></div>
+            </div>
+            <div class="skeleton w90"></div>
+            <div class="skeleton w70"></div>
+            <div class="skeleton w90"></div>
+            <div class="skeleton w55"></div>
+          </div>
+        </div>
+        <p class="caption">
+          Sample white label report — your logo, your domain, your brand
+          colours. Delivered monthly for every client on your plan.
+        </p>
+      </div>
+      <div>
+        <ul class="checklist">
+          <li><b>Kick-off within 48 hours</b><span>Scoping call, white label agreement signed, workspace set up.</span></li>
+          <li><b>Your brand kit applied</b><span>Logo, colours, domains and reporting templates configured once, reused for every client.</span></li>
+          <li><b>One point of contact</b><span>A named account manager on Growth and Agency plans, in US-overlap hours.</span></li>
+          <li><b>Clear turnarounds</b><span>Agreed SLAs per service — confirmed in your agency agreement before the first client goes live.</span></li>
+          <li><b>You stay in control</b><span>Nothing ships to a client without your sign-off.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span><strong>Quantel Solutions</strong> · White Label Agency Pack</span><span>04</span></div>
+</section>
+
+<!-- ============================ 5 · BACK COVER ======================= -->
+<section class="page back">
+  <div class="content">
+    <span class="label">Ready when you are</span>
+    <h2>Scale your agency without hiring.</h2>
+    <p class="cta-line">
+      Tell us which white label services your agency needs — we'll come back
+      with a delivery plan and agency pricing within 24 hours.
+    </p>
+    <div class="contact-grid">
+      <div class="contact-cell"><span class="k">Book a call</span><span class="v">quantel.uk/contact</span></div>
+      <div class="contact-cell"><span class="k">Email</span><span class="v">support@quantel.uk</span></div>
+      <div class="contact-cell"><span class="k">Phone / WhatsApp</span><span class="v">+44 7879 301606</span></div>
+      <div class="contact-cell"><span class="k">Office</span><span class="v">20 Fenchurch Street, London</span></div>
+      <div class="contact-cell"><span class="k">LinkedIn</span><span class="v">linkedin.com/company/quantel-solutions</span></div>
+      <div class="contact-cell"><span class="k">Instagram</span><span class="v">@quantelsolutions</span></div>
+    </div>
+  </div>
+  <div class="footer"><span><strong>Quantel Solutions Ltd</strong> · quantel.uk</span><span>05</span></div>
+</section>
+
+</body>
+</html>

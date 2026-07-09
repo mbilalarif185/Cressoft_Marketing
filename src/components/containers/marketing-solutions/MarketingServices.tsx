@@ -11,8 +11,8 @@ type Service = {
   bullets: string[];
 };
 
-// Mirrors the SERVICES list in HomeTwoOffer.tsx (lines 14-25) - same numbers
-// and titles, enriched with the marketing copy this page needs.
+// Mirrors the services shown on the homepage (HomeTwoOffer.tsx) - same
+// titles, enriched with the marketing copy this page needs.
 // const SERVICES: Service[] = [
 //   {
 //     num: "01",

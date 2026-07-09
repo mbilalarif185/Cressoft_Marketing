@@ -20,7 +20,18 @@ import { SERVICES } from "@/data/services";
  *
  * Styling lives in `src/styles/sections/_geo-landing.scss`.
  */
-const GeoLanding = ({ region }: { region: GeoRegion }) => {
+const GeoLanding = ({
+  region,
+  serviceLinks,
+}: {
+  region: GeoRegion;
+  /**
+   * Optional per-slug link overrides for the services grid. Used by /usa to
+   * point its four flagship services at the dedicated /usa/<service> pages
+   * while /uk and /uae keep linking to the global /services/<slug> pages.
+   */
+  serviceLinks?: Record<string, string>;
+}) => {
   return (
     <>
       {/* 1) Hero -------------------------------------------------------- */}
@@ -115,7 +126,7 @@ const GeoLanding = ({ region }: { region: GeoRegion }) => {
                     {service.heroDescription}
                   </p>
                   <Link
-                    href={`/services/${service.slug}`}
+                    href={serviceLinks?.[service.slug] ?? `/services/${service.slug}`}
                     className="marketing-services__cta"
                     aria-label={`Read more about ${service.name}`}
                   >

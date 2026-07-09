@@ -10,8 +10,9 @@ import type { BlogPostMeta } from "@/types/blog";
 import { SITE_URL } from "@/lib/seo";
 
 // Below-the-fold sections - defer their JS so the LCP banner ships first.
-// HomeTwoOffer pulls in the Swiper runtime; deferring it keeps Swiper out of
-// the page-level chunk while still SSR-rendering for SEO + first paint.
+// (HomeTwoOffer is now a static roadmap ledger - no Swiper - but deferring
+// still keeps below-the-fold JS out of the page-level chunk while
+// SSR-rendering for SEO + first paint.)
 const HomeTwoAward = dynamic(
   () => import("@/components/containers/home-two/HomeTwoAward"),
   { loading: () => null }
@@ -57,16 +58,21 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="Global Technology & SaaS Partner | Quantel Solutions"
-        description="Quantel Solutions — global technology partner in London. SaaS, AI, web & white-label software for the UK, USA & UAE. 500+ projects. Book a free call."
+        title="IT Services & Full-Service IT Company | Quantel Solutions"
+        description="Quantel Solutions is a full-service IT company in London. Managed IT support services, IT consulting & SaaS development for the UK, USA & UAE. Book a free call."
         pathname="/"
         keywords={[
-          "SaaS development UK",
-          "white label software",
-          "AI solutions",
-          "web development London",
-          "digital marketing UK",
-          "technology partner UAE",
+          "it services",
+          "it company",
+          "it services company",
+          "it consulting services",
+          "it support services",
+          "managed it support services",
+          "it solutions company",
+          "full service it company",
+          "it service provider",
+          "small business it services",
+          "enterprise it services",
         ]}
         image={`${SITE_URL}/images/feature.png`}
         imageAlt="Quantel Solutions - Global Technology & SaaS Partner"
@@ -74,9 +80,8 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
       {/*
         Organization / LocalBusiness / WebSite JSON-LD are emitted site-wide
         from _app.tsx (single, canonical, @id-referenced nodes), so the
-        homepage no longer ships a duplicate Organization block. The previous
-        inline copy also carried a LinkedIn `sameAs`, now removed per the
-        Instagram + Facebook-only policy.
+        homepage no longer ships a duplicate Organization block. `sameAs`
+        covers Instagram + Facebook + LinkedIn via constants/socialLinks.ts.
       */}
       <HeroSection />
 

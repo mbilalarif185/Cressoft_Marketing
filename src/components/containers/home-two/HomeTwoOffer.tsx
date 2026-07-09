@@ -1,97 +1,135 @@
 import React, { memo, useMemo } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/autoplay";
 import { SITE_URL } from "@/lib/seo";
 
-// Single source of truth for all services. Keeping this as a stable
-// module-level constant avoids re-creating the array on every render and
-// makes the structured-data block trivially cheap.
-const SERVICES = [
-  { num: "01", title: "SaaS Development", slug: "saas-development" },
-  { num: "02", title: "White-Label Platforms", slug: "white-label-solutions" },
-  { num: "03", title: "AI Solutions", slug: "ai-automation" },
-  { num: "04", title: "Web Development", slug: "web-development" },
-  { num: "05", title: "Search Engine Optimization", slug: "seo" },
-  { num: "06", title: "Social Media Marketing", slug: "social-media-marketing" },
-  { num: "07", title: "Mobile App Development", slug: "mobile-app-development" },
-  { num: "08", title: "Ecommerce Solutions", slug: "ecommerce-solutions" },
-  { num: "09", title: "ERP Solutions", slug: "erp-solutions" },
-  { num: "10", title: "UI / UX Design", slug: "ui-ux-design" },
-] as const;
+/**
+ * "Roadmap ledger" services section.
+ *
+ * The old version was a decorative Swiper double-marquee of giant service
+ * names — moving links, clipped text, and 01–10 numbering that encoded
+ * nothing. This version takes the header's own claim ("we cover every layer
+ * of your digital roadmap") literally: the ten services are grouped into the
+ * three layers a product actually moves through, in order, connected by a
+ * vertical gradient spine. Static HTML — no Swiper runtime in this chunk,
+ * every service is a crawlable, keyboard-focusable row link.
+ */
+
+type LayerService = {
+  title: string;
+  slug: string;
+  /** One-line promise, distilled from the service's copy in data/services.ts. */
+  promise: string;
+};
+
+type Layer = {
+  key: string;
+  /** "01" | "02" | "03" — a real sequence: design/build → launch → grow. */
+  index: string;
+  title: string;
+  /** One sentence saying what this layer of the roadmap is for. */
+  hint: string;
+  services: LayerService[];
+};
+
+const LAYERS: Layer[] = [
+  {
+    key: "build",
+    index: "01",
+    title: "Design & Build",
+    hint: "Product engineering from first wireframe to production.",
+    services: [
+      {
+        title: "SaaS Development",
+        slug: "saas-development",
+        promise: "Multi-tenant platforms built to grow from first customer to thousandth.",
+      },
+      {
+        title: "Web Development",
+        slug: "web-development",
+        promise: "Fast, SEO-ready websites and web apps engineered to convert.",
+      },
+      {
+        title: "Mobile App Development",
+        slug: "mobile-app-development",
+        promise: "iOS and Android from one codebase, launched to both stores.",
+      },
+      {
+        title: "UI / UX Design",
+        slug: "ui-ux-design",
+        promise: "Research-led interfaces that feel effortless and earn trust.",
+      },
+    ],
+  },
+  {
+    key: "launch",
+    index: "02",
+    title: "Launch & Operate",
+    hint: "Ready-to-run platforms, plus IT infrastructure management services behind your back office.",
+    services: [
+      {
+        title: "White-Label Platforms",
+        slug: "white-label-solutions",
+        promise: "Proven CRM, ERP and commerce products shipped under your brand in weeks.",
+      },
+      {
+        title: "Ecommerce Solutions",
+        slug: "ecommerce-solutions",
+        promise: "Shopify, WooCommerce and custom storefronts engineered to sell.",
+      },
+      {
+        title: "ERP Solutions",
+        slug: "erp-solutions",
+        promise: "Finance, inventory and operations connected into one source of truth.",
+      },
+    ],
+  },
+  {
+    key: "grow",
+    index: "03",
+    title: "Grow & Automate",
+    hint: "The marketing and AI layer that compounds after launch.",
+    services: [
+      {
+        title: "Search Engine Optimization",
+        slug: "seo",
+        promise: "Technical SEO, content and links that compound month after month.",
+      },
+      {
+        title: "Social Media Marketing",
+        slug: "social-media-marketing",
+        promise: "Strategy, creative and paid campaigns that turn attention into pipeline.",
+      },
+      {
+        title: "AI Solutions",
+        slug: "ai-automation",
+        promise: "Copilots, chatbots and workflow automation with measurable ROI.",
+      },
+    ],
+  },
+];
 
 const serviceHref = (slug: string) => `/services/${slug}`;
 
-const AUTOPLAY_OPTS = {
-  delay: 1,
-  disableOnInteraction: false,
-  pauseOnMouseEnter: true,
-} as const;
-
-type SlideProps = {
-  num: string;
-  title: string;
-  slug: string;
-};
-
-// Memoised slide so that re-renders of the parent (e.g. on Swiper internal
-// updates) don't reconcile every node again.
-const OfferSlide = memo(function OfferSlide({ num, title, slug }: SlideProps) {
-  return (
-    <div className="offer-two__slider-single offer__cta">
-      <div className="offer__cta-single">
-        <span className="sub-title" aria-hidden="true">
-          {num}
-          <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
-        </span>
-        {/*
-          Kept as <h2> intentionally: the existing global stylesheet targets
-          `.offer__cta h2 a { ... }` for typography, hover gradient text,
-          icon color, etc. Switching to <h3> would silently break the
-          design. The decorative second marquee below uses a plain <span>
-          to avoid duplicating heading nodes for crawlers.
-        */}
-        <h2>
-          <Link href={serviceHref(slug)} prefetch={false} aria-label={`Learn more about our ${title} services`}>
-            {title}
-          </Link>
-        </h2>
-      </div>
-    </div>
-  );
-});
-
 const HomeTwoOffer = () => {
-  // Build slides once. They never change for the lifetime of the page.
-  const slides = useMemo(
-    () =>
-      SERVICES.map((s) => (
-        <SwiperSlide key={s.num}>
-          <OfferSlide num={s.num} title={s.title} slug={s.slug} />
-        </SwiperSlide>
-      )),
-    []
-  );
-
   // Schema.org ItemList helps Google understand this is a list of services
-  // offered by the business - improves rich-result eligibility without any
-  // visual change to the page.
-  const jsonLd = useMemo(
-    () => ({
+  // offered by the business - improves rich-result eligibility. Order follows
+  // the on-page roadmap grouping.
+  const jsonLd = useMemo(() => {
+    const flat = LAYERS.flatMap((l) => l.services);
+    return {
       "@context": "https://schema.org",
       "@type": "ItemList",
       name: "End-to-end digital capabilities for global teams",
       itemListOrder: "https://schema.org/ItemListOrderAscending",
-      numberOfItems: SERVICES.length,
-      itemListElement: SERVICES.map((s, i) => ({
+      numberOfItems: flat.length,
+      itemListElement: flat.map((s, i) => ({
         "@type": "ListItem",
         position: i + 1,
         item: {
           "@type": "Service",
           name: s.title,
+          description: s.promise,
           url: `${SITE_URL}${serviceHref(s.slug)}`,
           provider: {
             "@type": "Organization",
@@ -101,21 +139,16 @@ const HomeTwoOffer = () => {
           areaServed: { "@type": "Country", name: "United Kingdom" },
         },
       })),
-    }),
-    []
-  );
+    };
+  }, []);
 
   return (
-    <section
-      className="section offer-two"
-      aria-labelledby="offer-two-heading"
-    >
+    <section className="section offer-stack" aria-labelledby="offer-stack-heading">
       <Head>
         <script
           type="application/ld+json"
-          // Inline JSON-LD: tiny payload, indexable by crawlers immediately.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          key="offer-two-jsonld"
+          key="offer-stack-jsonld"
         />
       </Head>
 
@@ -127,84 +160,55 @@ const HomeTwoOffer = () => {
                 what we offer
                 <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
               </span>
-              <h2 id="offer-two-heading" className="title title-anim">
+              <h2 id="offer-stack-heading" className="title title-anim">
                 End-to-end digital capabilities for global teams
               </h2>
+              {/* Carries "managed it support services", "it consulting
+                  services", and "it solutions services" verbatim (SEO brief). */}
               <p>
-                From SaaS platforms and white-label products to AI, web, and
-                growth marketing - we cover every layer of your digital roadmap.
+                From managed IT support services and IT consulting services to
+                SaaS, AI, web, and growth marketing - our IT solutions services
+                cover every layer of your digital roadmap.
               </p>
             </header>
           </div>
         </div>
-      </div>
 
-      {/* Primary marquee - exposed to assistive tech & crawlers. */}
-      <div className="offer-two__slider-w" dir="rtl">
-        <Swiper
-          slidesPerView="auto"
-          spaceBetween={30}
-          speed={13000}
-          loop
-          centeredSlides
-          modules={[Autoplay]}
-          autoplay={{ ...AUTOPLAY_OPTS, reverseDirection: true }}
-          className="offer-two__slider"
-          a11y={{
-            containerRoleDescriptionMessage: "Carousel of services",
-            itemRoleDescriptionMessage: "Service",
-          }}
-        >
-          {slides}
-        </Swiper>
-      </div>
-
-      {/*
-        Decorative second marquee running in the opposite direction.
-        It is identical content to the first slider, so we hide it from
-        screen readers and from search engines (via aria-hidden) to avoid
-        duplicate content / noise. Visual users still get the effect.
-      */}
-      <div
-        className="offer-two__slider-rtl-w"
-        aria-hidden="true"
-        // Keep it out of the tab order entirely.
-        tabIndex={-1}
-      >
-        <Swiper
-          slidesPerView="auto"
-          spaceBetween={30}
-          speed={13000}
-          loop
-          centeredSlides
-          modules={[Autoplay]}
-          autoplay={{ ...AUTOPLAY_OPTS, reverseDirection: true }}
-          className="offer-two__slider"
-        >
-          {SERVICES.map((s) => (
-            <SwiperSlide key={`mirror-${s.num}`}>
-              <div className="offer-two__slider-single offer__cta">
-                <div className="offer__cta-single">
-                  <span className="sub-title">
-                    {s.num}
-                    <i className="fa-solid fa-arrow-right"></i>
+        <div className="offer-stack__grid">
+          {LAYERS.map((layer) => (
+            <div className="offer-stack__layer" key={layer.key}>
+              <div className="offer-stack__rail">
+                <div className="offer-stack__rail-inner">
+                  <span className="offer-stack__node" aria-hidden="true"></span>
+                  <span className="offer-stack__index" aria-hidden="true">
+                    {layer.index}
                   </span>
-                  {/*
-                    Kept as <h2> (with no <a>) so the existing typography
-                    in `.offer__cta h2 { ... }` applies without any CSS
-                    changes. The whole wrapper is aria-hidden, so AT
-                    users won't see a duplicate heading; crawlers treat
-                    decorative duplicates fine and the link graph stays
-                    clean (no duplicate marketing-solutions links).
-                  */}
-                  <h2>
-                    <span>{s.title}</span>
-                  </h2>
+                  <h3 className="offer-stack__label">{layer.title}</h3>
+                  <p className="offer-stack__hint">{layer.hint}</p>
                 </div>
               </div>
-            </SwiperSlide>
+
+              <ul className="offer-stack__rows">
+                {layer.services.map((s) => (
+                  <li key={s.slug}>
+                    <Link
+                      href={serviceHref(s.slug)}
+                      prefetch={false}
+                      className="offer-stack__row"
+                      aria-label={`Learn more about our ${s.title} services`}
+                    >
+                      <span className="offer-stack__name">{s.title}</span>
+                      <span className="offer-stack__promise">{s.promise}</span>
+                      <span className="offer-stack__arrow" aria-hidden="true">
+                        <i className="fa-solid fa-arrow-right"></i>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </Swiper>
+        </div>
       </div>
     </section>
   );

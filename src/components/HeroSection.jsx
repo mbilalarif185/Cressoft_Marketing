@@ -97,29 +97,31 @@ export default function HeroSection() {
             <div className="qs-hero__content">
               {/* Eyebrow pill */}
               <span className="qs-hero__eyebrow">
-                🌍 Global Technology Partner
+                🌍 Full-Service IT Company
                 <span className="qs-hero__eyebrow-sep">·</span> UK
                 <span className="qs-hero__eyebrow-sep">·</span> USA
                 <span className="qs-hero__eyebrow-sep">·</span> UAE
               </span>
 
-              {/* H1 — kept under 60 chars with the primary keyword ("SaaS")
-                  in the first words for SEO, while preserving the hero's
-                  value-prop framing and the accent-span design. */}
+              {/* H1 — kept under 60 chars with the primary keyword
+                  ("IT services", per the client's SEO brief) in the first
+                  words, while preserving the accent-span design. */}
               <h1 className="qs-hero__title">
-                SaaS, AI &amp; web products
+                IT services, SaaS &amp; AI products
                 <span className="qs-hero__title-accent">
                   {" "}
                   — built and scaled globally.
                 </span>
               </h1>
 
-              {/* Subheadline */}
+              {/* Subheadline — carries "it company", "it service provider",
+                  and "professional it services" verbatim (SEO brief). */}
               <p className="qs-hero__sub">
-                Quantel Solutions is a full-service technology company
-                headquartered in London. We help startups and enterprises across
-                the UK, USA, and UAE build SaaS platforms, white-label products,
-                and AI-powered solutions — fully delivered for you.
+                Quantel Solutions is an IT company headquartered in London —
+                the IT service provider startups and enterprises across the
+                UK, USA, and UAE trust for professional IT services: SaaS
+                platforms, white-label products, and AI-powered solutions,
+                fully delivered for you.
               </p>
 
               {/* CTAs */}

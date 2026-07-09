@@ -144,6 +144,14 @@ const Offcanvas = ({ openNav, setOpenNav }: HeaderProps) => {
             >
               <i className="fa-brands fa-instagram"></i>
             </Link>
+            <Link
+              href={QUANTEL_SOCIAL.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Quantel Solutions on LinkedIn"
+            >
+              <i className="fa-brands fa-linkedin-in"></i>
+            </Link>
           </div>
         </nav>
       </div>

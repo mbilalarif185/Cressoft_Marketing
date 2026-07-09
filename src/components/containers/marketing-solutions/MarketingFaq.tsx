@@ -5,25 +5,32 @@ type Faq = {
   a: string;
 };
 
+// SEO NOTE: several questions/answers carry keyword phrases verbatim from the
+// client's homepage SEO brief ("services for it", "managed it services
+// pricing", "it services for law firms", "it company near me", etc.).
+// Don't "clean up" these phrasings when editing copy.
 const FAQS: Faq[] = [
   {
-    q: "How long does it take to build and launch a SaaS or white-label product?",
-    a: "It depends on scope. A focused MVP or a configured white-label platform (CRM, ERP, LMS, or e-commerce) typically goes live within 6–12 weeks. Full custom SaaS products with multi-tenant architecture, billing, and integrations usually run 3–6 months to a production-ready v1. We work in short, demoable sprints, so you see working software early and often rather than waiting months for a single big reveal."  },
+    q: "What do your IT services cover?",
+    a: "Everything a growing business needs from a full service IT company: SaaS, web, and mobile development, cloud infrastructure, IT support services, AI automation, and digital growth. We built our stack around the services for IT leaders actually budget for - so you get one accountable partner instead of five separate vendors."  },
   {
-    q: "Do you only work with large enterprises, or do you take on startups too?",
-    a: "Both. We partner with early-stage startups shipping their first product, scaleups hardening their platform for growth, and enterprises modernising legacy systems. We scope every engagement to the actual size and stage of the business, so a startup gets a lean, fast-moving team while an enterprise gets the governance, documentation, and security posture it needs."  },
+    q: "How does managed IT services pricing work?",
+    a: "Fully managed IT services run on a simple monthly retainer scoped to your users, systems, and hours of coverage. Project work - a platform build, a migration, a redesign - is quoted fixed-scope up front. Either way, managed IT services pricing is agreed in writing before any work starts, with no surprise line items."  },
+  {
+    q: "Do you offer small business IT services as well as enterprise IT services?",
+    a: "Both. Our small business IT services give early-stage teams a lean, fast-moving crew at a predictable cost, while our enterprise IT services add the governance, documentation, and security posture larger organisations need. We scope every engagement to the actual size and stage of the business."  },
+  {
+    q: "Do you provide industry-specific solutions, such as IT services for law firms or healthcare?",
+    a: "Yes. We deliver IT services for law firms with confidentiality and case-management workflows in mind, and healthcare IT services built around patient-data compliance - alongside e-commerce, real estate, education, and finance. Every engagement starts from your industry's workflows and regulations, never a generic template."  },
+  {
+    q: "I searched for an \"IT company near me\" - do you work with businesses outside London?",
+    a: "Absolutely. We're headquartered in London and deliver for clients across the UK, US, UAE, and Asia-Pacific, remote-first with overlapping working hours arranged around your team. Wherever you found us, we operate like the IT company near me you were searching for: responsive, in your time zone, and one call away."  },
+  {
+    q: "How do you compare to other IT service providers?",
+    a: "Most IT service providers stop at tickets and uptime. As an IT professional services partner, we pair an IT consulting service - strategy, audits, and roadmaps - with hands-on engineering and growth marketing, and we tie KPIs to business outcomes like retention, cost per acquisition, and revenue rather than response times alone."  },
   {
     q: "What's included in the free discovery call?",
     a: "Your discovery call is a genuine working session with a senior Quantel strategist - not a sales pitch dressed up as a consultation. We'll review your goals, your current stack, and identify the highest-leverage opportunities, then outline a practical roadmap you could act on with or without us. Within 24 hours we'll follow up with a written summary of the findings and recommendations. No obligation."  },
-  {
-    q: "Can you work alongside our existing in-house engineering or marketing team?",
-    a: "Absolutely. We're set up to augment internal teams, not replace them. Many clients embed us to own a specific workstream - a SaaS module, an AI feature, or a paid-acquisition channel - while their in-house team handles the rest. We're flexible on structure and always start by understanding what's already in place before recommending changes."  },
-  {
-    q: "Which regions and time zones do you work across?",
-    a: "We're headquartered in London and deliver for clients across the UK, US, UAE, and Asia-Pacific. Our delivery model is remote-first with overlapping working hours arranged around your core team, so collaboration stays smooth regardless of time zone. Calls run over Zoom or Google Meet, and day-to-day communication runs through Slack, email, and WhatsApp."  },
-  {
-    q: "How do we measure success? What KPIs do you use?",
-    a: "We tie KPIs to your actual business outcomes, not vanity metrics. Depending on the engagement, that can mean product velocity and uptime, activation and retention rates, cost per acquisition, return on ad spend, or direct revenue. Before any work begins, we document a written set of KPIs and targets, then review and update them each quarter as the programme evolves."  },
 ];
 
 const MarketingFaq = () => {
