@@ -5,7 +5,6 @@ import { serialize } from "next-mdx-remote/serialize";
 import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 import Layout from "@/components/layout/Layout";
 import Seo from "@/components/seo/Seo";
@@ -147,10 +146,11 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
   const source = await serialize(post.content, {
     mdxOptions: {
       remarkPlugins: [remarkGfm],
-      rehypePlugins: [
-        rehypeSlug,
-        [rehypeAutolinkHeadings, { behavior: "wrap" }],
-      ],
+      // rehypeSlug keeps ids on headings so `#anchor` URLs still work, but we
+      // deliberately do NOT autolink-wrap headings — the MDX `a` component
+      // styles every anchor as a blue underlined link, turning headings into
+      // giant links.
+      rehypePlugins: [rehypeSlug],
     },
   });
 
