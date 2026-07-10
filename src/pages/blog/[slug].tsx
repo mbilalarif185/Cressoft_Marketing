@@ -137,7 +137,11 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
   const slug = String(params?.slug ?? "");
   const post = await getPostBySlug(slug);
   if (!post) {
-    return { notFound: true };
+    // MUST carry `revalidate` — a notFound response without it is cached
+    // permanently by Vercel. One transient Blob read failure (or a visit
+    // before publish completes) would otherwise poison this slug to 404
+    // until the next deploy.
+    return { notFound: true, revalidate: 60 };
   }
 
   const source = await serialize(post.content, {
