@@ -15,7 +15,7 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
   }, [onChange]);
 
   return (
-    <div className="admin-md-editor mdx-editor-container" style={{ minHeight: "420px", border: "1px solid #ccc", borderRadius: "4px", backgroundColor: "#fff", padding: "16px" }}>
+    <div className="admin-md-editor">
       <MdxEditor markdown={value} onChange={handleChange} />
     </div>
   );
