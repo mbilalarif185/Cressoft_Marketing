@@ -1,16 +1,15 @@
 // =====================================================
 // Homepage blog — "Field notes" editorial dispatch
 //
-// Replaces the old `.blog-two` Swiper carousel, which hid post titles behind a
-// dark overlay and showed contextless covers on its side slides. This is a
-// static editorial split: a featured lead article (left) and the remaining
-// posts as a "ledger" list (right) — every title, category, read time and date
-// readable at a glance, the way a publication's contents page works.
+// Layout: the newest post runs as a full-width feature (cover left, body
+// right, like a magazine opener), then the next three posts sit in a card
+// row beneath it — every title, category, read time and date readable at a
+// glance, the way a publication's contents page works.
 //
-// SIGNATURE: the ledger marker — a thin brand-blue bar that grows down the
-// left edge of the hovered/focused row, like marking an entry in a contents
-// page. The shared uppercase metadata kicker (CATEGORY · N MIN READ) carries
-// the editorial voice.
+// SIGNATURE: the ledger marker — a thin brand-blue bar that grows along the
+// top edge of a hovered/focused card (and down the left edge of the feature
+// body), like marking an entry in a contents page. The shared uppercase
+// metadata kicker (CATEGORY · N MIN READ) carries the editorial voice.
 //
 // Reset note: `_reset.scss` forces h1–h6 + p to color:var(--theme-color)
 // !important. Headings want that ink anyway; the dek <p> re-declares
@@ -94,6 +93,17 @@
     text-transform: uppercase;
     color: var(--ink-faint);
   }
+  &__latest {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #fff;
+    background: var(--hb-accent);
+  }
   &__cat {
     color: var(--hb-accent);
     font-weight: 700;
@@ -102,16 +112,14 @@
     color: var(--line-strong);
   }
 
-  // ---- Layout ----------------------------------------------------------
-  &__grid {
+  // ---- Feature (latest post, full width) --------------------------------
+  &__feature {
     display: grid;
-    grid-template-columns: 1.04fr 0.96fr;
-    gap: clamp(32px, 4vw, 64px);
-    align-items: start;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(28px, 4vw, 56px);
+    align-items: center;
   }
-
-  // ---- Lead article ----------------------------------------------------
-  &__lead-media {
+  &__feature-media {
     display: block;
     position: relative;
     overflow: hidden;
@@ -132,26 +140,46 @@
       pointer-events: none;
     }
   }
-  &__lead-img {
+  &__feature-img {
     object-fit: cover;
     object-position: center;
     transition: transform 0.7s ease;
   }
-  &__lead-media:hover &__lead-img,
-  &__lead-media:focus-visible &__lead-img {
+  &__feature-media:hover &__feature-img,
+  &__feature-media:focus-visible &__feature-img {
     transform: scale(1.04);
   }
 
-  &__lead-body {
-    padding-top: 24px;
+  &__feature-body {
+    position: relative;
+    padding-left: 22px;
+    // Ledger marker — grows down the left edge on hover/focus.
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--hb-accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.35s ease;
+    }
   }
-  &__lead-title {
+  &__feature:hover &__feature-body::before,
+  &__feature:focus-within &__feature-body::before {
+    transform: scaleY(1);
+  }
+  &__feature-title {
     font-family: var(--display);
-    margin: 14px 0 0;
+    margin: 16px 0 0;
     font-weight: 700;
-    line-height: 1.14;
-    letter-spacing: -0.01em;
-    font-size: clamp(1.4rem, 2.3vw, 2rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+    text-wrap: balance;
     a {
       color: var(--ink);
       transition: color 0.25s ease;
@@ -162,12 +190,12 @@
       }
     }
   }
-  &__lead-dek {
+  &__feature-dek {
     --theme-color: var(--ink-soft); // beat reset !important
     margin: 14px 0 0;
     font-size: 16px;
     line-height: 1.6;
-    max-width: 46ch;
+    max-width: 52ch;
   }
   &__readmore {
     display: inline-flex;
@@ -192,71 +220,68 @@
     }
   }
 
-  // ---- Ledger list -----------------------------------------------------
-  &__list {
-    display: flex;
-    flex-direction: column;
-  }
-  &__item {
-    position: relative;
+  // ---- Card row (next three posts) --------------------------------------
+  &__row {
     display: grid;
-    grid-template-columns: clamp(88px, 9vw, 112px) 1fr;
-    gap: clamp(16px, 1.6vw, 22px);
-    align-items: center;
-    padding: clamp(18px, 2vw, 24px) 0 clamp(18px, 2vw, 24px) 22px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(20px, 2.5vw, 36px);
+    margin-top: clamp(36px, 5vw, 64px);
+    padding-top: clamp(28px, 3.5vw, 44px);
     border-top: 1px solid var(--line);
-    &:last-child {
-      border-bottom: 1px solid var(--line);
-    }
-    // Ledger marker — grows down the left edge on hover/focus.
+  }
+  &__card {
+    position: relative;
+    padding-top: 18px;
+    // Ledger marker, rotated for the row — grows across the top on hover.
     &::before {
       content: "";
       position: absolute;
       left: 0;
-      top: 16px;
-      bottom: 16px;
-      width: 3px;
+      top: 0;
+      height: 3px;
+      width: 48px;
       border-radius: 3px;
       background: var(--hb-accent);
-      transform: scaleY(0);
-      transform-origin: top;
+      transform: scaleX(0);
+      transform-origin: left;
       transition: transform 0.35s ease;
     }
     &:hover::before,
     &:focus-within::before {
-      transform: scaleY(1);
+      transform: scaleX(1);
     }
   }
-  &__item-thumb {
+  &__card-media {
     display: block;
     position: relative;
     overflow: hidden;
-    border-radius: 14px;
-    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+    aspect-ratio: 16 / 10;
     background: var(--surface-raised);
     box-shadow: var(--shadow);
   }
-  &__item-img {
+  &__card-img {
     object-fit: cover;
     object-position: center;
     transition: transform 0.6s ease;
   }
-  &__item:hover &__item-img,
-  &__item:focus-within &__item-img {
-    transform: scale(1.07);
+  &__card:hover &__card-img,
+  &__card:focus-within &__card-img {
+    transform: scale(1.06);
   }
 
-  &__item-body {
+  &__card-body {
     min-width: 0;
+    padding-top: 18px;
   }
-  &__item-title {
+  &__card-title {
     font-family: var(--display);
-    margin: 8px 0 0;
+    margin: 10px 0 0;
     font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.01em;
-    font-size: clamp(1rem, 1.3vw, 1.15rem);
-    // Clamp to two lines so rows stay even.
+    font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+    // Clamp to two lines so cards stay even.
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -282,33 +307,76 @@
 
   // ---- Responsive ------------------------------------------------------
   @media (max-width: 991.98px) {
-    &__grid {
+    // Feature stacks: cover on top, body below.
+    &__feature {
       grid-template-columns: 1fr;
-      gap: clamp(28px, 6vw, 44px);
+      gap: 0;
     }
-    &__lead-body {
-      padding-top: 20px;
+    &__feature-body {
+      padding: 20px 0 0;
+      &::before {
+        display: none;
+      }
+    }
+    // Cards collapse into compact ledger rows: square thumb + text.
+    &__row {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+    &__card {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 20px 0 20px 18px;
+      border-top: 1px solid var(--line);
+      &:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      // Back to the vertical marker for list rows.
+      &::before {
+        top: 16px;
+        bottom: 16px;
+        height: auto;
+        width: 3px;
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+      &:hover::before,
+      &:focus-within::before {
+        transform: scaleY(1);
+      }
+    }
+    &__card-media {
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+    }
+    &__card-body {
+      padding-top: 0;
     }
   }
   @media (max-width: 575.98px) {
     &__head {
       align-items: flex-start;
     }
-    &__item {
+    &__card {
       grid-template-columns: 76px 1fr;
       gap: 14px;
-      padding-left: 16px;
+      padding-left: 14px;
     }
-    &__item-title {
+    &__card-title {
       -webkit-line-clamp: 3;
     }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-blog__lead-img,
-  .home-blog__item-img,
-  .home-blog__item::before {
+  .home-blog__feature-img,
+  .home-blog__card-img,
+  .home-blog__feature-body::before,
+  .home-blog__card::before {
     transition: none !important;
   }
 }
