@@ -383,7 +383,10 @@
 .admin-md-editor {
   border-radius: 12px;
   border: 1px solid var(--line-strong);
-  overflow: hidden;
+  // `clip`, not `hidden`: an overflow-hidden ancestor becomes the scroll
+  // container for the ribbon's `position: sticky`, so the toolbar (and with
+  // it the Create-link flow) scrolls out of reach on long documents.
+  overflow: clip;
   background: #e8e6e3; // document canvas behind the page
 
   .mdxeditor {
