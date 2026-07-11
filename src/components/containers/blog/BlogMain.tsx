@@ -53,6 +53,14 @@ const BlogMain = ({ posts, categories, tags }: BlogMainProps) => {
 
   const recentPosts = posts.slice(0, 4);
 
+  const categoryLedger = useMemo(() => {
+    const total = Math.max(1, posts.length);
+    return categories.map((cat) => {
+      const count = posts.filter((p) => p.category === cat).length;
+      return { cat, count, share: count / total };
+    });
+  }, [categories, posts]);
+
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPage(1);
@@ -212,131 +220,128 @@ const BlogMain = ({ posts, categories, tags }: BlogMainProps) => {
           </div>
 
           <aside className="col-12 col-xl-4">
-            <div className="blog-main__sidebar">
-              <div className="widget">
-                <div className="widget__head">
-                  <h5 className="h5">Search</h5>
-                </div>
-                <div className="widget-search">
-                  <form onSubmit={handleSearchSubmit}>
-                    <div className="form-group-input">
-                      <input
-                        type="search"
-                        name="blog-search"
-                        id="blogSearch"
-                        placeholder="Search articles…"
-                        value={query}
-                        onChange={(e) => {
-                          setQuery(e.target.value);
-                          setPage(1);
-                        }}
-                      />
-                      <button type="submit" aria-label="Search">
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+            <div className="blog-main__sidebar blog-explorer">
+              <div className="blog-explorer__block">
+                <span className="blog-explorer__eyebrow">Search</span>
+                <form
+                  className="blog-explorer__search"
+                  onSubmit={handleSearchSubmit}
+                  role="search"
+                >
+                  <input
+                    type="search"
+                    name="blog-search"
+                    id="blogSearch"
+                    placeholder="Search articles…"
+                    value={query}
+                    onChange={(e) => {
+                      setQuery(e.target.value);
+                      setPage(1);
+                    }}
+                  />
+                  <button type="submit" aria-label="Search articles">
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </form>
               </div>
 
-              <div className="widget">
-                <div className="widget__head">
-                  <h5 className="h5">Categories</h5>
-                </div>
-                <div className="widget__list">
-                  <ul>
-                    <li>
-                      <button
-                        type="button"
-                        className={`blog-main__cat-btn${
-                          activeCategory === null ? " is-active" : ""
-                        }`}
-                        onClick={() => handleCategoryClick(null)}
-                      >
-                        All posts
-                        <span>{posts.length}</span>
-                      </button>
-                    </li>
-                    {categories.map((cat) => {
-                      const count = posts.filter(
-                        (p) => p.category === cat
-                      ).length;
-                      const isActive = activeCategory === cat;
-                      return (
-                        <li key={cat}>
-                          <button
-                            type="button"
-                            className={`blog-main__cat-btn${
-                              isActive ? " is-active" : ""
-                            }`}
-                            onClick={() =>
-                              handleCategoryClick(isActive ? null : cat)
-                            }
-                          >
-                            {cat}
-                            <span>{count}</span>
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+              <div className="blog-explorer__block">
+                <span className="blog-explorer__eyebrow">
+                  Browse topics
+                  <em>
+                    {posts.length} {posts.length === 1 ? "article" : "articles"}
+                  </em>
+                </span>
+                <ul className="topic-ledger">
+                  <li>
+                    <button
+                      type="button"
+                      className={`topic-ledger__row${
+                        activeCategory === null ? " is-active" : ""
+                      }`}
+                      style={{ "--share": 1 } as React.CSSProperties}
+                      onClick={() => handleCategoryClick(null)}
+                      aria-pressed={activeCategory === null}
+                    >
+                      <span className="topic-ledger__name">All posts</span>
+                      <span className="topic-ledger__count">
+                        {posts.length}
+                      </span>
+                    </button>
+                  </li>
+                  {categoryLedger.map(({ cat, count, share }) => {
+                    const isActive = activeCategory === cat;
+                    return (
+                      <li key={cat}>
+                        <button
+                          type="button"
+                          className={`topic-ledger__row${
+                            isActive ? " is-active" : ""
+                          }`}
+                          style={{ "--share": share } as React.CSSProperties}
+                          onClick={() =>
+                            handleCategoryClick(isActive ? null : cat)
+                          }
+                          aria-pressed={isActive}
+                        >
+                          <span className="topic-ledger__name">{cat}</span>
+                          <span className="topic-ledger__count">{count}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
 
               {recentPosts.length > 0 && (
-                <div className="widget">
-                  <div className="widget__head">
-                    <h5 className="h5">Recent Posts</h5>
-                  </div>
-                  <div className="widget__latest">
+                <div className="blog-explorer__block">
+                  <span className="blog-explorer__eyebrow">Recent posts</span>
+                  <div className="blog-explorer__recent">
                     {recentPosts.map((post) => (
-                      <div key={post.slug} className="latest-single">
-                        <div className="latest-thumb">
-                          <Link href={`/blog/${post.slug}`}>
-                            <Image
-                              src={post.cover}
-                              alt={post.title}
-                              width={120}
-                              height={90}
-                            />
-                          </Link>
-                        </div>
-                        <div className="latest-content">
-                          <p>{formatDate(post.date)}</p>
-                          <p>
-                            <Link href={`/blog/${post.slug}`}>
-                              {post.title}
-                            </Link>
-                          </p>
-                        </div>
-                      </div>
+                      <Link
+                        key={post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="recent-item"
+                      >
+                        <span className="recent-item__thumb">
+                          <Image
+                            src={post.cover}
+                            alt={post.title}
+                            width={120}
+                            height={90}
+                          />
+                        </span>
+                        <span className="recent-item__body">
+                          <span className="recent-item__date">
+                            {formatDate(post.date)}
+                          </span>
+                          <span className="recent-item__title">
+                            {post.title}
+                          </span>
+                        </span>
+                      </Link>
                     ))}
                   </div>
                 </div>
               )}
 
               {tags.length > 0 && (
-                <div className="widget">
-                  <div className="widget__head">
-                    <h5 className="h5">Tags</h5>
-                  </div>
-                  <div className="widget__tags">
-                    <ul>
-                      {tags.map((tag) => (
-                        <li key={tag}>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setQuery(tag);
-                              setActiveCategory(null);
-                              setPage(1);
-                            }}
-                          >
-                            {tag}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
+                <div className="blog-explorer__block">
+                  <span className="blog-explorer__eyebrow">Tags</span>
+                  <div className="blog-explorer__tags">
+                    {tags.map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => {
+                          setQuery(tag);
+                          setActiveCategory(null);
+                          setPage(1);
+                        }}
+                      >
+                        {tag}
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
