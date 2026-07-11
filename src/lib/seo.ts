@@ -222,7 +222,7 @@ export function serviceSchema(input: {
       { "@type": "Country", name: "United Kingdom" },
       ...SERVICE_AREAS.map((c) => ({ "@type": "AdministrativeArea", name: c })),
     ],
-    url: input.url ?? `${SITE_URL}/marketing-solutions`,
+    url: input.url ?? `${SITE_URL}/services`,
   };
 }
 
@@ -255,9 +255,6 @@ const BREADCRUMB_LABELS: Record<string, string> = {
   "success-stories": "Success Stories",
   "privacy-policy": "Privacy Policy",
   "terms-and-conditions": "Terms & Conditions",
-  // The services index lives at /marketing-solutions, so the "services"
-  // path segment is labelled accordingly.
-  "marketing-solutions": "Services",
   services: "Services",
 };
 

@@ -83,7 +83,7 @@ const HeaderTwo = ({ openNav, handleNav, setOpenNav }: HeaderProps) => {
                         <button
 
                         >
-                           <Link href="/marketing-solutions">Services</Link>
+                           <Link href="/services">Services</Link>
                         </button>
 
                       </li>

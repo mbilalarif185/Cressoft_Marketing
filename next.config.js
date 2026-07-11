@@ -155,8 +155,12 @@ const nextConfig = {
       // Removed stale theme demo pages (Lorem Ipsum content). 301 their
       // previously-indexed URLs to the closest real pages so inbound links and
       // search-engine equity are preserved instead of hitting a 404.
-      { source: '/service-single', destination: '/marketing-solutions', permanent: true },
+      { source: '/service-single', destination: '/services', permanent: true },
       { source: '/project-single', destination: '/success-stories', permanent: true },
+      // Services hub moved from /marketing-solutions to /services (better SEO
+      // URL, and it gives the /services/[slug] pages a resolving parent). 301
+      // preserves bookmarks, backlinks, and search-engine equity.
+      { source: '/marketing-solutions', destination: '/services', permanent: true },
     ]
   },
 }

@@ -46,7 +46,7 @@ const ServicePage = ({ service }: ServicePageProps) => {
   // BreadcrumbList for this page (Home › Services › <service>).
   const breadcrumbs = [
     { name: "Home", url: `${SITE_URL}/` },
-    { name: "Services", url: `${SITE_URL}/marketing-solutions` },
+    { name: "Services", url: `${SITE_URL}/services` },
     { name: service.shortName, url },
   ];
 
@@ -67,7 +67,7 @@ const ServicePage = ({ service }: ServicePageProps) => {
         title={service.name}
         navigation={service.shortName}
         parent="Services"
-        parentLink="/marketing-solutions"
+        parentLink="/services"
         description={service.heroDescription}
       />
 

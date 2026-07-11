@@ -127,7 +127,7 @@ const HomeOneBanner = () => {
                     across the UK, US, UAE, and beyond build smarter.
                   </p>
                   <div className="banner__cta-group">
-                    <Link href="/marketing-solutions" className="btn btn--primary">
+                    <Link href="/services" className="btn btn--primary">
                       Explore Solutions
                     </Link>
                     <Link href="/success-stories" className="btn btn--secondary">

@@ -9,7 +9,7 @@
  * COPY NOTE (please review):
  *   - `heroDescription`, the first `intro.paragraphs` sentence, and the
  *     headline `feature` titles are seeded from the original
- *     /marketing-solutions card copy (MarketingServices.tsx) and are accurate.
+ *     /services card copy (MarketingServices.tsx) and are accurate.
  *   - The remaining `intro.paragraphs`, the expanded `features` descriptions,
  *     and the per-service `process` steps were newly authored to give each
  *     page genuinely distinct, non-thin content. They are sound and on-brand,
