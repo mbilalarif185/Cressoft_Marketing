@@ -23,30 +23,27 @@ const HomeTwoAward = () => {
           </div>
           <div className="col-12 col-lg-6 col-xxl-5 offset-xxl-1">
             <div className="award__content section__content">
-              {/* Eyebrow + copy carry "core it solutions company overview",
-                  "it solutions company", "it services company",
-                  "full service it company usa", and "it service company"
-                  verbatim (client SEO brief — do not rephrase). */}
               <span className="sub-title">
-                Core IT Solutions Company Overview
+                Who We Are
                 <i className="fa-solid fa-arrow-right"></i>
               </span>
               <h2 className="title title-anim">
-                The IT Solutions Company Global Businesses Trust, Based in{" "}
+                The Technology Partner Global Businesses Trust, Based in{" "}
                 <span>London</span>
               </h2>
               <div className="paragraph">
                 <p>
-                  Quantel Solutions is an IT services company headquartered in
+                  Quantel Solutions is a technology company headquartered in
                   London. We work with startups, scaleups, and enterprises
                   across the UK, US, UAE, and Asia-Pacific to build digital
                   products, launch SaaS platforms, and drive measurable growth.
                 </p>
                 <p>
                   We don&apos;t believe in one-size-fits-all packages. As the
-                  full service IT company USA, UK, and UAE businesses rely on,
-                  we tailor every solution to your industry, your market, and
-                  your goals - the way an IT service company should.
+                  SaaS development company and digital agency USA, UK, and UAE
+                  businesses rely on, we tailor every solution to your industry,
+                  your market, and your goals - the way a true technology
+                  partner should.
                 </p>
               </div>
               <div className="award__content-meta">

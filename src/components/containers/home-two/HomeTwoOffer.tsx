@@ -65,7 +65,7 @@ const LAYERS: Layer[] = [
     key: "launch",
     index: "02",
     title: "Launch & Operate",
-    hint: "Ready-to-run platforms, plus IT infrastructure management services behind your back office.",
+    hint: "Ready-to-run platforms and back-office systems, live under your brand in weeks.",
     services: [
       {
         title: "White-Label Platforms",
@@ -120,7 +120,7 @@ const HomeTwoOffer = () => {
     return {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: "End-to-end digital capabilities for global teams",
+      name: "End-to-end technology services for global businesses",
       itemListOrder: "https://schema.org/ItemListOrderAscending",
       numberOfItems: flat.length,
       itemListElement: flat.map((s, i) => ({
@@ -157,18 +157,16 @@ const HomeTwoOffer = () => {
           <div className="col-12 col-lg-8">
             <header className="section__header text-center">
               <span className="sub-title">
-                what we offer
+                What We Offer
                 <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
               </span>
               <h2 id="offer-stack-heading" className="title title-anim">
-                End-to-end digital capabilities for global teams
+                End-to-end technology services for global businesses
               </h2>
-              {/* Carries "managed it support services", "it consulting
-                  services", and "it solutions services" verbatim (SEO brief). */}
               <p>
-                From managed IT support services and IT consulting services to
-                SaaS, AI, web, and growth marketing - our IT solutions services
-                cover every layer of your digital roadmap.
+                From SaaS, web, and mobile development to AI automation and
+                growth marketing - our technology services cover every layer
+                of your digital roadmap.
               </p>
             </header>
           </div>

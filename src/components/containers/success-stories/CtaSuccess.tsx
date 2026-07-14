@@ -40,13 +40,12 @@ const CtaSuccess = () => {
                    LET&apos;S BUILD TOGETHER
                   </span>
                   <h2 id="cta-success-title" className="cta-success__title title-anim">
-                    Join 500+ businesses across the UK, US, UAE,
-                    and beyond.
+                    Ready to Build Your Product Globally?
                   </h2>
                   <p className="cta-success__lead">
-                    We partner with a limited number of new clients each quarter.
-                    If you&apos;re comparing IT service providers, let&apos;s see
-                    if we&apos;re a good fit - no pressure, no hard sell.
+                    Join 500+ businesses across the UK, USA and UAE who trust
+                    Quantel Solutions as their technology partner. Free
+                    consultation — no commitment.
                   </p>
 
                   <div className="cta-success__actions">

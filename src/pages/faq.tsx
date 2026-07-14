@@ -29,10 +29,10 @@ const FaqPage = () => {
         ]}
       />
       {/*
-        FAQPage JSON-LD is emitted once, dynamically, by <MarketingFaq /> (via
-        <FaqMain />) from its own Q&A array — so we deliberately do NOT add a
-        second FAQPage block here. Two FAQPage entities on one URL with
-        divergent content confuses Google's rich-result parser.
+        FAQPage JSON-LD is emitted once, by <FaqMain />, from its own Q&A
+        array — so we deliberately do NOT add a second FAQPage block here. Two
+        FAQPage entities on one URL with divergent content confuses Google's
+        rich-result parser.
       */}
       <CmnBanner
         title="Faq"

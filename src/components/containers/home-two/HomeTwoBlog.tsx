@@ -40,8 +40,8 @@ const HomeTwoBlog = ({ posts }: HomeTwoBlogProps) => {
         {/* ---- Section header ---- */}
         <div className="home-blog__head">
           <div>
-            <span className="home-blog__eyebrow">Field notes</span>
-            <h2 className="home-blog__title">How we think about building software</h2>
+            <span className="home-blog__eyebrow">Latest Insights</span>
+            <h2 className="home-blog__title">SaaS, AI &amp; Web Development</h2>
           </div>
           <Link href="/blog" className="home-blog__viewall">
             Browse all articles

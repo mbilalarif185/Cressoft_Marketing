@@ -1,17 +1,15 @@
 import React, { useId, useMemo, useState } from "react";
-import Image from "next/image";
-import thumb from "public/images/faq-thumb.webp";
 
 type Faq = {
   q: string;
   a: string;
 };
 
-// /faq page FAQ set — used ONLY on the dedicated FAQ page. It carries the six
-// homepage questions (kept in sync with HomeFaq.tsx) PLUS the extra,
-// page-specific questions below. This component is independent of HomeFaq so
-// the two lists can diverge without affecting each other. Keep the SaaS / AI /
-// web / white-label framing; do NOT reintroduce IT-support / managed-IT copy.
+// Homepage FAQ — Quantel's core SaaS, AI, and web development positioning.
+// This component is used ONLY on the homepage. The /faq page has its own,
+// longer set in FaqMain.tsx — editing one no longer affects the other.
+// Keep the SaaS/AI/web/white-label framing; do NOT reintroduce IT-support
+// / managed-IT phrasing.
 const FAQS: Faq[] = [
   {
     q: "What services does Quantel Solutions offer?",
@@ -31,32 +29,12 @@ const FAQS: Faq[] = [
   {
     q: "Do you offer ongoing support after launch?",
     a: "Yes — all projects include post-launch support. We offer monthly retainer packages for ongoing development, maintenance and digital marketing."  },
-  {
-    q: "Which countries do you serve?",
-    a: "We serve clients across the UK, USA and UAE with dedicated service pages and local expertise for each market."  },
-  {
-    q: "How do I get started with Quantel?",
-    a: "Book a free 30-minute discovery call via our contact page. We will discuss your project, timeline and budget with no commitment required."  },
-  {
-    q: "What is your development process?",
-    a: "We work in agile sprints with weekly updates. Every project starts with discovery, moves through design and development, and ends with QA testing and launch support."  },
-  {
-    q: "Do you offer monthly retainers?",
-    a: "Yes — we offer ongoing monthly retainers for development, maintenance, SEO and digital marketing. Retainers start from £800/month."  },
-  {
-    q: "How much does a website cost?",
-    a: "A standard website starts from £2,500. Web applications start from £8,000. SaaS platforms from £15,000. Book a free call for an exact quote."  },
-  {
-    q: "Do you sign NDAs?",
-    a: "Yes — we sign NDAs before discussing any confidential project details. Contact us to request one."  },
 ];
 
-const FaqMain = () => {
+const HomeFaq = () => {
   const headingId = useId();
   const [open, setOpen] = useState<number>(0);
 
-  // FAQPage JSON-LD is emitted here (once) for the /faq page from this Q&A
-  // array — faq.tsx deliberately does not add a second FAQPage block.
   const faqJsonLd = useMemo(
     () => ({
       "@context": "https://schema.org",
@@ -76,28 +54,31 @@ const FaqMain = () => {
   const toggle = (i: number) => setOpen((cur) => (cur === i ? -1 : i));
 
   return (
-    <section className="section faq fade-wrapper" aria-labelledby={headingId}>
-      <div className="container">
-        <div className="row gaper align-items-center">
-          <div className="col-12 col-lg-6">
-            <div className="faq__thumb fade-left">
-              <Image src={thumb} alt="Quantel Solutions FAQ — answers about our technology and SaaS services" />
-            </div>
-          </div>
-          <div className="col-12 col-lg-6">
-            <div className="marketing-faq">
-              <span className="sub-title">
+    <>
+      <section
+        className="section marketing-faq"
+        aria-labelledby={headingId}
+      >
+        <div className="container">
+          <div className="row mb-50">
+            <div className="col-12 text-center">
+              <span className="sub-title justify-content-center">
+                <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
                 Frequently Asked
                 <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
               </span>
-              <h2 id={headingId} className="title title-anim mt-3 mb-40">
-                Answers to Your Questions
-              </h2>
-
-              <ul
-                className="marketing-faq__list"
-                aria-label="Frequently asked questions"
+              <h2
+                id={headingId}
+                className="title title-anim mt-3 mb-0"
               >
+               What Global Clients Ask Us
+              </h2>
+            </div>
+          </div>
+
+          <div className="row justify-content-center">
+            <div className="col-12 col-lg-10">
+              <ul className="marketing-faq__list" aria-label="Frequently asked questions">
                 {FAQS.map((faq, i) => {
                   const isOpen = open === i;
                   return (
@@ -113,7 +94,7 @@ const FaqMain = () => {
                         className="marketing-faq__question"
                         onClick={() => toggle(i)}
                         aria-expanded={isOpen}
-                        aria-controls={`faq-main-${i}`}
+                        aria-controls={`home-faq-${i}`}
                       >
                         <span>{faq.q}</span>
                         <i
@@ -125,7 +106,7 @@ const FaqMain = () => {
                         />
                       </button>
                       <div
-                        id={`faq-main-${i}`}
+                        id={`home-faq-${i}`}
                         className="marketing-faq__answer"
                         role="region"
                         hidden={!isOpen}
@@ -139,15 +120,15 @@ const FaqMain = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* schema.org/FAQPage - surfaces these answers in Google search results */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-    </section>
+    </>
   );
 };
 
-export default FaqMain;
+export default HomeFaq;

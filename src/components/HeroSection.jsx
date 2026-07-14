@@ -97,31 +97,28 @@ export default function HeroSection() {
             <div className="qs-hero__content">
               {/* Eyebrow pill */}
               <span className="qs-hero__eyebrow">
-                🌍 Full-Service IT Company
+                🌍 Global Technology Partner
                 <span className="qs-hero__eyebrow-sep">·</span> UK
                 <span className="qs-hero__eyebrow-sep">·</span> USA
                 <span className="qs-hero__eyebrow-sep">·</span> UAE
               </span>
 
-              {/* H1 — kept under 60 chars with the primary keyword
-                  ("IT services", per the client's SEO brief) in the first
-                  words, while preserving the accent-span design. */}
+              {/* H1 — leads with the core SaaS/AI/Web product positioning,
+                  keeping the accent-span design for the "scale" clause. */}
               <h1 className="qs-hero__title">
-                IT services, SaaS &amp; AI products
+                We Build Your SaaS, AI &amp; Web Products
                 <span className="qs-hero__title-accent">
                   {" "}
-                  — built and scaled globally.
+                  — and Scale Them Globally.
                 </span>
               </h1>
 
-              {/* Subheadline — carries "it company", "it service provider",
-                  and "professional it services" verbatim (SEO brief). */}
+              {/* Subheadline — full-service technology company positioning. */}
               <p className="qs-hero__sub">
-                Quantel Solutions is an IT company headquartered in London —
-                the IT service provider startups and enterprises across the
-                UK, USA, and UAE trust for professional IT services: SaaS
-                platforms, white-label products, and AI-powered solutions,
-                fully delivered for you.
+                Quantel Solutions is a full-service technology company
+                headquartered in London. We help startups and enterprises
+                across the UK, USA and UAE build SaaS platforms, white-label
+                products, and AI-powered solutions — fully delivered for you.
               </p>
 
               {/* CTAs */}

@@ -37,8 +37,8 @@ const HomeTwoBlog = dynamic(
   () => import("@/components/containers/home-two/HomeTwoBlog"),
   { loading: () => null }
 );
-const MarketingFaq = dynamic(
-  () => import("@/components/containers/marketing-solutions/MarketingFaq"),
+const HomeFaq = dynamic(
+  () => import("@/components/containers/home-two/HomeFaq"),
   { loading: () => null }
 );
 const CtaSuccess = dynamic(
@@ -58,21 +58,18 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
   return (
     <Layout header={2} footer={1}>
       <Seo
-        title="IT Services & Full-Service IT Company | Quantel Solutions"
-        description="Quantel Solutions is a full-service IT company in London. Managed IT support services, IT consulting & SaaS development for the UK, USA & UAE. Book a free call."
+        title="Global Technology Partner London | SaaS, AI & Web Development | Quantel Solutions"
+        description="Quantel Solutions — London's global tech partner. SaaS development, AI automation, web development & white-label software for UK, USA & UAE. 500+ projects."
         pathname="/"
         keywords={[
-          "it services",
-          "it company",
-          "it services company",
-          "it consulting services",
-          "it support services",
-          "managed it support services",
-          "it solutions company",
-          "full service it company",
-          "it service provider",
-          "small business it services",
-          "enterprise it services",
+          "SaaS development company UK",
+          "AI automation agency",
+          "web development London",
+          "white label software UK",
+          "technology partner UAE",
+          "SaaS development USA",
+          "digital marketing agency UK",
+          "Quantel Solutions",
         ]}
         image={`${SITE_URL}/images/feature.png`}
         imageAlt="Quantel Solutions - Global Technology & SaaS Partner"
@@ -93,7 +90,7 @@ const HomeTwo = ({ blogPosts }: HomeProps) => {
         marqueeText="Build Something Global with Quantel"
         marqueeHref="https://wa.me/447879301606?text=Hello%20I%20want%20to%20know%20more%20about%20your%20services"
       />
-      <MarketingFaq />
+      <HomeFaq />
       <HomeTwoBlog posts={blogPosts} />
       <CtaSuccess />
       <NextPageNull />
