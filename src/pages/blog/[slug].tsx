@@ -63,9 +63,30 @@ const BlogSinglePage = ({
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     keywords: post.tags.join(", "),
-    inLanguage: "en-MY",
+    inLanguage: "en-GB",
     articleSection: post.category,
   };
+
+  // Only emit FAQPage structured data when the post actually carries FAQ
+  // content — Google flags empty/irrelevant FAQPage markup as a rich-result
+  // violation, so posts without `faqs` must not render it.
+  const faqJsonLd =
+    post.faqs && post.faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: post.faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
+  const jsonLd = faqJsonLd ? [articleJsonLd, faqJsonLd] : articleJsonLd;
 
   // Avoid leaving the unused router warning while still keeping the import
   // available if future logic needs it (e.g. preview mode badge).
@@ -86,7 +107,7 @@ const BlogSinglePage = ({
           { name: "Blog", url: `${SITE_URL}/blog` },
           { name: post.title, url },
         ]}
-        jsonLd={articleJsonLd}
+        jsonLd={jsonLd}
       >
         <meta property="article:published_time" content={post.date} />
         <meta property="article:modified_time" content={post.date} />

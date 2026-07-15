@@ -18,6 +18,11 @@ export type BlogPostRecord = {
   tags: string[];
   category?: string;
   seoKeywords: string[];
+  /**
+   * Optional FAQ pairs. TODO(CMS): the editor UI does not yet write this field;
+   * add question/answer inputs so published posts emit FAQPage structured data.
+   */
+  faqs?: { question: string; answer: string }[];
   contentMarkdown: string;
   status: BlogPostStatus;
   createdAt: string;

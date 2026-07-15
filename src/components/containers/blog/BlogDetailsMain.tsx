@@ -131,10 +131,29 @@ const BlogDetailsMain = ({
   next,
   url,
 }: BlogDetailsMainProps) => {
-  // `url` retained in the props contract for future share-tracking / canonical
-  // helpers; not currently rendered now that the blog footer surfaces the
-  // brand's own social profiles instead of per-post share buttons.
-  void url;
+  const [copied, setCopied] = React.useState(false);
+
+  const linkedInShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+    url,
+  )}`;
+  const xShare = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+    url,
+  )}&text=${encodeURIComponent(post.title)}`;
+
+  const handleCopyLink = async () => {
+    try {
+      const href =
+        typeof window !== "undefined" ? window.location.href : url;
+      await navigator.clipboard.writeText(href);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard unavailable (older browser / insecure context): leave the
+      // button in its default state rather than showing a false confirmation.
+    }
+  };
+
+  const authorName = post.author?.trim() || "Quantel Editorial Team";
 
   return (
     <section
@@ -172,6 +191,86 @@ const BlogDetailsMain = ({
                   .join(" ")}
               >
                 <MDXRemote {...source} components={mdxComponents} />
+              </div>
+
+              {/* Per-post social sharing — LinkedIn / X / copy link. Distinct
+                  from the brand "Follow Quantel Solutions" icons in the footer
+                  below (those link to our profiles; these share this article). */}
+              <div className="blog-post-share">
+                <span className="blog-post-share__label">Share this article</span>
+                <div className="blog-post-share__actions">
+                  <a
+                    href={linkedInShare}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="blog-post-share__btn"
+                    aria-label="Share on LinkedIn"
+                  >
+                    <i className="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                    <span>LinkedIn</span>
+                  </a>
+                  <a
+                    href={xShare}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="blog-post-share__btn"
+                    aria-label="Share on X"
+                  >
+                    <i className="fa-brands fa-x-twitter" aria-hidden="true"></i>
+                    <span>X</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyLink}
+                    className={[
+                      "blog-post-share__btn",
+                      copied ? "is-copied" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    aria-label="Copy link to this article"
+                  >
+                    <i
+                      className={
+                        copied ? "fa-solid fa-check" : "fa-solid fa-link"
+                      }
+                      aria-hidden="true"
+                    ></i>
+                    <span>{copied ? "Copied!" : "Copy link"}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Author bio card */}
+              <div className="blog-author">
+                <div className="blog-author__avatar" aria-hidden={!post.authorAvatar}>
+                  {post.authorAvatar ? (
+                    <Image
+                      src={post.authorAvatar}
+                      alt={authorName}
+                      width={64}
+                      height={64}
+                    />
+                  ) : (
+                    <span className="blog-author__initials">QS</span>
+                  )}
+                </div>
+                <div className="blog-author__body">
+                  <span className="blog-author__eyebrow">Written by</span>
+                  <p className="blog-author__name">{authorName}</p>
+                  <p className="blog-author__bio">
+                    The Quantel Solutions editorial team covers SaaS development,
+                    AI automation, web development and digital marketing for
+                    businesses across the UK, USA and UAE.
+                  </p>
+                  <Link href="/blog" className="blog-author__link">
+                    View all articles
+                    <i
+                      className="fa-solid fa-arrow-right"
+                      aria-hidden="true"
+                    ></i>
+                  </Link>
+                </div>
               </div>
 
               <footer className="blog-article__footer">

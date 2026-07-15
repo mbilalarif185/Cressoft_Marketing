@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
-import type { BlogPost, BlogPostMeta } from "@/types/blog";
+import type { BlogFaq, BlogPost, BlogPostMeta } from "@/types/blog";
 import type { BlogPostRecord } from "@/lib/blog/types";
 import { loadAllRecords } from "@/lib/blog/storage";
 
@@ -12,6 +12,24 @@ const ensureDir = () => {
   if (!fs.existsSync(BLOG_DIR)) {
     fs.mkdirSync(BLOG_DIR, { recursive: true });
   }
+};
+
+/**
+ * Coerce an arbitrary `faqs` value (from MDX frontmatter or a CMS record) into a
+ * clean array of question/answer pairs. Returns `undefined` when there is no
+ * usable FAQ content so the template never emits an empty FAQPage schema.
+ */
+const normalizeFaqs = (value: unknown): BlogFaq[] | undefined => {
+  if (!Array.isArray(value)) return undefined;
+  const faqs = value
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const q = String((item as Record<string, unknown>).question ?? "").trim();
+      const a = String((item as Record<string, unknown>).answer ?? "").trim();
+      return q && a ? { question: q, answer: a } : null;
+    })
+    .filter((f): f is BlogFaq => f !== null);
+  return faqs.length > 0 ? faqs : undefined;
 };
 
 const slugFromFilename = (filename: string) =>
@@ -38,6 +56,8 @@ const readPostFile = (filename: string): BlogPost => {
     readingMinutes: Math.max(1, Math.ceil(stats.minutes)),
     featured: Boolean(data.featured),
     hideBlogBanner: Boolean(data.hideBlogBanner),
+    authorAvatar: data.authorAvatar ? String(data.authorAvatar) : undefined,
+    faqs: normalizeFaqs(data.faqs),
     content,
   };
 };
@@ -68,6 +88,8 @@ const recordToFilePost = (r: BlogPostRecord): BlogPost => {
     readingMinutes: minutes,
     featured: false,
     hideBlogBanner: false,
+    authorAvatar: r.authorAvatar || undefined,
+    faqs: normalizeFaqs(r.faqs),
     content: r.contentMarkdown,
   };
 };
