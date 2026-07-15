@@ -44,6 +44,9 @@ const readPostFile = (filename: string): BlogPost => {
   const { data, content } = matter(raw);
   const stats = readingTime(content);
 
+  const authorAvatar = data.authorAvatar ? String(data.authorAvatar) : undefined;
+  const faqs = normalizeFaqs(data.faqs);
+
   return {
     slug: slugFromFilename(filename),
     title: String(data.title ?? "Untitled"),
@@ -56,8 +59,10 @@ const readPostFile = (filename: string): BlogPost => {
     readingMinutes: Math.max(1, Math.ceil(stats.minutes)),
     featured: Boolean(data.featured),
     hideBlogBanner: Boolean(data.hideBlogBanner),
-    authorAvatar: data.authorAvatar ? String(data.authorAvatar) : undefined,
-    faqs: normalizeFaqs(data.faqs),
+    // Only include optional keys when set — Next.js `getStaticProps` cannot
+    // serialize `undefined` values (it throws during prerender).
+    ...(authorAvatar ? { authorAvatar } : {}),
+    ...(faqs ? { faqs } : {}),
     content,
   };
 };
@@ -76,6 +81,8 @@ const recordToFilePost = (r: BlogPostRecord): BlogPost => {
     typeof r.readingMinutes === "number" && r.readingMinutes > 0
       ? r.readingMinutes
       : Math.max(1, Math.ceil(readingTime(r.contentMarkdown).minutes));
+  const authorAvatar = r.authorAvatar || undefined;
+  const faqs = normalizeFaqs(r.faqs);
   return {
     slug: r.slug,
     title: r.title,
@@ -88,8 +95,9 @@ const recordToFilePost = (r: BlogPostRecord): BlogPost => {
     readingMinutes: minutes,
     featured: false,
     hideBlogBanner: false,
-    authorAvatar: r.authorAvatar || undefined,
-    faqs: normalizeFaqs(r.faqs),
+    // Omit optional keys when unset — `undefined` breaks getStaticProps JSON.
+    ...(authorAvatar ? { authorAvatar } : {}),
+    ...(faqs ? { faqs } : {}),
     content: r.contentMarkdown,
   };
 };
