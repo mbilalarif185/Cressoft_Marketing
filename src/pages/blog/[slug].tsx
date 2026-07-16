@@ -102,6 +102,7 @@ const BlogSinglePage = ({
         imageAlt={`${post.title} – Quantel Solutions Blog`}
         type="article"
         keywords={post.tags}
+        noindex={post.noindex}
         breadcrumbs={[
           { name: "Home", url: `${SITE_URL}/` },
           { name: "Blog", url: `${SITE_URL}/blog` },

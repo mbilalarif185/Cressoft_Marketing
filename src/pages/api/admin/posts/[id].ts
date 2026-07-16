@@ -5,7 +5,7 @@ import { revalidateBlogPaths } from "@/lib/blog/revalidate-public";
 import { ensureUniqueSlug } from "@/lib/blog/slug";
 import { loadAllRecords, saveAllRecords } from "@/lib/blog/storage";
 import type { BlogPostRecord } from "@/lib/blog/types";
-import { validatePostInput } from "@/lib/blog/validation";
+import { sanitizeFaqs, validatePostInput } from "@/lib/blog/validation";
 
 export default async function handler(
   req: NextApiRequest,
@@ -74,6 +74,10 @@ export default async function handler(
       seoKeywords: Array.isArray(input.seoKeywords)
         ? input.seoKeywords.map(String)
         : [],
+      // Explicitly re-derive from the payload (the editor always sends both), so
+      // clearing the toggle or removing every FAQ overrides the spread `existing`.
+      noindex: input.noindex === true ? true : undefined,
+      faqs: sanitizeFaqs(input.faqs),
       contentMarkdown: input.contentMarkdown!,
       status: input.status!,
       updatedAt: new Date().toISOString(),

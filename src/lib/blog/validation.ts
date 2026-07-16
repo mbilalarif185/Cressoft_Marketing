@@ -14,6 +14,27 @@ export type ValidationResult =
   | { ok: true; data: PostInput }
   | { ok: false; errors: Record<string, string> };
 
+/**
+ * Coerce an arbitrary `faqs` value (from a CMS request body) into a clean array
+ * of question/answer pairs, dropping any pair missing a question or answer.
+ * Returns `undefined` when there is no usable FAQ content so the stored record
+ * omits the field and the frontend never emits an empty FAQPage schema.
+ */
+export function sanitizeFaqs(
+  value: unknown,
+): { question: string; answer: string }[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const faqs = value
+    .map((item) => {
+      if (!item || typeof item !== "object") return null;
+      const q = String((item as Record<string, unknown>).question ?? "").trim();
+      const a = String((item as Record<string, unknown>).answer ?? "").trim();
+      return q && a ? { question: q, answer: a } : null;
+    })
+    .filter((f): f is { question: string; answer: string } => f !== null);
+  return faqs.length > 0 ? faqs : undefined;
+}
+
 export function validatePostInput(
   input: PostInput,
   isCreate: boolean,

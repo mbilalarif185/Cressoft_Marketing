@@ -14,6 +14,8 @@ type PostFormProps = {
   initial?: BlogPostRecord;
 };
 
+type FaqDraft = { question: string; answer: string };
+
 type FormState = {
   title: string;
   slug: string;
@@ -33,6 +35,8 @@ type FormState = {
   tags: string;
   seoKeywords: string;
   status: BlogPostStatus;
+  noindex: boolean;
+  faqs: FaqDraft[];
 };
 
 function toFormState(initial?: BlogPostRecord): FormState {
@@ -56,6 +60,12 @@ function toFormState(initial?: BlogPostRecord): FormState {
     tags: (initial?.tags ?? []).join(", "),
     seoKeywords: (initial?.seoKeywords ?? []).join(", "),
     status: initial?.status ?? "draft",
+    noindex: initial?.noindex ?? false,
+    // Clone so edits never mutate the server record passed in as a prop.
+    faqs: (initial?.faqs ?? []).map((f) => ({
+      question: f.question,
+      answer: f.answer,
+    })),
   };
 }
 
@@ -89,6 +99,32 @@ export default function PostForm({ mode, initial }: PostFormProps) {
     },
     [],
   );
+
+  const addFaq = useCallback(() => {
+    setForm((prev) => ({
+      ...prev,
+      faqs: [...prev.faqs, { question: "", answer: "" }],
+    }));
+  }, []);
+
+  const updateFaq = useCallback(
+    (index: number, field: keyof FaqDraft, value: string) => {
+      setForm((prev) => {
+        const faqs = prev.faqs.map((faq, i) =>
+          i === index ? { ...faq, [field]: value } : faq,
+        );
+        return { ...prev, faqs };
+      });
+    },
+    [],
+  );
+
+  const removeFaq = useCallback((index: number) => {
+    setForm((prev) => ({
+      ...prev,
+      faqs: prev.faqs.filter((_, i) => i !== index),
+    }));
+  }, []);
 
   async function uploadImage(file: File, target: "featuredImage" | "ogImage") {
     setUploading(true);
@@ -128,6 +164,11 @@ export default function PostForm({ mode, initial }: PostFormProps) {
       category: form.category || undefined,
       tags: splitList(form.tags),
       seoKeywords: splitList(form.seoKeywords),
+      noindex: form.noindex,
+      // Server sanitizes further; trim + drop pairs missing a question or answer.
+      faqs: form.faqs
+        .map((f) => ({ question: f.question.trim(), answer: f.answer.trim() }))
+        .filter((f) => f.question && f.answer),
       status,
     };
   }
@@ -363,6 +404,78 @@ export default function PostForm({ mode, initial }: PostFormProps) {
             value={form.contentMarkdown}
             onChange={(v) => update("contentMarkdown", v)}
           />
+        </section>
+
+        <section className="admin-card">
+          <h2 className="admin-card__title">SEO settings</h2>
+
+          <div className="admin-check">
+            <input
+              id="post-noindex"
+              type="checkbox"
+              className="admin-check__input"
+              checked={form.noindex}
+              onChange={(e) => update("noindex", e.target.checked)}
+            />
+            <label htmlFor="post-noindex" className="admin-check__body">
+              <span className="admin-check__label">
+                Hide from Google (noindex)
+              </span>
+              <span className="admin-check__hint">
+                Turn ON to stop Google indexing this post. Use for outdated or
+                off-topic content. The post stays live on your site — just
+                hidden from search.
+              </span>
+            </label>
+          </div>
+
+          <div className="admin-faq">
+            <div className="admin-faq__head">
+              <span className="admin-field__label">FAQ section</span>
+              <span className="admin-field__hint">
+                Adding FAQs here creates a special Google rich snippet that
+                shows your Q&amp;A directly in search results — above normal
+                results. Very high impact.
+              </span>
+            </div>
+
+            {form.faqs.map((faq, i) => (
+              <div className="admin-faq__item" key={i}>
+                <div className="admin-faq__fields">
+                  <input
+                    className="admin-input"
+                    value={faq.question}
+                    onChange={(e) => updateFaq(i, "question", e.target.value)}
+                    placeholder="e.g. How much does it cost?"
+                    aria-label={`FAQ ${i + 1} question`}
+                  />
+                  <textarea
+                    className="admin-input admin-input--area"
+                    value={faq.answer}
+                    onChange={(e) => updateFaq(i, "answer", e.target.value)}
+                    placeholder="Write a clear, helpful answer"
+                    aria-label={`FAQ ${i + 1} answer`}
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="admin-faq__remove"
+                  onClick={() => removeFaq(i)}
+                  aria-label={`Remove FAQ ${i + 1}`}
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              className="admin-btn admin-btn--ghost admin-faq__add"
+              onClick={addFaq}
+            >
+              {form.faqs.length === 0 ? "Add FAQ" : "Add another FAQ"}
+            </button>
+          </div>
         </section>
 
         <div className="admin-actions">

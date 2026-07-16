@@ -209,6 +209,89 @@
   }
 }
 
+// SEO settings: noindex toggle ----------------------------------
+.admin-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--surface-sunken);
+  padding: 14px 16px;
+}
+.admin-check__input {
+  margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  accent-color: var(--brand-blue);
+  cursor: pointer;
+}
+.admin-check__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+.admin-check__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.admin-check__hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+// SEO settings: FAQ schema builder ------------------------------
+.admin-faq {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.admin-faq__head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.admin-faq__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  padding: 14px;
+}
+.admin-faq__fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.admin-faq__remove {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(185, 28, 28, 0.3);
+  background: rgba(185, 28, 28, 0.08);
+  color: #b91c1c;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(185, 28, 28, 0.16);
+    border-color: rgba(185, 28, 28, 0.5);
+  }
+}
+.admin-faq__add {
+  align-self: flex-start;
+}
+
 // Shell / chrome ------------------------------------------------
 .admin-shell {
   min-height: 100vh;

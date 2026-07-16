@@ -59,6 +59,7 @@ const readPostFile = (filename: string): BlogPost => {
     readingMinutes: Math.max(1, Math.ceil(stats.minutes)),
     featured: Boolean(data.featured),
     hideBlogBanner: Boolean(data.hideBlogBanner),
+    noindex: Boolean(data.noindex),
     // Only include optional keys when set — Next.js `getStaticProps` cannot
     // serialize `undefined` values (it throws during prerender).
     ...(authorAvatar ? { authorAvatar } : {}),
@@ -95,6 +96,7 @@ const recordToFilePost = (r: BlogPostRecord): BlogPost => {
     readingMinutes: minutes,
     featured: false,
     hideBlogBanner: false,
+    noindex: Boolean(r.noindex),
     // Omit optional keys when unset — `undefined` breaks getStaticProps JSON.
     ...(authorAvatar ? { authorAvatar } : {}),
     ...(faqs ? { faqs } : {}),

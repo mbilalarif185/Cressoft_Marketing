@@ -19,8 +19,15 @@ export type BlogPostRecord = {
   category?: string;
   seoKeywords: string[];
   /**
-   * Optional FAQ pairs. TODO(CMS): the editor UI does not yet write this field;
-   * add question/answer inputs so published posts emit FAQPage structured data.
+   * When true, the published post is hidden from search engines: the frontend
+   * emits `noindex, nofollow` robots meta and the post is excluded from the
+   * sitemap. The post stays live on the site. Defaults to false (omitted).
+   */
+  noindex?: boolean;
+  /**
+   * Optional FAQ pairs. Populated from the CMS editor's "SEO Settings" FAQ
+   * builder (or MDX frontmatter). When present, published posts emit FAQPage
+   * structured data alongside the BlogPosting schema.
    */
   faqs?: { question: string; answer: string }[];
   contentMarkdown: string;

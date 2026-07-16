@@ -6,7 +6,7 @@ import { revalidateBlogPaths } from "@/lib/blog/revalidate-public";
 import { ensureUniqueSlug } from "@/lib/blog/slug";
 import { loadAllRecords, saveAllRecords } from "@/lib/blog/storage";
 import type { BlogPostRecord } from "@/lib/blog/types";
-import { validatePostInput } from "@/lib/blog/validation";
+import { sanitizeFaqs, validatePostInput } from "@/lib/blog/validation";
 
 export default async function handler(
   req: NextApiRequest,
@@ -68,6 +68,10 @@ export default async function handler(
       seoKeywords: Array.isArray(input.seoKeywords)
         ? input.seoKeywords.map(String)
         : [],
+      // Only store when true so the record stays clean (default is indexable).
+      noindex: input.noindex === true ? true : undefined,
+      // Drop empty/partial pairs; undefined when there are none.
+      faqs: sanitizeFaqs(input.faqs),
       contentMarkdown: input.contentMarkdown!,
       status: input.status!,
       createdAt: now,

@@ -28,6 +28,12 @@ export type BlogPostMeta = {
   /** When true, the default cover hero banner is omitted (custom in-article layout). */
   hideBlogBanner?: boolean;
   /**
+   * When true, the post is hidden from search: the template emits
+   * `noindex, nofollow` robots meta and the post is excluded from the sitemap.
+   * Sourced from the CMS record (`BlogPostRecord.noindex`) or MDX frontmatter.
+   */
+  noindex?: boolean;
+  /**
    * Optional FAQ content. When present (and non-empty) the blog template emits
    * FAQPage JSON-LD alongside the BlogPosting schema.
    *
