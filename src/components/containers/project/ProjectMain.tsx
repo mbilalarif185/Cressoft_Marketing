@@ -13,6 +13,7 @@ import hrthree from "public/images/portfolio/bcr.webp";
 import hrfour from "public/images/portfolio/edu.webp";
 import hrfive from "public/images/portfolio/ilham.webp";
 import hrsix from "public/images/portfolio/hookah.webp";
+import hrseven from "public/images/portfolio/harrowgate.webp";
 
 type Project = {
   title: string;
@@ -57,6 +58,12 @@ const PROJECTS: Project[] = [
     href: "https://www.hookahfuntasia.com.my/",
     image: hrsix,
     alt: "Digital Marketing",
+  },
+  {
+    title: "E-Commerce Website Development",
+    href: "https://harrowgate-foods.vercel.app/",
+    image: hrseven,
+    alt: "Harrowgate & Fine Foods e-commerce website",
   },
 ];
 

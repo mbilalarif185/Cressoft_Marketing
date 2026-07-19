@@ -11,6 +11,7 @@ import three from "public/images/portfolio/bcr.webp";
 import four from "public/images/portfolio/edu.webp";
 import five from "public/images/portfolio/ilham.webp";
 import six from "public/images/portfolio/hookah.webp";
+import seven from "public/images/portfolio/harrowgate.webp";
 
 type PortfolioCategory = "design" | "development" | "technology";
 
@@ -104,6 +105,13 @@ const PORTFOLIO_ITEMS: PortfolioItem[] = [
     image: six,
     alt: "Additional development portfolio project preview",
     href: "https://www.hookahfuntasia.com.my/",
+  },
+  {
+    id: "p-7",
+    categories: ["development"],
+    image: seven,
+    alt: "Harrowgate & Fine Foods e-commerce website development portfolio project preview",
+    href: "https://harrowgate-foods.vercel.app/",
   },
 ];
 
