@@ -101,60 +101,92 @@ const Agency = () => {
   return (
     <section ref={sectionRef} className="section agency">
       <div className="container">
-        <div className="row gaper align-items-center">
-          <div className="col-12 col-lg-6">
+        <div className="row gaper">
+          <div className="col-12 col-lg-5">
             <div className="agency__thumb">
-              <Image
-                src={thumbone}
-                alt="Quantel Solutions global technology team"
-                width={451}
-                height={585}
-                sizes="(max-width: 991px) 100vw, 45vw"
-                priority
-                fetchPriority="high"
-                className="thumb-one fade-left"
-              />
-              <Image
-                src={thumbtwo}
-                alt="Product strategy discussion at Quantel Solutions"
-                width={450}
-                height={584}
-                sizes="(max-width: 991px) 100vw, 45vw"
-                loading="lazy"
-                decoding="async"
-                className="thumb-two fade-right"
-              />
+              <div className="agency__thumb-media">
+                <Image
+                  src={thumbone}
+                  alt="Quantel Solutions global technology team"
+                  width={451}
+                  height={585}
+                  sizes="(max-width: 991px) 86vw, 38vw"
+                  priority
+                  fetchPriority="high"
+                  className="thumb-one fade-left"
+                />
+                <Image
+                  src={thumbtwo}
+                  alt="Product strategy discussion at Quantel Solutions"
+                  width={450}
+                  height={584}
+                  sizes="(max-width: 991px) 44vw, 18vw"
+                  loading="lazy"
+                  decoding="async"
+                  className="thumb-two fade-right"
+                />
+                <div className="agency__stamp" aria-hidden="true">
+                  <span className="agency__stamp-est">Est. 2021</span>
+                  <span className="agency__stamp-place">London &middot; EC3M</span>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="col-12 col-lg-6">
+          <div className="col-12 col-lg-7">
             <div className="agency__content section__content">
               <h2 className="custom-heading">
               <span className="sub-title">
-                WELCOME TO QUANTEL SOLUTIONS
+                OUR STORY
                 <i className="fa-solid fa-arrow-right"></i>
               </span>
               </h2>
               <h2 className="title title-anim">
-                We Are Your Global Technology Partner, Based in London
-
+                Built in London. Trusted Across the UK, USA and UAE.
               </h2>
               <div className="paragraph">
                 <p>
-                  At Quantel Solutions, we believe every business deserves
-                  world-class technology. Headquartered in London, we are a
-                  full-service technology company helping startups, scaleups,
-                  and enterprises across the UK, US, UAE, and beyond build
-                  digital products that scale. From SaaS platforms and
-                  white-label products to enterprise AI, web and mobile apps,
-                  and growth marketing, our team of specialists delivers
-                  integrated digital solutions that drive real business
-                  outcomes, not just vanity metrics.
+                  Quantel Solutions was founded in London in 2021 with a
+                  straightforward mission: give ambitious businesses access to
+                  the kind of technology partner that used to be reserved for
+                  companies with enterprise budgets and in-house engineering
+                  teams.
+                </p>
+                <p>
+                  In the early days, we worked with a handful of UK startups
+                  who had big ideas but no clear path to building them. We
+                  helped them move from concept to working product — SaaS
+                  platforms, white-label systems, web applications — and stayed
+                  with them through launch, growth and beyond.
+                </p>
+                <p>
+                  That model worked. Clients came back for the next project.
+                  They referred us to other founders. Word spread across the UK
+                  market and then into the UAE and United States.
+                </p>
+                <p>
+                  Today, Quantel Solutions is a team of 50+ specialists —
+                  developers, designers, AI engineers, digital marketers and
+                  product strategists — operating across three global markets
+                  from our London headquarters at 20 Fenchurch Street.
+                </p>
+                <p>
+                  We have delivered 500+ projects with a 98% client retention
+                  rate. We work with pre-revenue startups building their first
+                  SaaS MVP and established enterprises scaling their technology
+                  infrastructure. We work with agencies who white-label our
+                  services and businesses who need AI automation to replace
+                  manual workflows.
+                </p>
+                <p>
+                  What has not changed since 2021 is the commitment that
+                  started us: every client gets a partner who genuinely cares
+                  about the outcome — not just the delivery.
                 </p>
               </div>
               <div className="skill-wrap">
                 <div className="skill-bar-single">
                   <div className="skill-bar-title">
-                    <p className="primary-text">Web & App Development</p>
+                    <p className="primary-text">SaaS Development</p>
                   </div>
                   <div className="skill-bar-wrapper" data-percent="98%">
                     <div className="skill-bar">
@@ -166,7 +198,7 @@ const Agency = () => {
                 </div>
                 <div className="skill-bar-single">
                   <div className="skill-bar-title">
-                    <p className="primary-text">AI Solutions</p>
+                    <p className="primary-text">AI Automation</p>
                   </div>
                   <div className="skill-bar-wrapper" data-percent="95%">
                     <div className="skill-bar">
@@ -178,7 +210,7 @@ const Agency = () => {
                 </div>
                 <div className="skill-bar-single">
                   <div className="skill-bar-title">
-                    <p className="primary-text">Search Engine Optimization</p>
+                    <p className="primary-text">White Label Software</p>
                   </div>
                   <div className="skill-bar-wrapper" data-percent="90%">
                     <div className="skill-bar">

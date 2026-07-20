@@ -15,16 +15,16 @@ const AboutCta = () => {
                 <div className="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-9">
                   <div className="section__header text-center">
                     <h2 className="title">
-                      Stay Ahead With World-Class Technology &amp; Growth Solutions
+                      Ready to Work With a Technology Partner That Delivers?
                     </h2>
                     <p className="custom-margin">
-                      Whether you&apos;re a startup finding your footing or an established enterprise ready to scale, Quantel Solutions has the strategy, engineering firepower, and technical expertise to help you build and grow across global markets.
+                      We work with a limited number of new clients each quarter. If you are building a SaaS product, need white label software or want to automate your business with AI — book a free 30-minute discovery call. No pitch. No pressure. Just an honest conversation about what you are trying to build.
                     </p>
                   </div>
                   <div className="section__header text-center">
                     <Link href="/contact">
               <span className="sub-title">
-                what we offer
+                Book a Free Discovery Call
                 <i className="fa-solid fa-arrow-right"></i>
               </span>
               </Link>

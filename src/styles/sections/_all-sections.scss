@@ -8,54 +8,95 @@
   z-index: 1;
   position: relative;
 
+  // Origin-story media rail. On desktop the composition pins to the viewport
+  // and tracks the scroll of the (much taller) narrative column beside it, so
+  // it never leaves a vertical void — the fix for short media / tall copy.
   .agency__thumb {
     position: relative;
-    overflow: hidden;
-    text-align: end;
     z-index: 1;
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0px;
-      right: 10%;
-      width: 40px;
-      height: 40px;
-      background-image: url("../../../public/images/agency/dot-large.webp");
-      background-size: cover;
-      z-index: -1;
+
+    @media (min-width: 992px) {
+      position: sticky;
+      top: 110px;
     }
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-      width: 40px;
-      height: 40px;
-      background-image: url("../../../public/images/agency/dot-large.webp");
-      background-size: cover;
-      z-index: -1;
-    }
+  }
+
+  .agency__thumb-media {
+    position: relative;
+
     img {
       max-width: 100%;
       height: auto;
     }
 
+    // Large primary photo, right-aligned so the secondary can overlap its
+    // lower-left corner.
     .thumb-one {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      max-width: 80%;
+      display: block;
+      width: 86%;
+      margin-left: auto;
+      border-radius: 22px;
+      box-shadow: 0 30px 60px -28px rgba(22, 53, 92, 0.45);
     }
+
+    // Smaller secondary photo, white-framed like a print, poking out bottom-left.
     .thumb-two {
-      margin-top: 100px;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      width: 46%;
+      border-radius: 16px;
+      border: 6px solid var(--surface-raised);
+      box-shadow: 0 22px 40px -24px rgba(22, 53, 92, 0.5);
       z-index: 2;
-      position: relative;
-      max-width: 80%;
     }
   }
 
+  // Founding stamp — the section's signature. Ties the story's sense of place
+  // (London, 20 Fenchurch St) to a small, quiet card on the image.
+  .agency__stamp {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 18px;
+    background-color: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 12px;
+    box-shadow: 0 18px 34px -22px rgba(22, 53, 92, 0.55);
+  }
+
+  .agency__stamp-est {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    line-height: 1.2;
+  }
+
+  .agency__stamp-place {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+    line-height: 1.2;
+  }
+
   .agency__content {
-    padding-left: 70px;
+    padding-left: 40px;
+
+    // Promote the opening line to a lead for editorial hierarchy.
+    .paragraph p:first-child {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      font-weight: 500;
+      color: var(--ink);
+    }
   }
 
   .star {

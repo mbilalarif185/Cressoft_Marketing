@@ -19,73 +19,73 @@ type Service = {
 
 const SERVICES: Service[] = [
   {
-    id: "full-service",
-    title: "Full-Service Under One Roof",
+    id: "saas-core",
+    title: "SaaS Development is Our Core",
     description:
-      "From SEO and Google Ads to social media, web development, content creation, and graphic design, we handle your entire digital presence so you don\u2019t need to juggle multiple vendors.",
+      "We are not a generalist agency that does everything. SaaS platform development, white-label products and AI automation are what we do best \u2014 and what we have delivered for 500+ clients across the UK, USA and UAE.",
     image: serviceInnovation,
-    alt: "Full-service marketing team under one roof",
+    alt: "SaaS platform development team at Quantel Solutions",
     bullets: [
-      "SEO and Ads",
-      "Web and design",
-      "One unified team",
-      "Zero vendor juggling",
+      "Custom SaaS platforms",
+      "White label products",
+      "AI automation systems",
+      "End-to-end delivery",
     ],
   },
   {
-    id: "results-driven",
-    title: "Results-Driven Approach",
+    id: "london-global",
+    title: "London Headquartered, Globally Delivered",
     description:
-      "We measure everything. From click-through rates to cost-per-lead and revenue attribution, every campaign we run is tied to KPIs that matter to your business \u2014 not just impressions and likes.",
+      "Our headquarters is at 20 Fenchurch Street, London. Our 50+ specialist team operates across UK, USA and UAE timezones \u2014 giving every client the accountability of a London-based partner with the capacity of a global team.",
     image: serviceResults,
-    alt: "Results-driven marketing dashboard",
+    alt: "Quantel Solutions London headquarters and global team",
     bullets: [
-      "Data-backed decisions",
-      "KPI-focused campaigns",
-      "Measurable real ROI",
-      "Continuous performance optimisation",
+      "London HQ address",
+      "50+ specialist team",
+      "UK USA UAE timezone cover",
+      "Single accountable partner",
     ],
   },
   {
-    id: "global-reach",
-    title: "Global Reach, Local Nuance",
+    id: "stay-after-launch",
+    title: "We Stay After Launch",
     description:
-      "We deliver for clients across the UK, US, UAE, and Asia-Pacific, and we understand how buyers in each market search, evaluate, and convert. We craft strategies tuned to each region while keeping your brand consistent worldwide.",
+      "Most agencies disappear after they hand over the files. We do not. Our 98% client retention rate exists because we treat every project as the beginning of a long relationship \u2014 not the end of a contract.",
     image: serviceModernization,
-    alt: "Global reach with local market nuance",
+    alt: "Long-term client partnership and post-launch support",
     bullets: [
-      "UK, US & UAE expertise",
-      "Region-tuned strategy",
-      "Cross-market insights",
-      "Globally consistent brand",
+      "98% client retention",
+      "Post-launch support included",
+      "Monthly retainer options",
+      "Long-term partnership model",
     ],
   },
   {
-    id: "transparent-reporting",
-    title: "Transparent Reporting",
+    id: "transparent",
+    title: "Transparent from Day One",
     description:
-      "We send clear, easy-to-understand performance reports every month. You will always know exactly what\u2019s working, what we\u2019re optimising, and where your marketing budget is going.",
+      "Every project starts with a clear scope, a fixed timeline and an honest budget conversation. We do not do vague proposals, surprise invoices or scope creep without your sign-off. You always know exactly where your project stands.",
     image: serviceConsulting,
-    alt: "Transparent monthly marketing performance reporting",
+    alt: "Transparent project scope, timeline and budget",
     bullets: [
-      "Monthly clear reports",
-      "Budget fully visible",
-      "No hidden surprises",
-      "Always stay informed",
+      "Fixed scope and timeline",
+      "Honest budget conversations",
+      "Weekly progress updates",
+      "No surprise charges",
     ],
   },
   {
-    id: "agile-scalable",
-    title: "Agile & Scalable Strategies",
+    id: "three-markets",
+    title: "Three Markets. One Team.",
     description:
-      "Whether you\u2019re a startup just launching or an enterprise ready to scale, our solutions flex with your growth. We move fast, adapt quickly, and keep you ahead of your competitors.",
+      "We serve clients across the UK, USA and UAE from one coordinated team. No handoffs between offices. No communication gaps. The same senior specialists who scope your project build and deliver it.",
     image: serviceLocal,
-    alt: "Agile and scalable marketing strategies for growth",
+    alt: "One coordinated team serving UK, USA and UAE",
     bullets: [
-      "Startup-friendly plans",
-      "Scales with growth",
-      "Fast market adaptation",
-      "Outpace your competitors",
+      "UK USA UAE coverage",
+      "One coordinated team",
+      "Senior specialists on every project",
+      "No offshore handoffs",
     ],
   },
 ];
@@ -114,11 +114,11 @@ const HomeThreeServices = () => {
                 <div className="col-12 col-lg-8">
                   <div className="section__header text-center text-lg-start mb-0">
                     <span className="sub-title">
-                      Why Choose Us?
+                      Why UK, USA &amp; UAE Businesses Choose Quantel
                       <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
                     </span>
                     <h2 id="why-choose-quantel" className="title title-anim">
-                      Why Businesses Worldwide Choose Quantel Solutions
+                      What Makes Quantel Different
                     </h2>
                   </div>
                 </div>

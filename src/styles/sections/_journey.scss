@@ -1,0 +1,239 @@
+// ============================================================================
+//  Journey — the About page origin-story timeline.
+//  A single horizontal spine read as the company's "lifeline": each stop is a
+//  year node on a brand-gradient rail, culminating in an emphasised "Today"
+//  node at the most recent milestone. Replaces the old `.award` reuse, which
+//  was built for 3 items in a narrow column and read as messy at full width.
+// ============================================================================
+
+.journey {
+  background-color: var(--tertiary-color);
+  position: relative;
+  z-index: 1;
+
+  // --- Header: eyebrow + headline on the left, one framing line on the right
+  // so the headline never sits alone above a large void.
+  .journey__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 24px 48px;
+    margin-bottom: 72px;
+  }
+
+  .journey__head .title {
+    margin-bottom: 0;
+  }
+
+  .journey__head-note {
+    color: var(--secondary-color);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    max-width: 42ch;
+  }
+
+  // --- Track: five equal columns, each an independent stop. Every marker is
+  // the same height, so the per-marker line segments join into one continuous
+  // spine with the nodes sitting dead-centre on it.
+  .journey__track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0 28px;
+  }
+
+  .journey__step {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  // Fixed vertical anchor so the spine is at the same y in every column.
+  $node-y: 46px;
+
+  .journey__marker {
+    position: relative;
+    height: 64px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    // The spine segment. Each extends half the column gap (14px) on both
+    // sides so adjacent segments meet mid-gap → one unbroken rail. Kept a
+    // quiet warm hairline; the azure nodes and the "Today" pill carry the brand.
+    &::before {
+      content: "";
+      position: absolute;
+      top: $node-y;
+      left: -14px;
+      right: -14px;
+      height: 2px;
+      background: var(--line-strong);
+      transform: translateY(-50%);
+    }
+  }
+
+  // Trim the rail to the node centres at the two open ends.
+  .journey__step:first-child .journey__marker::before {
+    left: 50%;
+  }
+  .journey__step:last-child .journey__marker::before {
+    right: 50%;
+  }
+
+  .journey__year {
+    font-size: clamp(1.5rem, 2vw, 1.875rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .journey__now {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 10px;
+    border-radius: 100px;
+    background: var(--brand-gradient);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  // Node dot sits on the spine, ringed by the section bg so the rail reads as
+  // passing behind it.
+  .journey__node {
+    position: absolute;
+    top: $node-y;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 4px solid var(--primary-color);
+    box-shadow: 0 0 0 5px var(--tertiary-color);
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+
+  .journey__body {
+    padding-top: 26px;
+  }
+
+  .journey__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 0 0 12px;
+    // Reserve two lines so every description starts on the same baseline.
+    min-height: 3em;
+  }
+
+  .journey__detail {
+    color: var(--secondary-color);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  // --- The signature: the most recent milestone is "today" — the peak of the
+  // trajectory. Larger, filled, haloed node.
+  .journey__step--now {
+    .journey__node {
+      width: 22px;
+      height: 22px;
+      background: var(--primary-color);
+      border-color: var(--white);
+      box-shadow:
+        0 0 0 5px var(--tertiary-color),
+        0 0 0 10px rgba(10, 142, 240, 0.18);
+    }
+    .journey__title {
+      color: var(--brand-navy);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tablet: drop to a tighter 3+2 wrap would fragment the spine, so below the
+// desktop breakpoint we switch straight to a vertical rail — the natural,
+// legible form for a timeline on narrow screens.
+// ---------------------------------------------------------------------------
+@media (max-width: 991px) {
+  .journey {
+    .journey__head {
+      grid-template-columns: 1fr;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    .journey__track {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    // Continuous vertical rail via a left border on each step (no gap so the
+    // borders abut). Nodes sit on the rail; content stacks to the right.
+    .journey__step {
+      position: relative;
+      padding: 0 0 36px 30px;
+      border-left: 2px solid var(--line-strong);
+    }
+    .journey__step:last-child {
+      padding-bottom: 0;
+      border-left-color: transparent;
+    }
+
+    .journey__marker {
+      height: auto;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+
+      &::before {
+        content: none;
+      }
+    }
+
+    .journey__node {
+      top: 6px;
+      left: -30px;
+      transform: translateX(-50%);
+    }
+    .journey__step--now .journey__node {
+      top: 4px;
+    }
+
+    .journey__body {
+      padding-top: 0;
+    }
+
+    .journey__title {
+      min-height: 0;
+      margin-bottom: 8px;
+    }
+
+    .journey__detail {
+      max-width: 52ch;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .journey .journey__year {
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .journey .journey__step {
+    transition: transform 0.25s ease;
+  }
+}
