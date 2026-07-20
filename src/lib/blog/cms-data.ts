@@ -24,6 +24,7 @@ export type CmsBlogPost = {
   author: CmsAuthor;
   publishedAt: string;
   featuredImage: string;
+  featuredImageAlt?: string;
   ogImage?: string;
   imageFit?: "cover" | "contain";
   readingMinutes: number;

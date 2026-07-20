@@ -12,6 +12,8 @@ export type BlogPostRecord = {
   authorAvatar?: string;
   publishedAt: string;
   featuredImage: string;
+  /** Alt text for the featured/cover image — used for social og:image:alt and listing thumbnails. */
+  featuredImageAlt?: string;
   ogImage?: string;
   imageFit?: "cover" | "contain";
   readingMinutes?: number;

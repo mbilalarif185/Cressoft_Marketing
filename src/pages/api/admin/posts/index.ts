@@ -56,6 +56,10 @@ export default async function handler(
           : undefined,
       publishedAt: input.publishedAt!,
       featuredImage: input.featuredImage!.trim(),
+      featuredImageAlt:
+        typeof input.featuredImageAlt === "string" && input.featuredImageAlt.trim()
+          ? input.featuredImageAlt.trim()
+          : undefined,
       ogImage: typeof input.ogImage === "string" ? input.ogImage.trim() : undefined,
       imageFit: input.imageFit === "contain" ? "contain" : "cover",
       readingMinutes:

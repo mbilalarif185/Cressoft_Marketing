@@ -27,6 +27,7 @@ type FormState = {
   authorAvatar: string;
   publishedAt: string;
   featuredImage: string;
+  featuredImageAlt: string;
   ogImage: string;
   imageFit: "cover" | "contain";
   metaTitle: string;
@@ -52,6 +53,7 @@ function toFormState(initial?: BlogPostRecord): FormState {
     authorAvatar: initial?.authorAvatar ?? "",
     publishedAt: initial?.publishedAt?.slice(0, 10) ?? today,
     featuredImage: initial?.featuredImage ?? "",
+    featuredImageAlt: initial?.featuredImageAlt ?? "",
     ogImage: initial?.ogImage ?? "",
     imageFit: initial?.imageFit ?? "cover",
     metaTitle: initial?.metaTitle ?? "",
@@ -157,6 +159,7 @@ export default function PostForm({ mode, initial }: PostFormProps) {
       authorAvatar: form.authorAvatar || undefined,
       publishedAt: form.publishedAt,
       featuredImage: form.featuredImage,
+      featuredImageAlt: form.featuredImageAlt || undefined,
       ogImage: form.ogImage || undefined,
       imageFit: form.imageFit,
       metaTitle: form.metaTitle || undefined,
@@ -347,6 +350,17 @@ export default function PostForm({ mode, initial }: PostFormProps) {
                 }}
               />
             </Field>
+            <Field
+              label="Featured image alt text"
+              hint="Describe the image for screen readers and SEO (used for the social share image). Defaults to the post title if left blank."
+            >
+              <input
+                className="admin-input"
+                value={form.featuredImageAlt}
+                onChange={(e) => update("featuredImageAlt", e.target.value)}
+                placeholder="e.g. Developer reviewing code on a dual-monitor setup"
+              />
+            </Field>
             <Field label="OG image (social share)">
               <input
                 className="admin-input"
@@ -381,7 +395,7 @@ export default function PostForm({ mode, initial }: PostFormProps) {
             <div className="admin-imgpreview">
               <Image
                 src={form.featuredImage}
-                alt="Featured preview"
+                alt={form.featuredImageAlt || "Featured preview"}
                 fill
                 sizes="(max-width: 640px) 100vw, 36rem"
                 style={{ objectFit: "cover" }}

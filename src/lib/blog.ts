@@ -45,6 +45,7 @@ const readPostFile = (filename: string): BlogPost => {
   const stats = readingTime(content);
 
   const authorAvatar = data.authorAvatar ? String(data.authorAvatar) : undefined;
+  const coverAlt = data.coverAlt ? String(data.coverAlt) : undefined;
   const faqs = normalizeFaqs(data.faqs);
 
   return {
@@ -63,6 +64,7 @@ const readPostFile = (filename: string): BlogPost => {
     // Only include optional keys when set — Next.js `getStaticProps` cannot
     // serialize `undefined` values (it throws during prerender).
     ...(authorAvatar ? { authorAvatar } : {}),
+    ...(coverAlt ? { coverAlt } : {}),
     ...(faqs ? { faqs } : {}),
     content,
   };
@@ -83,6 +85,7 @@ const recordToFilePost = (r: BlogPostRecord): BlogPost => {
       ? r.readingMinutes
       : Math.max(1, Math.ceil(readingTime(r.contentMarkdown).minutes));
   const authorAvatar = r.authorAvatar || undefined;
+  const coverAlt = r.featuredImageAlt || undefined;
   const faqs = normalizeFaqs(r.faqs);
   return {
     slug: r.slug,
@@ -99,6 +102,7 @@ const recordToFilePost = (r: BlogPostRecord): BlogPost => {
     noindex: Boolean(r.noindex),
     // Omit optional keys when unset — `undefined` breaks getStaticProps JSON.
     ...(authorAvatar ? { authorAvatar } : {}),
+    ...(coverAlt ? { coverAlt } : {}),
     ...(faqs ? { faqs } : {}),
     content: r.contentMarkdown,
   };

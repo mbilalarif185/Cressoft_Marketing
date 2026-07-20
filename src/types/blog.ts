@@ -21,6 +21,8 @@ export type BlogPostMeta = {
   tags: string[];
   /** Public-relative cover image path, e.g. /images/news/eight.webp. */
   cover: string;
+  /** Alt text for the cover image (SEO/accessibility). Falls back to the title when unset. */
+  coverAlt?: string;
   /** Estimated reading time in minutes (rounded up). */
   readingMinutes: number;
   /** Whether this post should be highlighted as the lead article. */

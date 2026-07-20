@@ -140,7 +140,7 @@ const BlogMain = ({ posts, categories, tags }: BlogMainProps) => {
                         <Link href={`/blog/${post.slug}`}>
                           <Image
                             src={post.cover}
-                            alt={post.title}
+                            alt={post.coverAlt || post.title}
                             width={1200}
                             height={720}
                             sizes="(min-width: 1200px) 720px, 100vw"
@@ -306,7 +306,7 @@ const BlogMain = ({ posts, categories, tags }: BlogMainProps) => {
                         <span className="recent-item__thumb">
                           <Image
                             src={post.cover}
-                            alt={post.title}
+                            alt={post.coverAlt || post.title}
                             width={120}
                             height={90}
                           />

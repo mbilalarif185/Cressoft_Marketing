@@ -25,6 +25,7 @@ export function recordToCmsPost(record: BlogPostRecord): CmsBlogPost {
     author,
     publishedAt: record.publishedAt,
     featuredImage: record.featuredImage,
+    featuredImageAlt: record.featuredImageAlt,
     imageFit: record.imageFit,
     readingMinutes: readingMinutesFromMarkdown(
       record.contentMarkdown,

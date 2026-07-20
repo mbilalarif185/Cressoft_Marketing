@@ -62,6 +62,12 @@ export default async function handler(
           : undefined,
       publishedAt: input.publishedAt!,
       featuredImage: input.featuredImage!.trim(),
+      // Re-derive from the payload (editor always sends it) so clearing the
+      // field overrides the spread `existing`.
+      featuredImageAlt:
+        typeof input.featuredImageAlt === "string" && input.featuredImageAlt.trim()
+          ? input.featuredImageAlt.trim()
+          : undefined,
       ogImage: typeof input.ogImage === "string" ? input.ogImage.trim() : undefined,
       imageFit: input.imageFit === "contain" ? "contain" : "cover",
       readingMinutes:

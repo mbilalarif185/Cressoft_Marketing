@@ -61,7 +61,7 @@ export default function AdminPreviewPage({ post, html }: PreviewProps) {
               <div className="admin-preview__media">
                 <Image
                   src={post.featuredImage}
-                  alt={post.title}
+                  alt={post.featuredImageAlt || post.title}
                   fill
                   priority
                   className={
