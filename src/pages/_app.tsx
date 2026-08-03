@@ -16,6 +16,54 @@ const GA_MEASUREMENT_ID =
 // largest TBT contributor.
 const GTM_ID = "GTM-546P2F53";
 
+/**
+ * Google Consent Mode v2 defaults, denying the advertising storage types.
+ *
+ * WHY: with ad storage allowed, the GA4 tag fires a `ga-audiences`
+ * remarketing ping to the visitor's OWN country Google domain —
+ * www.google.co.uk, www.google.ae, www.google.com.pk, one of roughly 190.
+ * CSP has no TLD wildcard, so that set cannot be allowlisted, and GA4 sends
+ * the ping as an image or a fetch depending on context — permitting it would
+ * mean opening both `img-src` and `connect-src` to a bare `https:`, gutting
+ * the exfiltration protection the CSP exists to provide. Left blocked, each
+ * attempt logs a console error and fails two Lighthouse Best-Practices
+ * audits for every visitor outside a .com region.
+ *
+ * Consent Mode removes the request at the source instead of arguing with it
+ * downstream. It is also the only lever that works here: setting
+ * `allow_google_signals: false` on our own `gtag('config', …)` does not
+ * reach the GA4 configuration tag that lives inside the GTM container, and
+ * the ping kept firing. Consent state applies to every Google tag the
+ * container loads.
+ *
+ * `analytics_storage` stays granted, so this changes nothing about ordinary
+ * measurement — sessions, page views, events, conversions and attribution
+ * all continue. What stops is advertising/remarketing audience building,
+ * which for a London-headquartered company under UK GDPR is a defensible
+ * default to ship without a consent banner.
+ *
+ * If a consent banner is added later, call
+ * `gtag('consent', 'update', { ad_storage: 'granted', … })` on acceptance —
+ * the defaults below are exactly the "before consent" state such a banner
+ * expects to find. Note `wait_for_update` is 0 because there is no banner to
+ * wait for yet; a banner would need a few hundred ms here.
+ */
+const CONSENT_DEFAULTS = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+if (!window.__qsConsentInit) {
+  window.__qsConsentInit = 1;
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'granted',
+    wait_for_update: 0
+  });
+  gtag('set', 'ads_data_redaction', true);
+}
+`;
+
 // Bootstrap: slim SCSS build (grid/reboot/utilities/accordion) — not full min.css.
 import "@/styles/bootstrap-slim.scss";
 
@@ -29,10 +77,14 @@ import "@/styles/main.scss";
 import "@/styles/icons.scss";
 import "@/styles/fa-font-compat.scss";
 
-// Blog-admin markdown editor CSS. The Pages Router only permits global
-// (non-module) CSS imports from _app; the editor itself is code-split and
-// loaded on demand (ssr:false) only on /admin/posts/* screens.
-import "@mdxeditor/editor/style.css";
+// NOTE: the blog-admin markdown editor's CSS is deliberately NOT imported
+// here. Importing it from _app (the only place the Pages Router permits a
+// global CSS import) welded ~56 KB of editor chrome onto the single
+// render-blocking site-wide stylesheet that every public page loads — for a
+// component that only mounts on /admin/posts/* behind an auth cookie.
+// It is now served from public/vendor/mdxeditor.css and <link>-ed in by
+// src/components/admin/MdxEditor.tsx when the editor actually mounts.
+// See scripts/sync-editor-css.mjs (wired to prebuild/predev).
 
 import {
   organizationSchema,
@@ -291,12 +343,44 @@ export default function App({ Component, pageProps }: AppProps) {
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             strategy="lazyOnload"
           />
+          {/*
+            `allow_google_signals` / `allow_ad_personalization_signals` are
+            OFF deliberately. With them on, GA4 fires a `ga-audiences`
+            remarketing ping to the visitor's own country Google domain —
+            www.google.co.uk, www.google.ae, www.google.com.pk, one of ~190.
+            CSP has no TLD wildcard, so no allowlist can cover that set, and
+            GA4 sends it as an image OR a fetch depending on context: making
+            it work would mean opening BOTH img-src and connect-src to a bare
+            `https:`, which is precisely the exfiltration protection a CSP
+            exists to provide. Every blocked attempt also logs a console
+            error, failing two Lighthouse Best-Practices audits for every
+            visitor outside a .com region.
+
+            Switching the signals off removes the request at the source: the
+            CSP stays strict, the console stays clean, and — for a
+            London-headquartered company under UK GDPR — not shipping
+            advertising identifiers by default is the safer posture anyway.
+
+            WHAT IS LOST: GA4 stops building remarketing / advertising
+            audiences and demographic reports. Ordinary analytics — sessions,
+            page views, events, conversions, attribution — are unaffected.
+
+            TO RE-ENABLE: delete these two lines, and add to next.config.js
+            `img-src` AND `connect-src` the Google domains your audience
+            actually resolves to (at minimum https://www.google.com plus each
+            target-market ccTLD), accepting a console error for any visitor
+            outside that list. Note this only governs the GA4 tag configured
+            here — a Google Ads remarketing tag added inside the GTM
+            container would fire independently of this setting.
+          */}
           <Script id="ga-init" strategy="lazyOnload">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
+            {`${CONSENT_DEFAULTS}
               gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}', { transport_type: 'beacon' });
+              gtag('config', '${GA_MEASUREMENT_ID}', {
+                transport_type: 'beacon',
+                allow_google_signals: false,
+                allow_ad_personalization_signals: false
+              });
             `}
           </Script>
         </>
@@ -304,7 +388,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
       {trackingArmed && GTM_ID ? (
         <Script id="gtm-loader" strategy="lazyOnload">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          {`${CONSENT_DEFAULTS}
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);

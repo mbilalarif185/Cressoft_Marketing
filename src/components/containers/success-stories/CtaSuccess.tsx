@@ -58,8 +58,17 @@ const CtaSuccess = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="cta-success__btn-ghost"
-                      aria-label="Chat with our team on WhatsApp"
                     >
+                      {/*
+                        No aria-label: the visible "Message Us on WhatsApp"
+                        already is the accessible name (the icon is
+                        aria-hidden). The label that used to be here read
+                        "Chat with our team on WhatsApp", which *replaced* the
+                        visible text rather than containing it — a WCAG 2.5.3
+                        "Label in Name" failure, and it broke voice control,
+                        where saying "message us on WhatsApp" would no longer
+                        match the control.
+                      */}
                       <WhatsAppIcon className="wa-icon" />
                       Message Us on WhatsApp
                     </Link>
@@ -68,8 +77,13 @@ const CtaSuccess = () => {
                   <Link
                     href={CONTACT_PHONE_TEL_HREF}
                     className="cta-success__phone"
-                    aria-label={`Call us at ${CONTACT_PHONE_DISPLAY}`}
                   >
+                    {/*
+                      Same reason as above — the visible "Or call us directly
+                      / <number>" is the accessible name. The former
+                      aria-label ("Call us at <number>") dropped the
+                      "Or call us directly" half of the visible text.
+                    */}
                     <i className="fa-solid fa-phone" aria-hidden="true"></i>
                     <span>
                       <small>Or call us directly</small>

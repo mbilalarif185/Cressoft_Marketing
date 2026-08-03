@@ -10,7 +10,10 @@
     "dev:clean:webpack": "npm run clean && node scripts/dev.cjs --webpack",
     "dev:safe": "node scripts/dev-safe.cjs",
     "clean": "node -e \"const fs=require('fs');['.next','node_modules/.cache'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})\"",
-    "build": "next build",
+    "predev": "node scripts/sync-editor-css.mjs",
+    "prebuild": "node scripts/sync-editor-css.mjs",
+    "build": "next build && node scripts/purge-css.mjs",
+    "build:nopurge": "next build",
     "start": "next start",
     "lint": "next lint",
     "optimize:images": "node scripts/optimize-images.mjs && node scripts/update-image-imports.mjs"
@@ -46,11 +49,22 @@
     "vanilla-tilt": "^1.8.1"
   },
   "devDependencies": {
+    "critters": "^0.0.23",
     "eslint": "8.48.0",
-    "eslint-config-next": "15.5.18"
+    "eslint-config-next": "15.5.18",
+    "purgecss": "^8.0.0"
   },
   "overrides": {
     "react": "19.0.0",
     "react-dom": "19.0.0"
-  }
+  },
+  "browserslist": [
+    "chrome >= 93",
+    "edge >= 93",
+    "firefox >= 92",
+    "safari >= 15.4",
+    "ios_saf >= 15.4",
+    "opera >= 79",
+    "not dead"
+  ]
 }

@@ -486,18 +486,22 @@
         color: #474747;
         transition: var(--transition);
       }
+      // --primary-color is --brand-blue (#0a8ef0) = 3.17:1 on the ivory
+      // canvas, under the 4.5:1 AA floor for these 14–16px controls. This
+      // block (not the one in _light-theme.scss) is the one that wins the
+      // cascade, so the AA-safe deep blue has to be set here too.
       &:hover {
-        color: var(--primary-color);
+        color: var(--brand-blue-deep);
         span {
-          color: var(--primary-color);
+          color: var(--brand-blue-deep);
         }
       }
     }
 
     .active {
-      color: var(--primary-color);
+      color: var(--brand-blue-deep);
       span {
-        color: var(--primary-color);
+        color: var(--brand-blue-deep);
       }
     }
   }
@@ -998,7 +1002,11 @@
   }
 
   blockquote {
-    color: #c1c1c1;
+    // #c1c1c1 was a leftover from the theme's original dark design; on the
+    // ivory canvas it measured 1.67:1 — the worst contrast on the page, and
+    // this is the testimonial copy itself, not decoration. --ink-soft is the
+    // palette's supporting-copy token and gives 5.55:1.
+    color: var(--ink-soft);
   }
 
   .author-meta {
@@ -1494,6 +1502,12 @@
       border: 15px solid transparent;
       border-top-color: var(--primary-color);
     }
+    // The milestone year + label are `<h3 class="h4">`: h3 because they sit
+    // under the section's h2 (a bare h4 there was a level skip), .h4 to keep
+    // the original size. `:nth-of-type` still isolates the year because both
+    // headings in a `.single` share one tag. Matching both tags keeps this
+    // rule working for any `.single` block still using h4.
+    h3,
     h4 {
       &:nth-of-type(1) {
         color: var(--primary-color);
@@ -1638,8 +1652,11 @@
     display: inline-block;
   }
 
+  // `.type-h5` covers the phone CTA, which is a <p class="type-h5"> rather
+  // than a heading (see CtaTwo.tsx) so the outline stays contiguous.
   h2,
-  h5 {
+  h5,
+  .type-h5 {
     text-transform: capitalize;
   }
 
@@ -1736,7 +1753,10 @@
     gap: 10px;
     padding: 10px 18px;
     border-radius: 999px;
-    background: var(--primary-color);
+    // White 12px text on --primary-color (--brand-blue) measured 3.42:1.
+    // Deepening only the pill's fill takes it to 5.63:1 — the label stays
+    // white and the pill still reads as the same brand blue.
+    background: var(--brand-blue-deep);
     border: 1px solid transparent;
     color: var(--white);
     font-size: 12px;

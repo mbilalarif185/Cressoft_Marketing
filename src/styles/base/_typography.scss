@@ -106,6 +106,73 @@ h6 {
   line-height: 1.5;
 }
 
+// ---------------------------------------------------------------------------
+// `.type-hN` — render at heading level N without *being* heading level N.
+// ---------------------------------------------------------------------------
+// Accessibility needs the document outline to run h1 → h2 → h3 with no gaps,
+// but the design deliberately renders some top-level sections small: the
+// footer column titles, the award milestone labels. `<h2 class="type-h5">`
+// gives the correct rank to assistive tech and the intended size on screen.
+//
+// WHY NOT JUST `.h5`? Bootstrap's type module already defines `.h1`–`.h6`,
+// and parts of this codebase (the blog listing, blog detail) have long used
+// those classes and are laid out around BOOTSTRAP's values, which differ from
+// the theme scale above — `.h4` there computes to 21.6px/1.2, a bare `<h4>`
+// to 20px/1.4. Redefining `.h4` to the theme scale silently resized every one
+// of those pre-existing call sites. A separate namespace changes only the
+// elements that opt in.
+//
+// Each rule restates the FULL typographic identity of the level, not just its
+// size, because three separate things vary by level and all of them are set
+// by tag selectors elsewhere:
+//   • size + leading      — the scale above
+//   • family + tracking   — `h2, h3` are on the display face (top of file),
+//                           h4–h6 stay on Inter (`_reset.scss`)
+//   • margin              — `_reset.scss` zeroes heading margins by TAG only,
+//                           so a class-bearing element would otherwise keep
+//                           bootstrap's `margin-bottom: .5rem` (0,1,0 beats
+//                           0,0,1)
+// Miss any one and re-ranking an element quietly restyles it.
+.type-h2 {
+  margin: 0;
+  font-family: var(--display);
+  letter-spacing: -0.02em;
+  font-size: clamp(1.875rem, 4.2vw, 3.4375rem);
+  line-height: 1.2;
+}
+
+.type-h3 {
+  margin: 0;
+  font-family: var(--display);
+  letter-spacing: -0.02em;
+  font-size: clamp(1.5rem, 2.8vw, 2.5rem);
+  line-height: 1.25;
+}
+
+.type-h4 {
+  margin: 0;
+  font-family: var(--inter);
+  letter-spacing: normal;
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  line-height: 1.4;
+}
+
+.type-h5 {
+  margin: 0;
+  font-family: var(--inter);
+  letter-spacing: normal;
+  font-size: clamp(1.125rem, 1.3vw, 1.25rem);
+  line-height: 1.45;
+}
+
+.type-h6 {
+  margin: 0;
+  font-family: var(--inter);
+  letter-spacing: normal;
+  font-size: clamp(0.9375rem, 1.1vw, 1rem);
+  line-height: 1.5;
+}
+
 h1,
 h2,
 h3,

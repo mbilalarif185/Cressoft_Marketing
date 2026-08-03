@@ -16,6 +16,7 @@
 // -----------------------------------------------------------------------------
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 /* ----------------------------- Swappable assets ---------------------------- */
 // Replace with your own muted aerial London/UK loop (MP4/WebM). Keep it short
@@ -26,8 +27,55 @@ import { useEffect, useState } from "react";
 // clip first (the original /london.mp4 had moov at the end → ~10s blank wait
 // before the video appeared in production). Regenerate with
 // `node scripts/faststart-video.js` after replacing the source video.
+//
+// The clip is 2-pass H.264 @ ~780 kbps, 1280×720, audio stripped (~0.98 MB,
+// down from 2.9 MB). Under the 78% white wash the rate cut is imperceptible
+// (SSIM 0.95 measured post-wash). Re-encode with:
+//   ffmpeg -i src.mp4 -an -c:v libx264 -profile:v high -preset veryslow \
+//     -b:v 780k -maxrate 1000k -bufsize 2000k -pix_fmt yuv420p -g 48 \
+//     -movflags +faststart out.mp4
 const VIDEO_SRC = "/london-faststart.mp4"; // swap for your own aerial loop
 const POSTER_SRC = "/images/home/banner.webp"; // existing asset as a fallback
+
+// Below this width the <video> is never mounted (see useIsDesktop). Matches the
+// project's Bootstrap `lg` breakpoint, which is also where the hero switches to
+// its single-column mobile layout in _hero-section.scss.
+const DESKTOP_MQ = "(min-width: 992px)";
+
+/**
+ * True only once the client has *confirmed* a desktop-width viewport.
+ *
+ * Deliberately starts `false` on both server and first client render. The
+ * <video> tag is therefore absent from the SSR HTML and from the hydration
+ * pass, so on mobile the browser never sees a video URL to fetch — not even
+ * a speculative preload. CSS `display:none` would NOT achieve this: the
+ * element still parses and the media file is still requested. The hero video
+ * is ~0.98 MB, which was the single largest item on the mobile page.
+ *
+ * Desktop pays a one-frame delay before the video mounts; the poster <Image>
+ * underneath is already painted, so there is no visible gap or layout shift.
+ */
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+
+    const mq = window.matchMedia(DESKTOP_MQ);
+    const sync = () => setIsDesktop(mq.matches);
+    sync();
+
+    // Safari < 14 only has the deprecated addListener API.
+    if (mq.addEventListener) {
+      mq.addEventListener("change", sync);
+      return () => mq.removeEventListener("change", sync);
+    }
+    mq.addListener(sync);
+    return () => mq.removeListener(sync);
+  }, []);
+
+  return isDesktop;
+}
 
 /* -------------------------------- Content data ----------------------------- */
 const TRUST = [
@@ -67,23 +115,51 @@ export default function HeroSection() {
   }, []);
 
   const msg = FEED[active];
+  const isDesktop = useIsDesktop();
 
   return (
     <>
       {/* ===================== HERO ===================== */}
       <section className="qs-hero">
-        {/* --- Background video + 85% white wash (decorative) --- */}
+        {/* --- Background still + (desktop-only) video + 85% white wash --- */}
         <div className="qs-hero__bg" aria-hidden="true">
-          <video
-            className="qs-hero__video"
-            src={VIDEO_SRC}
-            poster={POSTER_SRC}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
+          {/*
+            Always rendered, at every breakpoint. On mobile this IS the
+            background; on desktop it is what the <video> fades in over, so
+            there is never an empty frame. `fill` + `sizes="100vw"` lets
+            Next.js serve a 480w AVIF (~8 KB) to a phone instead of the full
+            494×494 source, and `priority` preloads it so it can't lose the
+            race to the LCP paint. Decorative — the wrapper is aria-hidden.
+          */}
+          <Image
+            className="qs-hero__poster"
+            src={POSTER_SRC}
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+            fetchPriority="high"
+            quality={70}
           />
+
+          {/*
+            Desktop only, and mounted client-side *after* the media query is
+            confirmed — so a phone issues zero bytes of video request. See
+            useIsDesktop above for why display:none is not a substitute.
+          */}
+          {isDesktop ? (
+            <video
+              className="qs-hero__video"
+              src={VIDEO_SRC}
+              poster={POSTER_SRC}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+          ) : null}
+
           {/* The wash keeps everything readable on white while motion shows through */}
           <div className="qs-hero__wash" />
           {/* Faint brand tint in the top-right ties it to the Quantel palette */}

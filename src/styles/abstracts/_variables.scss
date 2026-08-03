@@ -39,7 +39,12 @@
   // Text ramp
   --ink: #16181f; // primary text
   --ink-soft: #565d6b; // secondary / supporting copy
-  --ink-faint: #8a8f9c; // captions, disabled, hairline labels
+  // Was #8a8f9c, which measured 3.00:1 on the ivory canvas and 2.73:1 on the
+  // sunken sand band — both short of the 4.5:1 WCAG AA floor for normal text,
+  // and flagged by Lighthouse on the blog kickers. #666a73 keeps the same
+  // cool-grey hue while clearing AA on every surface in the ramp:
+  // 5.03:1 on --surface, 4.58:1 on --surface-sunken, 5.42:1 on white.
+  --ink-faint: #666a73; // captions, disabled, hairline labels
 
   // Hairlines / dividers tuned for a warm light background
   --line: #e8e0d2;
@@ -57,7 +62,17 @@
   // ---------------------------------------------------------------------
   --brand-cyan: #1fc4f5; // vivid cyan highlight / gradient start (logo top)
   --brand-blue: #0a8ef0; // vibrant electric azure — fills + large accents
-  --brand-blue-deep: #0a6cc4; // AA-safe blue for small text on light
+  // AA-safe blue for small text on light, and for any fill that carries white
+  // text. The previous #0a6cc4 cleared the ivory canvas (4.93:1) but landed at
+  // 4.48:1 on the sunken sand band — just under AA, which is why the blog
+  // eyebrow/category labels still failed. #0a68bd clears every combination the
+  // site actually uses: 5.23:1 on --surface, 4.75:1 on --surface-sunken,
+  // 5.63:1 on white, and 5.63:1 for white text sitting on top of it.
+  //
+  // Use --brand-blue for large fills and >=24px display accents; use this for
+  // anything at normal text size. Note #0a8ef0 is only 3.17:1 on the canvas,
+  // so it can never carry small copy.
+  --brand-blue-deep: #0a68bd;
   --brand-navy: #16355c; // logo wordmark navy — depth
 
   // Legacy aliases — the accent pivoted from coral to the logo blue; these

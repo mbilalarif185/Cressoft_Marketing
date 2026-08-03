@@ -77,7 +77,7 @@ const Footer = () => {
           <div className="col-12 col-lg-2 col-xl-2">
             <div className="footer__single">
               <div className="footer__single-intro">
-                <h5>quick links</h5>
+                <h2 className="type-h5">quick links</h2>
               </div>
               <div className="footer__single-content">
                 <ul>
@@ -100,7 +100,7 @@ const Footer = () => {
           <div className="col-12 col-lg-2 col-xl-2">
             <div className="footer__single">
               <div className="footer__single-intro">
-                <h5>Solutions</h5>
+                <h2 className="type-h5">Solutions</h2>
               </div>
               <div className="footer__single-content">
                 <ul>
@@ -128,7 +128,7 @@ const Footer = () => {
           <div className="col-12 col-lg-2 col-xl-2">
             <div className="footer__single">
               <div className="footer__single-intro">
-                <h5>Regions</h5>
+                <h2 className="type-h5">Regions</h2>
               </div>
               <div className="footer__single-content">
                 <ul>
@@ -148,7 +148,7 @@ const Footer = () => {
           <div className="col-12 col-lg-2 col-xl-2">
             <div className="footer__single">
               <div className="footer__single-intro">
-                <h5>Company</h5>
+                <h2 className="type-h5">Company</h2>
               </div>
               <div className="footer__single-content">
                 <ul>

@@ -67,12 +67,167 @@ const nextConfig = {
           'swiper/react',
           'gsap',
         ],
+
+        // Critical-CSS inlining (Next runs `critters` over the rendered HTML
+        // in `server/post-process`). Two blocking <link rel="stylesheet">
+        // elements sat in <head>, and Lighthouse attributed ~650 ms of
+        // render-blocking time to them. Critters rewrites that to:
+        //   • a <style> block of just the rules matching above-the-fold
+        //     markup, inlined in <head>, and
+        //   • the original sheets as `rel="preload" as="style"` +
+        //     `onload="this.media='all'"` — i.e. the preload/swap-media
+        //     pattern, so the full CSS lands without blocking first paint.
+        //
+        // Because this runs at render time rather than build time it stays
+        // correct for the ISR pages (`revalidate: 3600`), which regenerate
+        // their HTML after the build has finished.
+        //
+        // `fonts: false` (Next's default) is kept: next/font already
+        // self-hosts and preloads the faces, so letting critters touch them
+        // would only duplicate work.
+        optimizeCss: {
+          // Override Next's default `preload: 'media'`.
+          //
+          // In 'media' mode critters rewrites the link to
+          // `media="print" onload="this.media='all'"` and THEN clones it into
+          // the <noscript> fallback — attributes included. With JS disabled
+          // the onload never fires, so that fallback stays `media="print"`
+          // and the page renders with critical CSS only. 'js' mode builds the
+          // noscript clone *before* it touches the link (see the
+          // `updateLinkToPreload` ordering in critters/dist/critters.js), so
+          // the fallback is a clean `rel="stylesheet"`. Same non-blocking
+          // load for everyone else, minus the no-JS regression.
+          preload: 'js',
+          noscriptFallback: true,
+          // next/font already self-hosts and preloads every face; letting
+          // critters inline them again would just duplicate bytes.
+          inlineFonts: false,
+          // Keep the full stylesheet intact behind the async load — the
+          // inlined block is above-the-fold only, and scripts/purge-css.mjs
+          // is what trims the remainder.
+          pruneSource: false,
+        },
       }
     : {},
 
   async headers() {
     const longCache = 'public, max-age=31536000, immutable'
     const devNoStore = 'no-store, must-revalidate'
+
+    // ---------------------------------------------------------------------
+    // Content-Security-Policy
+    // ---------------------------------------------------------------------
+    // Every page here is statically generated (getStaticProps + ISR), so the
+    // HTML is produced once at build time and replayed from cache. A
+    // per-request nonce is therefore impossible without converting the whole
+    // site to SSR — the nonce baked into the HTML would not match the one in
+    // the header on any subsequent hit. That rules out the
+    // `'nonce-…' 'strict-dynamic'` form Lighthouse's (informational) csp-xss
+    // audit prefers, so `script-src` keeps `'unsafe-inline'`.
+    //
+    // What this policy still buys, all of which are real XSS/injection
+    // mitigations independent of the inline-script caveat:
+    //   • `object-src 'none'`   — kills <object>/<embed> plugin injection,
+    //                             a classic CSP bypass vector.
+    //   • `base-uri 'self'`     — stops an injected <base> from re-pointing
+    //                             every relative script URL at an attacker.
+    //   • `frame-ancestors`     — clickjacking defence that actually applies
+    //                             to modern browsers (X-Frame-Options below
+    //                             is the legacy fallback).
+    //   • `form-action`         — an injected <form> cannot exfiltrate to a
+    //                             third-party origin.
+    //   • host allowlists       — script/connect/frame are limited to self +
+    //                             the Google tag endpoints we actually use.
+    //
+    // `'unsafe-eval'` is deliberately NOT granted. GTM only needs it for
+    // Custom HTML/JS tags; if the container starts using one, that tag will
+    // break loudly rather than silently widening the policy.
+    const googleTag = [
+      'https://www.googletagmanager.com',
+      'https://*.googletagmanager.com',
+    ]
+
+    // NOTE ON THE APEX HOSTS BELOW: a CSP `*.example.com` source does NOT
+    // match `example.com`. GA4 posts its `/g/collect` beacon to the apex
+    // `analytics.google.com`, so listing only `*.analytics.google.com`
+    // silently blocked every hit — verified against a real browser run, not
+    // assumed. Each entry here corresponds to traffic actually observed.
+    const googleAnalytics = [
+      'https://www.google-analytics.com',
+      'https://*.google-analytics.com',
+      'https://analytics.google.com',
+      'https://*.analytics.google.com',
+    ]
+
+    // Google Signals / remarketing endpoints. GA4 only contacts these when
+    // Signals is enabled on the property; they are separate from the core
+    // analytics beacon above.
+    //
+    // CAVEAT: for users outside the US, GA4 sends the `ga-audiences` pixel to
+    // their *regional* Google domain (www.google.co.uk, www.google.com.pk,
+    // …). CSP has no TLD wildcard, so those regional variants stay blocked
+    // and will log a console error for those visitors. Two ways to close
+    // that gap if it matters: enumerate the country domains your audience
+    // actually uses, or turn off Signals/remarketing in the GA4 property.
+    // Left un-enumerated deliberately — an open-ended TLD allowlist would
+    // undercut the point of having a CSP.
+    const googleSignals = [
+      'https://www.google.com',
+      'https://stats.g.doubleclick.net',
+      'https://*.g.doubleclick.net',
+    ]
+
+    const csp = [
+      "default-src 'self'",
+      // 'unsafe-inline' is required for the JSON-LD blocks, the next/font
+      // variable <style>, and the next/script GA + GTM bootstraps. See above
+      // for why a nonce is not an option on a fully static build.
+      `script-src 'self' 'unsafe-inline' ${googleTag.join(' ')} ${googleAnalytics.join(' ')}`,
+      // Ditto for styles: next/font injects an inline <style>, and Bootstrap
+      // utility components set inline style attributes.
+      "style-src 'self' 'unsafe-inline'",
+      // data: for inlined SVG/placeholder payloads, blob: for the admin
+      // editor's local previews, plus the Vercel Blob store the blog uploads
+      // to and the Google tag's tracking pixels.
+      // data: for inlined SVG/placeholder payloads, blob: for the admin
+      // editor's local previews, plus the Vercel Blob store the blog uploads
+      // to and the Google tag's tracking pixels.
+      //
+      // This stays a strict allowlist rather than a bare `https:`. The one
+      // request that needed more was GA4's `ga-audiences` remarketing ping,
+      // which targets the visitor's own country Google domain (~190 possible
+      // hosts, un-allowlistable) — that is switched off at the source in
+      // _app.tsx instead. See the note there before re-enabling it.
+      `img-src 'self' data: blob: https://*.public.blob.vercel-storage.com ${googleTag.join(' ')} ${googleAnalytics.join(' ')} ${googleSignals.join(' ')}`,
+      // next/font self-hosts every face, so no third-party font origin.
+      "font-src 'self' data:",
+      `connect-src 'self' https://*.public.blob.vercel-storage.com ${googleTag.join(' ')} ${googleAnalytics.join(' ')} ${googleSignals.join(' ')}`,
+      // Two framed third parties:
+      //   • the GTM <noscript> fallback iframe in _document.tsx, and
+      //   • the Google Maps office-location embed on /contact, which loads
+      //     from https://www.google.com/maps?...&output=embed (see
+      //     CONTACT_MAP_EMBED_URL in src/constants/contact.ts).
+      // The Maps host was missing from the first version of this policy and
+      // the map silently failed to render — caught by a browser pass over
+      // every route rather than by reading the config.
+      `frame-src 'self' https://www.google.com https://maps.google.com ${googleTag.join(' ')}`,
+      "media-src 'self'",
+      "worker-src 'self' blob:",
+      "manifest-src 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'",
+      // `upgrade-insecure-requests` is deliberately omitted. The HSTS header
+      // below (max-age 2y, includeSubDomains, preload) already forces https
+      // for this origin, and every third-party source in this policy is
+      // pinned to an https:// URL — so the directive would be a no-op in
+      // production. What it *does* do is rewrite same-origin requests to
+      // https on a plain-http origin, which breaks `next start` on
+      // http://localhost (Next's route prefetches turn into failed https
+      // requests). Removing it costs no real protection and keeps a local
+      // production build honestly testable.
+    ].join('; ')
 
     const prodAssetCache = isProd
       ? [
@@ -102,10 +257,23 @@ const nextConfig = {
       {
         source: '/:path*',
         headers: [
+          { key: 'Content-Security-Policy', value: csp },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          // Severs the window.opener relationship with any cross-origin
+          // document that opens us (and vice-versa), which is what
+          // Lighthouse's `origin-isolation` Best-Practices audit checks for.
+          // Nothing on the site relies on cross-origin popup messaging —
+          // the WhatsApp / social links are plain target="_blank"
+          // navigations, which keep working (they just get opener = null,
+          // itself the recommended hardening).
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+          // Blocks other origins from embedding our responses as
+          // no-cors subresources. `same-site` rather than `same-origin` so
+          // the Vercel preview/prod host pair keeps working.
+          { key: 'Cross-Origin-Resource-Policy', value: 'same-site' },
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',

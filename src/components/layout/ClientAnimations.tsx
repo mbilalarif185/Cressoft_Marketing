@@ -199,32 +199,71 @@ const ClientAnimations: React.FC = () => {
           const splits = titles.map(
             (t) => new SplitType(t, { types: "words,chars" })
           );
+
+          // FORCED REFLOW FIX — separate the style writes from the geometry
+          // reads instead of interleaving them per title.
+          //
+          // The previous loop ran, for every `.title-anim` on the page:
+          //     gsap.set(chars, …)   ← style write, invalidates layout
+          //     gsap.to(…, {scrollTrigger}) ← ScrollTrigger measures the
+          //                                   trigger element on creation
+          // Each measurement had to flush the write that immediately preceded
+          // it, so a page with N titles paid N synchronous layout passes.
+          // Chrome attributes that to whichever bundle is on the stack, which
+          // is why it surfaced as "forced reflow" inside the framework chunk
+          // rather than in this file.
+          //
+          // Now every char on the page is set in ONE call (writes coalesce
+          // into a single invalidation), and trigger creation is deferred to
+          // the next animation frame — by which point layout has been
+          // committed once and each read is served from a clean tree.
+          const titleData = titles
+            .map((title) => ({
+              title,
+              chars: Array.from(
+                title.querySelectorAll<HTMLElement>(".char")
+              ),
+            }))
+            .filter((d) => d.chars.length > 0);
+
+          let rafId = 0;
           const titleCtx = gsap.context(() => {
-            titles.forEach((title) => {
-              const chars = title.querySelectorAll<HTMLElement>(".char");
-              if (chars.length === 0) return;
-              gsap.set(chars, {
-                x: 70,
-                autoAlpha: 0,
-                willChange: "transform, opacity",
-              });
-              gsap.to(chars, {
-                x: 0,
-                autoAlpha: 1,
-                duration: 0.8,
-                stagger: 0.03,
-                ease: "power2.out",
-                overwrite: true,
-                clearProps: "willChange",
-                scrollTrigger: {
-                  trigger: title,
-                  start: "top 90%",
-                  once: true,
-                },
+            // ---- Pass 1: writes only, batched across every title ----
+            const allChars = titleData.flatMap((d) => d.chars);
+            if (allChars.length === 0) return;
+            gsap.set(allChars, {
+              x: 70,
+              autoAlpha: 0,
+              willChange: "transform, opacity",
+            });
+
+            // ---- Pass 2: reads (ScrollTrigger measurement), next frame ----
+            rafId = requestAnimationFrame(() => {
+              rafId = 0;
+              if (cancelled) return;
+              titleCtx.add(() => {
+                titleData.forEach(({ title, chars }) => {
+                  gsap.to(chars, {
+                    x: 0,
+                    autoAlpha: 1,
+                    duration: 0.8,
+                    stagger: 0.03,
+                    ease: "power2.out",
+                    overwrite: true,
+                    clearProps: "willChange",
+                    scrollTrigger: {
+                      trigger: title,
+                      start: "top 90%",
+                      once: true,
+                    },
+                  });
+                });
               });
             });
           });
+
           cleanups.push(() => {
+            if (rafId) cancelAnimationFrame(rafId);
             titleCtx.revert();
             splits.forEach((s) => {
               try {

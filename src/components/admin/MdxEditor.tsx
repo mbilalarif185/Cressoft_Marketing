@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import {
   MDXEditor,
   headingsPlugin,
@@ -76,57 +77,78 @@ const codeBlockLanguages = {
 
 export default function MdxEditor({ markdown, onChange }: MdxEditorProps) {
   return (
-    <MDXEditor
-      markdown={markdown}
-      onChange={onChange}
-      contentEditableClassName="admin-mdx-content"
-      plugins={[
-        headingsPlugin(),
-        listsPlugin(),
-        quotePlugin(),
-        thematicBreakPlugin(),
-        markdownShortcutPlugin(),
-        linkPlugin(),
-        linkDialogPlugin(),
-        imagePlugin({ imageUploadHandler }),
-        tablePlugin(),
-        codeBlockPlugin({ defaultCodeBlockLanguage: "" }),
-        codeMirrorPlugin({ codeBlockLanguages }),
-        diffSourcePlugin({ viewMode: "rich-text" }),
-        toolbarPlugin({
-          toolbarContents: () => (
-            <ConditionalContents
-              options={[
-                {
-                  when: (editor) => editor?.editorType === "codeblock",
-                  contents: () => <ChangeCodeMirrorLanguage />,
-                },
-                {
-                  fallback: () => (
-                    <DiffSourceToggleWrapper>
-                      <UndoRedo />
-                      <Separator />
-                      <BlockTypeSelect />
-                      <Separator />
-                      <BoldItalicUnderlineToggles />
-                      <CodeToggle />
-                      <StrikeThroughSupSubToggles />
-                      <Separator />
-                      <ListsToggle />
-                      <Separator />
-                      <CreateLink />
-                      <InsertImage />
-                      <InsertTable />
-                      <InsertThematicBreak />
-                      <InsertCodeBlock />
-                    </DiffSourceToggleWrapper>
-                  ),
-                },
-              ]}
-            />
-          ),
-        }),
-      ]}
-    />
+    <>
+      {/*
+        The editor's own stylesheet, pulled in only once this component
+        mounts. It used to be a global import in _app.tsx, which welded
+        ~56 KB of admin-only CSS onto the render-blocking stylesheet served
+        to every public page. This component is already loaded via
+        `dynamic(..., { ssr: false })` from MarkdownEditor.tsx, so the <link>
+        is requested at the same moment the editor JS is — admin-only, and
+        off the critical path for everyone else.
+
+        The file is copied out of node_modules by scripts/sync-editor-css.mjs
+        on prebuild/predev, so it cannot drift from the installed version.
+      */}
+      <Head>
+        <link
+          rel="stylesheet"
+          href="/vendor/mdxeditor.css"
+          key="mdxeditor-css"
+        />
+      </Head>
+      <MDXEditor
+        markdown={markdown}
+        onChange={onChange}
+        contentEditableClassName="admin-mdx-content"
+        plugins={[
+          headingsPlugin(),
+          listsPlugin(),
+          quotePlugin(),
+          thematicBreakPlugin(),
+          markdownShortcutPlugin(),
+          linkPlugin(),
+          linkDialogPlugin(),
+          imagePlugin({ imageUploadHandler }),
+          tablePlugin(),
+          codeBlockPlugin({ defaultCodeBlockLanguage: "" }),
+          codeMirrorPlugin({ codeBlockLanguages }),
+          diffSourcePlugin({ viewMode: "rich-text" }),
+          toolbarPlugin({
+            toolbarContents: () => (
+              <ConditionalContents
+                options={[
+                  {
+                    when: (editor) => editor?.editorType === "codeblock",
+                    contents: () => <ChangeCodeMirrorLanguage />,
+                  },
+                  {
+                    fallback: () => (
+                      <DiffSourceToggleWrapper>
+                        <UndoRedo />
+                        <Separator />
+                        <BlockTypeSelect />
+                        <Separator />
+                        <BoldItalicUnderlineToggles />
+                        <CodeToggle />
+                        <StrikeThroughSupSubToggles />
+                        <Separator />
+                        <ListsToggle />
+                        <Separator />
+                        <CreateLink />
+                        <InsertImage />
+                        <InsertTable />
+                        <InsertThematicBreak />
+                        <InsertCodeBlock />
+                      </DiffSourceToggleWrapper>
+                    ),
+                  },
+                ]}
+              />
+            ),
+          }),
+        ]}
+      />
+    </>
   );
 }

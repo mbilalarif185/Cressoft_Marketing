@@ -17,37 +17,48 @@ type PortfolioCategory = "design" | "development" | "technology";
 
 type FilterId = "*" | `.${PortfolioCategory}`;
 
+/**
+ * NOTE — there is deliberately no `ariaLabel` here any more.
+ *
+ * These buttons used to carry `aria-label="Show all portfolio categories"`
+ * and friends. An aria-label REPLACES the accessible name rather than adding
+ * to it, so the name no longer contained the button's own visible text —
+ * a WCAG 2.5.3 ("Label in Name") failure, and a real usability bug for voice
+ * control, where saying "click Design" matched nothing.
+ *
+ * Rewriting the labels to contain the visible word was not enough on its own:
+ * axe compares against the button's full text content, which also includes
+ * the decorative `step` numeral. So the numeral is `aria-hidden` and the
+ * label is gone entirely — the accessible name is now exactly the visible
+ * word ("Design"), which is unambiguous given the wrapping
+ * `<nav aria-label="Portfolio categories">` and the `aria-pressed` state.
+ */
 type FilterTab = {
   id: FilterId;
   step: string;
   label: string;
-  ariaLabel: string;
 };
 
 const FILTER_TABS: FilterTab[] = [
   {
     id: "*",
     step: "01",
-    label: "All",
-    ariaLabel: "Show all portfolio categories",
+    label: "All",
   },
   {
     id: ".design",
     step: "02",
-    label: "Design",
-    ariaLabel: "Filter portfolio by design work",
+    label: "Design",
   },
   {
     id: ".development",
     step: "03",
-    label: "Development",
-    ariaLabel: "Filter portfolio by development work",
+    label: "Development",
   },
   {
     id: ".technology",
     step: "04",
-    label: "Technology",
-    ariaLabel: "Filter portfolio by technology work",
+    label: "Technology",
   },
 ];
 
@@ -243,12 +254,11 @@ const HomeTwoPortfolio = () => {
                     key={tab.id}
                     type="button"
                     data-filter={tab.id}
-                    aria-pressed={activeFilter === tab.id}
-                    aria-label={tab.ariaLabel}
+                    aria-pressed={activeFilter === tab.id}
                     className={activeFilter === tab.id ? "active" : ""}
                     onClick={onFilterClick}
                   >
-                    <span>{tab.step}</span>
+                    <span aria-hidden="true">{tab.step}</span>
                     {tab.label}
                   </button>
                 ))}

@@ -17,11 +17,19 @@ const CtaTwo = () => {
                   <div className="cta-two__content">
                     <span>LET'S GET STARTED</span>
                     <h2 className="title-anim">Ready to Grow Your Business Online?</h2>
-                    <h5>
+                    {/*
+                      A phone CTA, not a section heading — it was an <h5>
+                      sitting directly under the <h2> above, which put a
+                      three-level jump into the document outline for no
+                      semantic gain. A <p> carrying the .h5 class keeps the
+                      exact same type size while leaving the heading tree
+                      contiguous.
+                    */}
+                    <p className="type-h5">
                       <Link href={CONTACT_PHONE_TEL_HREF}>
                         call: {CONTACT_PHONE_DISPLAY}
                       </Link>
-                    </h5>
+                    </p>
                   </div>
                 </div>
                 <div className="col-12 col-lg-4">

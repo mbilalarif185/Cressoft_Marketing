@@ -248,7 +248,10 @@ i:not([class*="fa-"]) {
     padding: 12px 20px;
     line-height: 1;
     border: 1px solid var(--line-strong);
-    color: var(--primary-color);
+    // 14px uppercase on the ivory / sunken canvas: --primary-color resolves
+    // to --brand-blue (#0a8ef0), only 3.17:1 and 2.89:1 against those two
+    // surfaces. The deep variant is the AA-safe blue at this text size.
+    color: var(--brand-blue-deep);
     border-radius: 30px;
     margin-bottom: 32px;
     text-transform: uppercase;
@@ -275,7 +278,10 @@ i:not([class*="fa-"]) {
     padding: 12px 20px;
     line-height: 1;
     border: 1px solid var(--line-strong);
-    color: var(--primary-color);
+    // 14px uppercase on the ivory / sunken canvas: --primary-color resolves
+    // to --brand-blue (#0a8ef0), only 3.17:1 and 2.89:1 against those two
+    // surfaces. The deep variant is the AA-safe blue at this text size.
+    color: var(--brand-blue-deep);
     border-radius: 30px;
     margin-bottom: 32px;
     text-transform: uppercase;

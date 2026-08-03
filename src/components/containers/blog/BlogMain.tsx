@@ -123,7 +123,7 @@ const BlogMain = ({ posts, categories, tags }: BlogMainProps) => {
 
               {pageItems.length === 0 ? (
                 <div className="blog-main__empty fade-top">
-                  <h4 className="h4">No posts found.</h4>
+                  <h2 className="h4">No posts found.</h2>
                   <p>
                     Try a different search term or clear the filter to see
                     everything we&apos;ve published.
@@ -169,9 +169,9 @@ const BlogMain = ({ posts, categories, tags }: BlogMainProps) => {
                       </div>
                     </div>
                     <div className="content">
-                      <h4 className="h4">
+                      <h2 className="h4">
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                      </h4>
+                      </h2>
                       <p>{post.description}</p>
                       <div className="cta">
                         <Link

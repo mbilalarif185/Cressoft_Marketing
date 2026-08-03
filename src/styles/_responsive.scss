@@ -1272,6 +1272,15 @@
           content: none;
         }
 
+        // Mobile drops the horizontal timeline rule (`&::before: none`
+        // above), so the year needs only a small gap to its label rather than
+        // the 50px that clears the desktop rule.
+        //
+        // Must list h3 as well: the milestone headings are now `<h3 class="h4">`
+        // (h4-after-h2 was a heading-level skip). When this selector matched
+        // only h4 it silently stopped applying, the desktop 50px won on
+        // mobile, and each milestone grew 34px taller.
+        h3,
         h4 {
           &:nth-of-type(1) {
             margin-bottom: 16px;

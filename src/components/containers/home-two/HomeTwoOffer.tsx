@@ -193,8 +193,16 @@ const HomeTwoOffer = () => {
                       href={serviceHref(s.slug)}
                       prefetch={false}
                       className="offer-stack__row"
-                      aria-label={`Learn more about our ${s.title} services`}
                     >
+                      {/*
+                        No aria-label. The row's visible text is the service
+                        name plus its promise line, and an aria-label
+                        ("Learn more about our <title> services") replaced all
+                        of that with a paraphrase that omitted the promise —
+                        a WCAG 2.5.3 "Label in Name" failure. Letting the
+                        visible text form the name keeps voice control working
+                        and is more informative to a screen reader anyway.
+                      */}
                       <span className="offer-stack__name">{s.title}</span>
                       <span className="offer-stack__promise">{s.promise}</span>
                       <span className="offer-stack__arrow" aria-hidden="true">

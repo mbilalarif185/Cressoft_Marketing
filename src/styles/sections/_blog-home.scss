@@ -20,6 +20,12 @@
 
 .home-blog {
   --hb-accent: var(--brand-blue, #0a8ef0);
+  // Text-safe companion to --hb-accent. This section sits on
+  // --surface-sunken (#f2ebdf), where --brand-blue measures only 2.89:1 —
+  // fine for the 2px rules and fills that use --hb-accent, nowhere near AA
+  // for the 12–13px uppercase eyebrow/category labels. Anything that sets
+  // `color:` at text size uses this instead.
+  --hb-accent-text: var(--brand-blue-deep, #0a68bd);
   background-color: var(--surface-sunken);
 
   // ---- Section header --------------------------------------------------
@@ -39,7 +45,7 @@
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--hb-accent);
+    color: var(--hb-accent-text);
     &::before {
       content: "";
       width: 24px;
@@ -74,7 +80,7 @@
     }
     &:hover,
     &:focus-visible {
-      color: var(--hb-accent);
+      color: var(--hb-accent-text);
       border-color: var(--hb-accent);
       i {
         transform: translateX(4px);
@@ -95,7 +101,7 @@
     color: var(--ink-faint);
   }
   &__cat {
-    color: var(--hb-accent);
+    color: var(--hb-accent-text);
     font-weight: 700;
   }
   &__sep {
@@ -157,7 +163,7 @@
       transition: color 0.25s ease;
       &:hover,
       &:focus-visible {
-        color: var(--hb-accent);
+        color: var(--hb-accent-text);
         text-decoration: none;
       }
     }
@@ -179,13 +185,13 @@
     letter-spacing: 0.02em;
     color: var(--ink);
     i {
-      color: var(--hb-accent);
+      color: var(--hb-accent-text);
       font-size: 13px;
       transition: transform 0.25s ease;
     }
     &:hover,
     &:focus-visible {
-      color: var(--hb-accent);
+      color: var(--hb-accent-text);
       i {
         transform: translateX(5px);
       }
@@ -266,7 +272,7 @@
       transition: color 0.25s ease;
       &:hover,
       &:focus-visible {
-        color: var(--hb-accent);
+        color: var(--hb-accent-text);
         text-decoration: none;
       }
     }

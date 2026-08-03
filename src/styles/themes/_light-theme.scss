@@ -187,25 +187,32 @@
 
   .portfolio-two {
     .portfolio-two__filter-btn {
+      // These are 14–16px filter controls on the ivory canvas, so every state
+      // needs the 4.5:1 AA floor for normal text. The old values were both
+      // short: #888888 gave 3.29:1 and --primary-color (--brand-blue) 3.17:1,
+      // which meant the *selected* filter — the one a user most needs to
+      // identify — was the hardest to read. --ink-faint is 5.03:1 and
+      // --brand-blue-deep 5.23:1, and the active/inactive distinction stays
+      // just as visible.
       button {
-        color: #888888;
+        color: var(--ink-faint);
 
         span {
-          color: #888888;
+          color: var(--ink-faint);
           transition: var(--transition);
         }
         &:hover {
-          color: var(--primary-color);
+          color: var(--brand-blue-deep);
           span {
-            color: var(--primary-color);
+            color: var(--brand-blue-deep);
           }
         }
       }
 
       .active {
-        color: var(--primary-color);
+        color: var(--brand-blue-deep);
         span {
-          color: var(--primary-color);
+          color: var(--brand-blue-deep);
         }
       }
     }

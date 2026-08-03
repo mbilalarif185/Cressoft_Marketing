@@ -16,12 +16,25 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
-  // CLS-safe: footer always reserves real layout from its content; the
-  // intrinsic-size hint just lets the browser skip painting the section
-  // before it scrolls into view, cutting style + paint cost on every
-  // page load.
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 720px;
+  // `content-visibility: auto` was removed here.
+  //
+  // It skipped style + layout for the footer subtree until it scrolled into
+  // view, which is a genuine (if small — this is one short section) paint
+  // saving. The cost was much larger: axe-core resolves an element's
+  // background by hit-testing at its centre point via `elementsFromPoint`,
+  // and inside an unrendered `content-visibility` subtree that test returns
+  // the page canvas rather than this dark island. Every footer link was
+  // therefore measured as #f4efe6 on #faf6ef — 1.06:1 — and Lighthouse
+  // failed `color-contrast` on the strength of it, on every single page.
+  // Real contrast against --surface-dark is 16.3:1.
+  //
+  // A false accessibility failure that suppresses the score site-wide, and
+  // hides the footer from any axe-based tooling, is not worth one section's
+  // deferred paint. `contain-intrinsic-size` goes with it — it only has
+  // meaning alongside content-visibility.
+  //
+  // NOTE if reinstating: it must be paired with something that keeps axe's
+  // hit-test resolvable, otherwise the false failure comes straight back.
 
   .gaper {
     row-gap: 60px;
@@ -57,6 +70,12 @@
 
   .footer__single-intro {
     margin-bottom: 30px;
+    // The column titles are `<h2 class="type-h5">`: h2 for the document
+    // outline (they are top-level footer sections, and a bare h5 straight
+    // after the page's h2 content was a level skip), .type-h5 for the small
+    // visual size they have always had. Match on either so this rule is
+    // tag-agnostic.
+    h2,
     h5 {
       text-transform: capitalize;
       font-weight: 600;
