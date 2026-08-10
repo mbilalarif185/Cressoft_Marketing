@@ -1,11 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import { serialize } from "next-mdx-remote/serialize";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-
 import Layout from "@/components/layout/Layout";
 import Seo from "@/components/seo/Seo";
 import BlogSingleBanner from "@/components/layout/banner/BlogSingleBanner";
@@ -16,13 +11,22 @@ import {
   getRelatedPosts,
   getAllPostMeta,
 } from "@/lib/blog";
+import {
+  markdownToContentTree,
+  type BlogContentTree,
+} from "@/lib/blog/markdown-tree";
 import type { BlogPost, BlogPostMeta } from "@/types/blog";
 
 import { SITE_URL, ORGANIZATION_LOGO, SITE_NAME } from "@/lib/seo";
 
 type BlogSinglePageProps = {
   post: Omit<BlogPost, "content">;
-  source: MDXRemoteSerializeResult;
+  /**
+   * The post body as a prebuilt hast tree. Deliberately not a compiled-MDX
+   * string — see the header comment in `lib/blog/markdown-tree.ts` for why
+   * client-side MDX evaluation is incompatible with our CSP.
+   */
+  content: BlogContentTree;
   related: BlogPostMeta[];
   recentPosts: BlogPostMeta[];
   prev: BlogPostMeta | null;
@@ -31,7 +35,7 @@ type BlogSinglePageProps = {
 
 const BlogSinglePage = ({
   post,
-  source,
+  content,
   related,
   recentPosts,
   prev,
@@ -131,7 +135,7 @@ const BlogSinglePage = ({
       ) : null}
       <BlogDetailsMain
         post={post}
-        source={source}
+        content={content}
         related={related}
         recentPosts={recentPosts}
         prev={prev}
@@ -165,16 +169,9 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
     return { notFound: true, revalidate: 60 };
   }
 
-  const source = await serialize(post.content, {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm],
-      // rehypeSlug keeps ids on headings so `#anchor` URLs still work, but we
-      // deliberately do NOT autolink-wrap headings — the MDX `a` component
-      // styles every anchor as a blue underlined link, turning headings into
-      // giant links.
-      rehypePlugins: [rehypeSlug],
-    },
-  });
+  // Markdown → hast at build time. The client only walks the finished tree, so
+  // nothing has to be `eval`'d in the browser (which our CSP forbids).
+  const content = await markdownToContentTree(post.content);
 
   const allMeta = await getAllPostMeta();
   const idx = allMeta.findIndex((p) => p.slug === slug);
@@ -187,7 +184,7 @@ export const getStaticProps: GetStaticProps<BlogSinglePageProps> = async ({
   return {
     props: {
       post: meta,
-      source,
+      content,
       related: await getRelatedPosts(slug, 2),
       recentPosts: allMeta.filter((p) => p.slug !== slug).slice(0, 4),
       prev,

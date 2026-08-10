@@ -1,14 +1,16 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { toJsxRuntime } from "hast-util-to-jsx-runtime";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import type { BlogPost, BlogPostMeta } from "@/types/blog";
+import type { BlogContentTree } from "@/lib/blog/markdown-tree";
 import { QUANTEL_SOCIAL } from "@/constants/socialLinks";
 
 type BlogDetailsMainProps = {
   post: Omit<BlogPost, "content">;
-  source: MDXRemoteSerializeResult;
+  /** Prebuilt hast tree from `getStaticProps` (no client-side MDX eval). */
+  content: BlogContentTree;
   related: BlogPostMeta[];
   recentPosts: BlogPostMeta[];
   prev: BlogPostMeta | null;
@@ -27,7 +29,12 @@ const formatDate = (iso: string) => {
   });
 };
 
-const mdxComponents = {
+/**
+ * Tag → component overrides for the post body. Keyed by HTML tag name, which is
+ * what both the old MDX provider and `hast-util-to-jsx-runtime` expect, so the
+ * rendered markup is unchanged by the switch away from MDX.
+ */
+const contentComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2 className="bd-prose__h2" {...props} />
   ),
@@ -124,7 +131,7 @@ const mdxComponents = {
 
 const BlogDetailsMain = ({
   post,
-  source,
+  content,
   related,
   recentPosts,
   prev,
@@ -132,6 +139,20 @@ const BlogDetailsMain = ({
   url,
 }: BlogDetailsMainProps) => {
   const [copied, setCopied] = React.useState(false);
+
+  // Walks the prebuilt hast tree into React elements via `createElement`.
+  // Unlike `<MDXRemote>` this never runs `new Function`, so it works under a
+  // CSP without `'unsafe-eval'` — see `lib/blog/markdown-tree.ts`.
+  const body = React.useMemo(
+    () =>
+      toJsxRuntime(content, {
+        Fragment,
+        jsx,
+        jsxs,
+        components: contentComponents,
+      }),
+    [content],
+  );
 
   const linkedInShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
     url,
@@ -190,7 +211,7 @@ const BlogDetailsMain = ({
                   .filter(Boolean)
                   .join(" ")}
               >
-                <MDXRemote {...source} components={mdxComponents} />
+                {body}
               </div>
 
               {/* Per-post social sharing — LinkedIn / X / copy link. Distinct
