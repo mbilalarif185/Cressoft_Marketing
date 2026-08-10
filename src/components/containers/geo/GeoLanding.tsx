@@ -23,6 +23,7 @@ import { SERVICES } from "@/data/services";
 const GeoLanding = ({
   region,
   serviceLinks,
+  afterStats,
 }: {
   region: GeoRegion;
   /**
@@ -31,6 +32,12 @@ const GeoLanding = ({
    * while /uk and /uae keep linking to the global /services/<slug> pages.
    */
   serviceLinks?: Record<string, string>;
+  /**
+   * Optional region-specific sections rendered between the stats grid and the
+   * closing CTA banner. Used by /uk for its market/industries/locations/FAQ
+   * content; /usa and /uae omit it and render exactly as before.
+   */
+  afterStats?: React.ReactNode;
 }) => {
   return (
     <>
@@ -205,6 +212,9 @@ const GeoLanding = ({
           </ul>
         </div>
       </section>
+
+      {/* 4b) Region-specific extra sections (optional — /uk only today) - */}
+      {afterStats}
 
       {/* 5) CTA banner ------------------------------------------------- */}
       <section className="section geo-cta" aria-labelledby="geo-cta-title">

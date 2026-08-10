@@ -285,6 +285,85 @@
 }
 
 // =====================================================
+// 3) UK-only sections (/uk — see `UkContent.tsx`)
+// The industries grid and the FAQ accordion reuse `.marketing-why` and
+// `.marketing-faq` wholesale, so only the prose block, the shared section
+// lead and the city pills need styles here.
+// =====================================================
+
+// Shared intro paragraph under a UK section heading.
+.uk-section__lead {
+  margin: 18px 0 0;
+  max-width: 720px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.uk-market {
+  background-color: var(--surface-sunken);
+
+  .uk-market__body {
+    margin-top: 26px;
+
+    p {
+      margin: 0 0 18px;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--ink-soft);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.uk-locations {
+  .uk-locations__pills {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 30px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .uk-locations__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1;
+    transition: var(--transition);
+
+    i {
+      color: var(--primary-color);
+      font-size: 12px;
+    }
+
+    &:hover {
+      border-color: rgba(30, 134, 214, 0.4);
+      background: rgba(30, 134, 214, 0.06);
+    }
+  }
+
+  .uk-locations__note {
+    margin: 30px 0 0;
+    max-width: 720px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+  }
+}
+
+// =====================================================
 // Responsive
 // =====================================================
 @media only screen and (max-width: 991.98px) {
@@ -326,5 +405,16 @@
       padding: 44px 24px;
       border-radius: 22.5px;
     }
+  }
+
+  .uk-section__lead,
+  .uk-market .uk-market__body p,
+  .uk-locations .uk-locations__note {
+    font-size: 15px;
+  }
+
+  .uk-locations .uk-locations__pill {
+    padding: 9px 16px;
+    font-size: 13.5px;
   }
 }
